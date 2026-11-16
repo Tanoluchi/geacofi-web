@@ -2,12 +2,13 @@
 import Base from '../layouts/Base.astro';
 import Boton from '../components/shared/Boton.astro';
 import Rana from '../components/shared/Rana.astro';
+import GrillaBebidas from '../components/carta/GrillaBebidas.astro';
 import TarjetaCarta from '../components/carta/TarjetaCarta.astro';
 import TabsCategorias from '../components/carta/TabsCategorias.astro';
 import { carta, local } from '../lib/data.ts';
+import { slug } from '../lib/slug.ts';
 
 // panadería y pastelería viene como una categoría con `grupo` por ítem: se muestran como dos tarjetas.
-const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\W+/g, '-');
 const tarjetas = carta.categorias.flatMap((c) => {
   const grupos = [...new Set(c.items.map((i) => i.grupo).filter((g): g is string => !!g))];
   return grupos.length
@@ -34,14 +35,13 @@ const fecha = carta.actualizada.split('-').reverse().join('/');
 
   <TabsCategorias tabs={tarjetas.map((t) => ({ id: t.id, nombre: t.nombre }))} />
 
+  {calientes && <GrillaBebidas {...calientes} etiqueta="caliente" respaldo="tomando" />}
+  {frios && <GrillaBebidas {...frios} etiqueta="frío" respaldo="togo" noche />}
+
   <section class="banda">
     <div class="contenedor pila">
       <div class="fila-1">
-        {calientes && <TarjetaCarta {...calientes} />}
-        <div class="col">
-          {frios && <TarjetaCarta {...frios} noche />}
-          {filtrados && <TarjetaCarta {...filtrados} noche especial />}
-        </div>
+        {filtrados && <TarjetaCarta {...filtrados} noche especial />}
       </div>
       <div class="fila-2">
         {resto.map((t) => <TarjetaCarta {...t} compacta />)}

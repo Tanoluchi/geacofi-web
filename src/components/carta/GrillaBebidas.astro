@@ -1,0 +1,67 @@
+---
+import type { Item } from '../../lib/types.ts';
+import { formatPrecio } from '../../lib/precio.ts';
+import { ranaUrl } from '../../lib/assets.ts';
+import { slug } from '../../lib/slug.ts';
+
+// Bebidas ilustradas (calientes y fríos): cada ítem flota sobre el fondo de la banda, sin caja.
+interface Props { id: string; nombre: string; lado: string; items: Item[]; etiqueta: string; noche?: boolean; respaldo: string }
+const { id, nombre, lado, items, etiqueta, noche = false, respaldo } = Astro.props;
+const dibujos = import.meta.glob<string>('/src/assets/bebidas/*.svg', { eager: true, query: '?url', import: 'default' });
+// sin dibujo propio: la pose de la rana del ítem (o la de la categoría), ya existente
+const imagen = (it: Item) => dibujos[`/src/assets/bebidas/${slug(it.nombre)}.svg`];
+const respaldoUrl = (it: Item) => ranaUrl(it.pose ?? respaldo, noche ? 'crema' : 'carbon');
+const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).join(', ')} o ` : ''}${o.at(-1)}`;
+---
+<section class="banda" id={id} aria-labelledby={`${id}-t`} data-theme={noche ? 'noche' : undefined}>
+  <div class="contenedor">
+    <header class="cab">
+      <span class="t-eyebrow">{lado}</span>
+      <h2 id={`${id}-t`}>{nombre}</h2>
+    </header>
+    <ul class="grilla">
+      {items.map((it, i) => (
+        <li class="beb">
+          <span class="tag">{etiqueta}</span>
+          <img
+            class:list={['dib', { respaldo: !imagen(it) }]}
+            src={imagen(it) ?? respaldoUrl(it)} alt={it.nombre} width="300" height="400"
+            loading={i < 4 ? 'eager' : 'lazy'} decoding="async"
+          />
+          <span class="nombre">{it.nombre}</span>
+          {it.descripcion && <span class="desc">{it.descripcion}</span>}
+          {it.opciones?.length ? <span class="desc">{opcion(it.opciones)}</span> : null}
+          <span class="precio"><span class="sr-only">{it.nombre}, </span>{formatPrecio(it.precio)}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .banda { scroll-margin-top: 96px; }
+  .cab { display: flex; flex-direction: column; gap: 4px; margin-bottom: var(--space-6); }
+  .t-eyebrow { color: var(--eyebrow); }
+  h2 { font: italic 800 56px/1 var(--font-cond); color: var(--heading); }
+  .grilla {
+    list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-7) var(--space-6);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .beb { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; position: relative; min-width: 0; }
+  .tag {
+    align-self: flex-start; font: 500 13px/18px var(--font-mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--eyebrow); border: var(--border-dash) solid var(--border); border-radius: var(--radius-pill); padding: 2px 10px;
+  }
+  .dib {
+    width: 100%; max-width: 240px; height: auto; aspect-ratio: 3 / 4; object-fit: contain; margin-block: var(--space-2);
+    transition: transform 150ms ease-out;
+  }
+  .dib.respaldo { padding: 12%; opacity: .85; }
+  .nombre { font: 800 17px/22px var(--font-body); text-transform: lowercase; color: var(--ink); }
+  .desc { font: 400 13px/18px var(--font-body); color: var(--ink-muted); }
+  .precio { margin-top: auto; padding-top: var(--space-2); font: 400 16px/22px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+  @media (hover: hover) { .beb:hover .dib { transform: translateY(-4px) rotate(1.5deg); } }
+  @media (prefers-reduced-motion: reduce) { .beb:hover .dib { transform: none; } }
+  @media (min-width: 800px) { .grilla { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .grilla { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { h2 { font-size: 44px; } .grilla { gap: var(--space-6) var(--space-4); } }
+</style>
