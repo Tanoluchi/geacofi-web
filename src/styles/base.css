@@ -7,7 +7,7 @@ body {
   background: var(--durazno);
   color: var(--ink);
   font: 400 17px/26px var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip; /* clip, not hidden: hidden makes body a scroll container and breaks view() timelines */
 }
 
 img, svg { max-width: 100%; height: auto; }

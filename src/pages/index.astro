@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import Intro from '../components/home/Intro.astro';
 import Hero from '../components/home/Hero.astro';
+import Destacados from '../components/home/Destacados.astro';
+import Vaso3D from '../components/home/Vaso3D.astro';
 import CartaAB from '../components/home/CartaAB.astro';
 import SobreSeccion from '../components/home/SobreSeccion.astro';
 import Filtrados from '../components/home/Filtrados.astro';
@@ -9,8 +12,11 @@ import Visita from '../components/home/Visita.astro';
 import { local } from '../lib/data.ts';
 ---
 <Base title="café, discos y eso…" description={`Café de especialidad en ${local.direccion}, ${local.ciudad}. Carta, eventos y cómo llegar.`}>
+  <Intro />
   <Hero />
+  <Destacados />
   <CartaAB />
+  <Vaso3D />
   <SobreSeccion />
   <Filtrados />
   <EventosHome />

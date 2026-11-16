@@ -123,7 +123,9 @@ const granos = [[grano1, 1, 'izq'], [grano2, 2, 'der'], [grano3, 3, 'izq'], [gra
   @media (prefers-reduced-motion: no-preference) {
     .vaso.scrub { --p: 0; --lift: calc(1 - abs(var(--p) * 2 - 1)); height: 300vh; padding: 0; }
     @supports (animation-timeline: view()) {
-      .vaso.scrub { animation: vaso-p linear both; animation-timeline: view(); animation-range: cover 100vh cover calc(100% - 100vh); }
+      .vaso.scrub { animation: vaso-p linear both; }
+      /* separate, more specific rule: the build minifier folds a same-rule timeline into the shorthand, which Chrome rejects */
+      .vaso.scrub.scrub { animation-timeline: view(); animation-range: cover 100vh cover calc(100% - 100vh); }
     }
     @keyframes vaso-p { from { --p: 0; } to { --p: 1; } }
     @keyframes vaso-vapor { 0%, 100% { transform: rotate(-4deg) scaleY(1); } 50% { transform: rotate(5deg) scaleY(1.07); } }
