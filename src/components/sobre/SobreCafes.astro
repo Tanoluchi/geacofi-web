@@ -1,4 +1,404 @@
 ---
-// Stub so pages can import it; T4 replaces this with the real coffee pack.
+// Sobre de cafés: sobre → corte + ola de vapor + papelitos → 5 figuritas que salen y se abren en abanico.
+// Datos: cafes.json (solo en_barra) vía src/lib; el sorteo es elegirSobre() de src/lib/sobre.ts, también en el cliente.
+import Boton from '../shared/Boton.astro';
+import { cafes } from '../../lib/data.ts';
+import { ranaUrl } from '../../lib/assets.ts';
+import { POSES_CAFE, TEXTO_SIN_CAFES } from '../../lib/sobre.ts';
+
+const enBarra = cafes.cafes.filter((c) => c.en_barra);
+const quitar = (p: string) => p.replace(/^rana-/, '');
+const poses = [...new Set([...POSES_CAFE, ...enBarra.flatMap((c) => (c.pose ? [quitar(c.pose)] : []))])];
+const ranas = Object.fromEntries(
+  poses.map((p) => [p, { carbon: ranaUrl(p, 'carbon'), crema: ranaUrl(p, 'crema') }]),
+);
+// número de figurita = posición del café en la lista de la barra
+const numeros = Object.fromEntries(enBarra.map((c, i) => [c.id, i + 1]));
+const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, texto: TEXTO_SIN_CAFES };
+const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) => c.tostador === t.id) }));
 ---
-<section class="sobre-stub" aria-label="sobre de cafés"><p>sobre de cafés</p></section>
+<section class="sobre" data-sobre aria-label="sobre de cafés">
+  <div class="stage" data-stage>
+    <canvas class="fx" data-fx aria-hidden="true"></canvas>
+    <button class="pack" type="button" data-pack aria-label="abrir el sobre de cafés">
+      <span class="float">
+        <span class="pack-top" data-top></span>
+        <span class="pack-body">
+          <span class="wordmark">geacofi</span>
+          <img class="rana" src={ranas.oficial.crema} alt="" width="190" height="190" />
+          <span class="label">sobre de cafés · 5 figuritas</span>
+        </span>
+        <span class="hint">tocá para abrir</span>
+      </span>
+    </button>
+    <div data-cards></div>
+  </div>
+
+  <div class="controls">
+    <div data-again hidden><Boton data-again-btn>abrir otro sobre</Boton></div>
+    <p class="status" role="status" data-status></p>
+  </div>
+
+  <div class="todos">
+    <h3>todos los cafés que hay en la barra</h3>
+    <div class="tostadores">
+      {porTostador.map(({ t, lista }) => (
+        <article class="tostador">
+          <h4><span class="muestra" style={`--sw:var(--${t.color})`}></span>{t.nombre}</h4>
+          {lista.length ? (
+            <ul>
+              {lista.map((c) => (
+                <li>
+                  <b>{c.nombre}</b>
+                  <small>{[c.origen, c.proceso ?? c.mood].filter(Boolean).join(' · ')}</small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>{TEXTO_SIN_CAFES}</p>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <dialog class="detalle" data-dialog aria-labelledby="sobre-d-titulo">
+    <form method="dialog"><button class="cerrar" aria-label="cerrar">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
+    </button></form>
+    <div data-d-card></div>
+    <div class="info">
+      <p class="por" data-d-por></p>
+      <h3 id="sobre-d-titulo" data-d-title></h3>
+      <dl data-d-list></dl>
+      <p class="nota">preguntá en la barra si está hoy y en qué método conviene tomarlo.</p>
+    </div>
+  </dialog>
+
+  <script type="application/json" data-sobre-datos is:inline set:html={JSON.stringify(datos)} />
+</section>
+
+<style is:global>
+  .sobre { color: var(--ink); }
+  .sobre .stage { position: relative; height: 600px; perspective: 1400px; touch-action: manipulation; }
+  .sobre .fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+  /* ---- sobre */
+  .sobre .pack { --pack: var(--terracota); position: absolute; left: 50%; top: 50%; width: 250px; height: 350px; margin: -185px 0 0 -125px; padding: 0; border: 0; background: none; cursor: pointer; z-index: 2; }
+  .sobre .pack:focus-visible { outline: 3px solid var(--focus); outline-offset: 10px; border-radius: 18px; }
+  .sobre .pack .float { position: absolute; inset: 0; animation: sobre-bob 3.2s ease-in-out infinite; }
+  .sobre .pack:hover .float { animation-duration: 1.4s; }
+  .sobre .pack-body { position: absolute; inset: 34px 0 0; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 20px 14px 14px; overflow: hidden; background: var(--pack); border: var(--border-ink) solid var(--bordo); border-radius: 6px 6px 18px 18px; box-shadow: 8px 10px 0 var(--bordo); }
+  .sobre .pack-body::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.22) 45%, transparent 60%); transform: translateX(-60%); animation: sobre-shine 3.6s ease-in-out infinite; }
+  .sobre .pack-top { position: absolute; left: 0; right: 0; top: 0; height: 40px; z-index: 2; background: var(--pack); border: var(--border-ink) solid var(--bordo); border-bottom: 0; border-radius: 10px 10px 0 0; transform-origin: 20% 100%; }
+  .sobre .pack-top::before { content: ""; position: absolute; left: 8px; right: 8px; top: 6px; height: 10px; border-radius: 4px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 6px, transparent 6px 12px); }
+  .sobre .pack-top::after { content: "cortá acá"; position: absolute; left: 0; right: 0; bottom: -2px; padding-right: 10px; border-bottom: 3px dashed var(--crema); text-align: right; letter-spacing: .06em; font: 500 11px/1.4 var(--font-mono); color: var(--crema); }
+  .sobre .wordmark { margin-top: 6px; font: italic 800 44px/1 var(--font-cond); color: var(--crema); }
+  .sobre .pack .rana { width: 170px; height: auto; margin-top: -2px; }
+  .sobre .pack .label { margin-top: auto; font: 500 11px/1.3 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--crema); }
+  .sobre .pack .hint { position: absolute; left: 50%; bottom: -62px; white-space: nowrap; transform: translateX(-50%) rotate(-2deg); padding: 4px 16px; background: var(--crema); color: var(--bordo); border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-pill); box-shadow: var(--sticker-sm); font: italic 800 22px/1.2 var(--font-cond); }
+  .sobre .pack.is-open { pointer-events: none; }
+  .sobre .pack.is-gone { visibility: hidden; }
+  .sobre .pack.shake .float { animation: sobre-shake .18s linear 2; }
+
+  /* ---- figuritas */
+  .sobre .card { position: absolute; left: 0; top: 0; width: var(--cw); height: calc(var(--cw) * 1.42); padding: 0; border: 0; background: none; cursor: pointer; z-index: 4; transform-style: preserve-3d; font: inherit; color: inherit; text-align: left; }
+  .sobre .card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: calc(var(--cw) * .07); }
+  .sobre .card .inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+  .sobre .face { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; border: var(--border-ink) solid var(--bordo); border-radius: calc(var(--cw) * .07); box-shadow: var(--drop); }
+  .sobre .back { transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; background: #E7C79C; }
+  .sobre .back::before { content: ""; position: absolute; inset: 7%; border: var(--border-dash) dashed var(--bordo); border-radius: calc(var(--cw) * .05); }
+  .sobre .back .q { font: 700 calc(var(--cw) * .5)/1 var(--font-display); color: var(--terracota); }
+  .sobre .front { display: flex; flex-direction: column; padding: calc(var(--cw) * .06); background: var(--bg); color: var(--ink-f); }
+  .sobre .front .top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font: italic 800 calc(var(--cw) * .085)/1 var(--font-cond); }
+  .sobre .front .num { font: 500 calc(var(--cw) * .055)/1 var(--font-mono); font-style: normal; opacity: .8; }
+  .sobre .front .art { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; margin: calc(var(--cw) * .04) 0; padding: 6%; border-radius: calc(var(--cw) * .05); background: var(--panel); }
+  .sobre .front .art img { max-height: 100%; max-width: 100%; width: auto; height: auto; }
+  .sobre .front .name { font: 700 calc(var(--cw) * .15)/.9 var(--font-display); text-wrap: balance; }
+  .sobre .front .meta { margin-top: calc(var(--cw) * .02); font: 500 calc(var(--cw) * .056)/1.3 var(--font-mono); opacity: .9; }
+  .sobre .front .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: calc(var(--cw) * .035); }
+  .sobre .front .tag { padding: 4px 7px; border-radius: var(--radius-pill); background: var(--ink-f); color: var(--bg); font: 800 calc(var(--cw) * .05)/1 var(--font-body); }
+  .sobre .sheen { position: absolute; inset: 0; border-radius: calc(var(--cw) * .07); pointer-events: none; opacity: 0; mix-blend-mode: soft-light; transition: opacity .3s; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.75), transparent 55%); }
+  .sobre .holo .sheen { opacity: .55; mix-blend-mode: color-dodge; background-size: 100% 100%, 220% 220%; background-position: center, var(--mx, 50%) var(--my, 50%);
+    background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.55), transparent 45%), linear-gradient(115deg, transparent 20%, rgba(255,92,180,.45) 35%, rgba(90,200,255,.45) 50%, rgba(140,255,170,.45) 65%, transparent 80%); }
+  .sobre .card:hover .sheen, .sobre .card:focus-visible .sheen { opacity: 1; }
+
+  /* ---- controles */
+  .sobre .controls { display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 90px; margin-top: 10px; }
+  .sobre .controls [hidden] { display: none; }
+  .sobre .status { margin: 0; font: 500 13px/1.4 var(--font-mono); color: var(--ink-muted); }
+
+  /* ---- lista completa (lectores de pantalla y quien no quiere jugar) */
+  .sobre .todos { margin-top: 40px; }
+  .sobre .todos h3 { margin: 0 0 14px; font: italic 800 30px/1.1 var(--font-cond); color: var(--heading); }
+  .sobre .tostadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .sobre .tostador { padding: 16px 18px; background: var(--surface-raised); border: var(--border-ink) solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .sobre .tostador h4 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font: italic 800 24px/1.1 var(--font-cond); color: var(--heading); }
+  .sobre .muestra { flex: none; width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 50%; background: var(--sw); }
+  .sobre .tostador ul { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 15px; }
+  .sobre .tostador li b { font-weight: 800; }
+  .sobre .tostador li small { display: block; font: 400 12px/1.4 var(--font-mono); color: var(--ink-muted); }
+  .sobre .tostador p { margin: 0; font-size: 15px; color: var(--ink-muted); }
+
+  /* ---- detalle */
+  .sobre .detalle { width: min(760px, calc(100vw - 32px)); padding: 26px; background: var(--crema); color: var(--ink-dia); border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-xl); box-shadow: 10px 10px 0 var(--bordo); overflow: visible; }
+  .sobre .detalle[open] { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 26px; animation: sobre-in .3s cubic-bezier(.2,.8,.2,1); }
+  .sobre .detalle::backdrop { background: rgba(20,23,27,.7); }
+  .sobre .detalle .card { position: relative; cursor: default; }
+  .sobre .detalle .info { flex: 1 1 260px; display: flex; flex-direction: column; gap: 10px; }
+  .sobre .detalle .por { margin: 0; font: 500 13px/1.3 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--terracota); }
+  .sobre .detalle h3 { margin: 0; font: 700 56px/.9 var(--font-display); color: var(--terracota); }
+  .sobre .detalle dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 6px 0 0; font-size: 15px; }
+  .sobre .detalle dt { padding-top: 3px; font: 500 12px/1.3 var(--font-mono); text-transform: uppercase; color: var(--ink-muted-dia); }
+  .sobre .detalle dd { margin: 0; font-weight: 800; }
+  .sobre .detalle .nota { margin: 0; font-size: 14px; color: var(--ink-muted-dia); }
+  .sobre .cerrar { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: var(--border-ink) solid var(--bordo); border-radius: 50%; background: var(--durazno); color: var(--bordo); cursor: pointer; }
+  .sobre .cerrar:focus-visible { outline: 3px solid var(--carbon); outline-offset: 3px; }
+
+  @keyframes sobre-bob { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(1.5deg); } }
+  @keyframes sobre-shine { 0%, 60% { transform: translateX(-80%); } 100% { transform: translateX(80%); } }
+  @keyframes sobre-shake { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
+  @keyframes sobre-in { from { opacity: 0; transform: translateY(20px) scale(.96); } }
+
+  @media (max-width: 700px) {
+    .sobre .stage { height: 560px; }
+    .sobre .pack { transform: scale(.86); }
+    .sobre .detalle h3 { font-size: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sobre .pack .float, .sobre .pack-body::after, .sobre .detalle[open] { animation: none; }
+    .sobre .card .inner, .sobre .sheen { transition: none; }
+  }
+</style>
+
+<script>
+  import { elegirSobre } from '../../lib/sobre.ts';
+  import type { Cafe, Tostador } from '../../lib/types.ts';
+  import type { Figurita } from '../../lib/sobre.ts';
+
+  interface Datos { tostadores: Tostador[]; cafes: Cafe[]; ranas: Record<string, { carbon: string; crema: string }>; numeros: Record<string, number>; texto: string }
+
+  const root = document.querySelector<HTMLElement>('[data-sobre]')!;
+  const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+  const D: Datos = JSON.parse($('[data-sobre-datos]').textContent!);
+  const stage = $('[data-stage]'), pack = $<HTMLButtonElement>('[data-pack]'), top = $('[data-top]'), cardsEl = $('[data-cards]');
+  const again = $('[data-again]'), againBtn = $('[data-again-btn]'), status = $('[data-status]'), dlg = $<HTMLDialogElement>('[data-dialog]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PACKS = ['--terracota', '--verde', '--bordo', '--carbon'];
+  const FX = ['--terracota', '--durazno', '--verde', '--tostador-komun', '--crema', '--ambar', '--tostador-motofeca', '--bordo'];
+  const EASE = 'cubic-bezier(.2,.8,.2,1)';
+  let packIdx = 0, hand: Figurita[] = [], busy = false;
+
+  const esc = (s: unknown) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const css = (v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  // ---------------------------------------------------------------- figurita
+  function cardHTML(f: Figurita, cw: number, tag: 'button' | 'div' = 'button') {
+    const t = f.tostador, carbon = t.tinta === 'carbon';
+    const c = f.tipo === 'cafe' ? f.cafe : null;
+    const notas = c?.notas?.slice(0, 3) ?? [];
+    const tags = f.tipo === 'semana' ? [] : notas.length ? notas : [c!.proceso, c!.mood].filter(Boolean);
+    const meta = f.tipo === 'semana' ? 'preguntá en la barra' : [c!.origen, notas.length ? c!.proceso : null].filter(Boolean).join(' · ');
+    const nombre = f.tipo === 'semana' ? 'café de la semana' : c!.nombre;
+    const num = c ? '#' + String(D.numeros[c.id]).padStart(2, '0') : '';
+    const label = tag === 'button' ? ` type="button" aria-label="${esc(nombre)}, de ${esc(t.nombre)}. ver detalle"` : '';
+    return `<${tag} class="card${t.holo ? ' holo' : ''}"${label} style="--cw:${cw}px;--bg:var(--${t.color});--ink-f:var(--${t.tinta});--panel:${carbon ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.1)'}">
+      <span class="inner">
+        <span class="face back"><span class="q">?</span></span>
+        <span class="face front">
+          <span class="top"><span>${esc(t.nombre)}</span><span class="num">${num}</span></span>
+          <span class="art"><img src="${D.ranas[f.pose]?.[t.tinta] ?? D.ranas.espresso[t.tinta]}" alt=""></span>
+          <span class="name">${esc(nombre)}</span>
+          <span class="meta">${esc(meta)}</span>
+          <span class="tags">${tags.map((n) => `<span class="tag">${esc(n)}</span>`).join('')}</span>
+        </span>
+        <span class="sheen"></span>
+      </span></${tag}>`;
+  }
+
+  // inclinación 3D hasta 22° y brillo que sigue al cursor
+  function tilt(card: HTMLElement) {
+    if (reduce) return;
+    const inner = card.querySelector<HTMLElement>('.inner')!;
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      inner.style.transform = `translateZ(30px) scale(1.06) rotateY(${px * 22}deg) rotateX(${-py * 22}deg)`;
+      inner.style.setProperty('--mx', (px + .5) * 100 + '%');
+      inner.style.setProperty('--my', (py + .5) * 100 + '%');
+      card.style.zIndex = '6';
+    });
+    card.addEventListener('pointerleave', () => { inner.style.transform = ''; card.style.zIndex = ''; });
+  }
+
+  // ---------------------------------------------------------------- disposición del abanico
+  function layout() {
+    const W = stage.clientWidth, H = stage.clientHeight, n = 5, small = W < 700, gap = small ? 12 : 22;
+    const pos: [number, number, number][] = [];
+    let cw: number;
+    if (small) {
+      cw = Math.min(150, (W - gap * 2 - 8) / 3);
+      const ch = cw * 1.42, y1 = H / 2 - ch - gap / 2, y2 = H / 2 + gap / 2;
+      const x1 = (W - (cw * 3 + gap * 2)) / 2, x2 = (W - (cw * 2 + gap)) / 2;
+      for (let i = 0; i < 3; i++) pos.push([x1 + i * (cw + gap), y1, 0]);
+      for (let i = 0; i < 2; i++) pos.push([x2 + i * (cw + gap), y2, 0]);
+    } else {
+      cw = Math.min(205, (W - gap * (n - 1) - 20) / n);
+      const x0 = (W - (cw * n + gap * (n - 1))) / 2, ch = cw * 1.42;
+      for (let i = 0; i < n; i++) { const k = i - (n - 1) / 2; pos.push([x0 + i * (cw + gap), H / 2 - ch / 2 - 20 + Math.abs(k) * 10, k * 2.2]); }
+    }
+    return { cw, pos };
+  }
+  const place = (el: HTMLElement, [x, y, r]: number[]) => { el.style.transform = `translate(${x}px,${y}px) rotate(${r}deg)`; };
+
+  // ---------------------------------------------------------------- efectos: ola de vapor + granos + papelitos
+  // El canvas solo corre mientras hay algo que dibujar y el escenario está a la vista.
+  const fx = $<HTMLCanvasElement>('[data-fx]'), ctx = fx.getContext('2d')!;
+  type P = { x: number; y: number; vx: number; vy: number; r: number; vr: number; bean: boolean; c: string; s: number; life: number };
+  let parts: P[] = [], waveT = -1, waveStart = 0, org = [0, 0], raf = 0, last = 0, seen = true, cols: string[] = [];
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf && (parts.length || waveT >= 0)) { last = 0; raf = requestAnimationFrame(tick); } }).observe(stage);
+  function sizeFx() {
+    const d = devicePixelRatio || 1;
+    fx.width = stage.clientWidth * d; fx.height = stage.clientHeight * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  function burst(x: number, y: number) {
+    cols = FX.map(css); org = [x, y]; waveT = 0; waveStart = performance.now();
+    for (let i = 0; i < 90; i++) {
+      const a = -Math.PI / 2 + (Math.random() - .5) * 2.4, v = 6 + Math.random() * 9;
+      parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: Math.random() * 6, vr: (Math.random() - .5) * .4, bean: i % 3 === 0, c: cols[i % cols.length], s: 5 + Math.random() * 6, life: 1 });
+    }
+    if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+  }
+  function tick(t: number) {
+    if (!seen) { raf = 0; return; }
+    const dt = last ? Math.min(40, t - last) / 16.7 : 1; last = t;
+    const W = stage.clientWidth, H = stage.clientHeight;
+    ctx.clearRect(0, 0, W, H);
+    if (waveT >= 0) {
+      waveT = (t - waveStart) / 1000;
+      const p = Math.min(1, waveT / .7), fade = waveT > .9 ? Math.max(0, 1 - (waveT - .9) / .6) : 1;
+      const L = (1 - Math.pow(1 - p, 3)) * Math.min(H * .95, 560);
+      ctx.lineCap = ctx.lineJoin = 'round';
+      cols.forEach((col, k) => {
+        const off = (k - (cols.length - 1) / 2) * 20;
+        ctx.beginPath(); ctx.strokeStyle = col; ctx.lineWidth = 22; ctx.globalAlpha = fade;
+        for (let s = 0; s <= 40; s++) {
+          const f = s / 40, yy = org[1] - f * L, xx = org[0] + off * (1 + f * 3.2) + Math.sin(f * 9 + waveT * 10 + k * .4) * 18 * f;
+          s ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy);
+        }
+        ctx.stroke();
+        ctx.lineWidth = 3; ctx.strokeStyle = cols[7]; ctx.globalAlpha = fade * .35; ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      if (waveT > 1.6) waveT = -1;
+    }
+    for (const q of parts) {
+      q.vy += .32 * dt; q.vx *= .99; q.x += q.vx * dt; q.y += q.vy * dt; q.r += q.vr * dt; q.life -= .006 * dt;
+      ctx.save(); ctx.globalAlpha = Math.max(0, Math.min(1, q.life * 1.6)); ctx.translate(q.x, q.y); ctx.rotate(q.r);
+      if (q.bean) {
+        ctx.fillStyle = '#5A3420'; ctx.beginPath(); ctx.ellipse(0, 0, q.s * 1.15, q.s * .8, 0, 0, 6.3); ctx.fill();
+        ctx.strokeStyle = '#E7C79C'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(-q.s * .8, 0); ctx.quadraticCurveTo(0, q.s * .35, q.s * .8, 0); ctx.stroke();
+      } else { ctx.fillStyle = q.c; ctx.fillRect(-q.s / 2, -q.s / 4, q.s, q.s / 2); }
+      ctx.restore();
+    }
+    parts = parts.filter((q) => q.life > 0 && q.y < H + 40);
+    if (parts.length || waveT >= 0) raf = requestAnimationFrame(tick);
+    else { raf = 0; last = 0; ctx.clearRect(0, 0, W, H); }
+  }
+
+  // ---------------------------------------------------------------- abrir el sobre
+  function open() {
+    if (busy) return; busy = true;
+    hand = elegirSobre(D.tostadores, D.cafes); // sorteo nuevo en cada sobre
+    const L = layout(), ch = L.cw * 1.42;
+    const sr = stage.getBoundingClientRect(), pr = pack.getBoundingClientRect();
+    const cx = pr.left - sr.left + pr.width / 2, ty = pr.top - sr.top + 40;
+    cardsEl.innerHTML = hand.map((f) => cardHTML(f, L.cw)).join('');
+    const cards = [...cardsEl.children] as HTMLElement[];
+
+    if (reduce) { pack.classList.add('is-gone'); cards.forEach((el, i) => place(el, L.pos[i])); return done(cards); }
+
+    pack.classList.add('is-open', 'shake');
+    setTimeout(() => {
+      top.animate([{ transform: 'none', opacity: 1 }, { transform: 'translate(-60px,-160px) rotate(-38deg)', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+      burst(cx, ty);
+      pack.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(70px) scale(.9)', opacity: 0 }], { duration: 700, delay: 420, easing: 'ease-in', fill: 'forwards' })
+        .finished.then(() => pack.classList.add('is-gone'));
+      cards.forEach((el, i) => {
+        const [x, y, r] = L.pos[i], rr = (Math.random() - .5) * 50;
+        const sx = cx - L.cw / 2, sy = ty + 60 - ch / 2;
+        const mx = cx - L.cw / 2 + (i - 2) * 120 + (Math.random() - .5) * 60, my = ty - ch - 40 - Math.random() * 60;
+        el.animate([
+          { transform: `translate(${sx}px,${sy}px) scale(.45) rotate(${rr}deg)`, opacity: 0 },
+          { transform: `translate(${mx}px,${my}px) scale(.85) rotate(${-rr}deg)`, opacity: 1, offset: .45 },
+          { transform: `translate(${x}px,${y}px) scale(1) rotate(${r}deg)`, opacity: 1 },
+        ], { duration: 1150, delay: 120 + i * 90, easing: EASE, fill: 'both' })
+          .finished.then(() => { place(el, L.pos[i]); el.getAnimations().forEach((a) => a.cancel()); });
+        const inner = el.querySelector<HTMLElement>('.inner')!;
+        inner.style.transform = 'rotateY(180deg)';
+        inner.animate([{ transform: 'rotateY(180deg)' }, { transform: 'rotateY(0deg)' }], { duration: 700, delay: 650 + i * 110, easing: EASE, fill: 'forwards' })
+          .finished.then((a) => { inner.style.transform = ''; a.cancel(); });
+      });
+      setTimeout(() => done(cards), 1900);
+    }, 360);
+  }
+
+  function done(cards: HTMLElement[]) {
+    cards.forEach((el, i) => { tilt(el); el.addEventListener('click', () => showDetail(hand[i])); });
+    pack.classList.remove('shake');
+    again.hidden = false;
+    status.textContent = '';
+    setTimeout(() => (status.textContent = `salieron ${cards.length} cafés`), 50); // reanuncia aunque el texto sea el mismo
+    cards[0]?.focus({ preventScroll: true });
+    busy = false;
+  }
+
+  function reset() {
+    if (busy) return; busy = true;
+    again.hidden = true; status.textContent = '';
+    const cards = [...cardsEl.children] as HTMLElement[];
+    const finish = () => {
+      cardsEl.innerHTML = '';
+      packIdx = (packIdx + 1) % PACKS.length;
+      pack.style.setProperty('--pack', `var(${PACKS[packIdx]})`);
+      pack.getAnimations().concat(top.getAnimations()).forEach((a) => a.cancel());
+      pack.classList.remove('is-open', 'is-gone');
+      if (!reduce) pack.animate([{ transform: 'translateY(-80px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 500, easing: EASE });
+      busy = false; pack.focus({ preventScroll: true });
+    };
+    if (reduce || !cards.length) return finish();
+    cards.forEach((el, i) => el.animate([{ opacity: 1 }, { transform: `${el.style.transform} translateY(120px) rotate(12deg)`, opacity: 0 }], { duration: 380, delay: i * 50, easing: 'ease-in', fill: 'forwards' }));
+    setTimeout(finish, 380 + cards.length * 50);
+  }
+
+  // ---------------------------------------------------------------- detalle (<dialog>: Escape y foco los maneja el navegador)
+  function showDetail(f: Figurita) {
+    const c = f.tipo === 'cafe' ? f.cafe : null;
+    $('[data-d-card]').innerHTML = cardHTML(f, Math.min(240, innerWidth - 100), 'div');
+    tilt($('[data-d-card]').firstElementChild as HTMLElement);
+    $('[data-d-por]').textContent = 'tostado por ' + f.tostador.nombre;
+    $('[data-d-title]').textContent = c ? c.nombre : 'café de la semana';
+    const rows = c
+      ? [['origen', c.origen], ['proceso', c.proceso], ['variedad', c.variedad], ['mood', c.mood], ['notas', c.notas?.join(', ')]]
+      : [['café', f.tipo === 'semana' ? f.texto : '']];
+    $('[data-d-list]').innerHTML = rows.filter((r) => r[1]).map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('');
+    dlg.showModal();
+  }
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+  // ---------------------------------------------------------------- arranque
+  pack.addEventListener('click', open);
+  againBtn.addEventListener('click', reset);
+  sizeFx();
+  let rt: number;
+  addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = window.setTimeout(() => {
+      sizeFx();
+      if (busy) return;
+      const L = layout();
+      ([...cardsEl.children] as HTMLElement[]).forEach((el, i) => { el.style.setProperty('--cw', L.cw + 'px'); place(el, L.pos[i]); });
+    }, 150);
+  });
+</script>
