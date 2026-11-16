@@ -1,0 +1,78 @@
+---
+import type { Item } from '../../lib/types.ts';
+import { formatPrecio } from '../../lib/precio.ts';
+import Rana from '../shared/Rana.astro';
+
+// Una categoría como el reverso de un disco (DESIGN.md · Tarjeta de carta).
+// variante "especial": filtrados, sobre carbón y con la rana moliendo en lugar del disco de letra.
+interface Props {
+  id: string; nombre: string; lado: string; items: Item[];
+  noche?: boolean; especial?: boolean; compacta?: boolean;
+}
+const { id, nombre, lado, items, noche = false, especial = false, compacta = false } = Astro.props;
+const letra = /^lado\s+(\w)/i.exec(lado)?.[1].toUpperCase() ?? '+';
+const detalle = (it: Item) =>
+  [it.descripcion, it.opciones?.length ? `opcional ${it.opciones.slice(0, -1).join(', ')}${it.opciones.length > 1 ? ' o ' : ''}${it.opciones.at(-1)}` : '']
+    .filter(Boolean).join(' · ');
+---
+<section class:list={['tarjeta', { compacta, especial }]} id={id} aria-labelledby={`${id}-t`} data-theme={noche ? 'noche' : undefined}>
+  <header class="cab">
+    {especial
+      ? <Rana pose="moliendo" tinta="crema" width="132px" class="rana-esp" />
+      : <span class="disco" aria-hidden="true">{letra}</span>}
+    <div class="titulos">
+      <span class="etiqueta">{lado}</span>
+      <h2 id={`${id}-t`}>{nombre}</h2>
+    </div>
+  </header>
+  <ol class="pistas">
+    {items.map((it, i) => (
+      <li class="pista">
+        <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="txt">
+          <span class="nombre">{it.nombre}</span>
+          {detalle(it) && <span class="desc">{detalle(it)}</span>}
+        </span>
+        <span class="precio"><span class="sr-only">{it.nombre}, </span>{formatPrecio(it.precio)}</span>
+      </li>
+    ))}
+  </ol>
+</section>
+<style>
+  .tarjeta {
+    min-width: 0; padding: 26px; background: var(--surface-raised); color: var(--ink);
+    border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+    scroll-margin-top: 96px;
+  }
+  .tarjeta.compacta { padding: 18px; }
+  .cab { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .disco {
+    flex: none; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--carbon); color: var(--durazno); font: italic 800 26px/1 var(--font-cond);
+  }
+  .compacta .disco { width: 44px; height: 44px; font-size: 22px; }
+  [data-theme="noche"] .disco { background: var(--terracota); }
+  .titulos { display: flex; flex-direction: column; }
+  .etiqueta { font: 400 11px/16px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+  h2 { font: italic 800 36px/1 var(--font-cond); color: var(--heading); }
+  .compacta h2 { font-size: 28px; }
+  .especial .cab { flex-direction: row; gap: 18px; }
+  .especial .etiqueta { color: var(--eyebrow); }
+  .rana-esp { flex: none; }
+  .pistas { list-style: none; margin: 0; padding: 0; }
+  .pista {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; padding: 10px 0;
+    border-bottom: var(--border-dash) dashed #D9B9A0;
+  }
+  [data-theme="noche"] .pista { border-bottom-color: #3A3E44; }
+  .pista:last-child { border-bottom: 0; }
+  .num { font: 400 13px/22px var(--font-mono); color: var(--terracota); padding-top: 1px; }
+  [data-theme="noche"] .num { color: var(--ambar); }
+  .txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .nombre { font: 800 17px/22px var(--font-body); }
+  .compacta .nombre { font-size: 15px; }
+  .desc { font: 400 13px/18px var(--font-body); color: var(--ink-muted); }
+  .precio { font: 400 16px/22px var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .compacta .precio { font-size: 14px; }
+  @media (max-width: 640px) { .tarjeta { padding: 20px; } .especial .rana-esp { width: 110px; } }
+</style>

@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import Boton from '../components/shared/Boton.astro';
+import Rana from '../components/shared/Rana.astro';
+import TarjetaCarta from '../components/carta/TarjetaCarta.astro';
+import TabsCategorias from '../components/carta/TabsCategorias.astro';
+import { carta, local } from '../lib/data.ts';
+
+// panadería y pastelería viene como una categoría con `grupo` por ítem: se muestran como dos tarjetas.
+const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\W+/g, '-');
+const tarjetas = carta.categorias.flatMap((c) => {
+  const grupos = [...new Set(c.items.map((i) => i.grupo).filter((g): g is string => !!g))];
+  return grupos.length
+    ? grupos.map((g) => ({ ...c, id: slug(g), nombre: g, items: c.items.filter((i) => i.grupo === g) }))
+    : [c];
+});
+const por = (id: string) => tarjetas.find((t) => t.id === id);
+const principales = ['calientes', 'frios'].map(por).filter((t) => t !== undefined);
+const [calientes, frios] = principales;
+const filtrados = por('filtrados');
+const resto = tarjetas.filter((t) => !['calientes', 'frios', 'filtrados'].includes(t.id));
+const fecha = carta.actualizada.split('-').reverse().join('/');
+---
+<Base title="la carta" description="La carta de geacofi: calientes, fríos, filtrados, salado, panadería y pastelería, con precios en pesos.">
+  <section class="hero contenedor-lateral">
+    <div class="hero-txt">
+      <h1 class="t-hero">la carta</h1>
+      <p class="lead">Café de especialidad, cosas dulces y saladas. Si tenés dudas sobre algo, preguntá en la barra o escribinos.</p>
+      <p class="nota">Precios en pesos · actualizada el <time datetime={carta.actualizada}>{fecha}</time> · pueden cambiar</p>
+    </div>
+    <div class="hero-rana"><Rana pose="carta" alt="La rana leyendo la carta" width="100%" /></div>
+  </section>
+
+  <TabsCategorias tabs={tarjetas.map((t) => ({ id: t.id, nombre: t.nombre }))} />
+
+  <section class="banda">
+    <div class="contenedor pila">
+      <div class="fila-1">
+        {calientes && <TarjetaCarta {...calientes} />}
+        <div class="col">
+          {frios && <TarjetaCarta {...frios} noche />}
+          {filtrados && <TarjetaCarta {...filtrados} noche especial />}
+        </div>
+      </div>
+      <div class="fila-2">
+        {resto.map((t) => <TarjetaCarta {...t} compacta />)}
+      </div>
+      <div class="cta">
+        <div class="cta-rana"><Rana pose="senala" alt="La rana señalando" width="100%" /></div>
+        <h2 class="cta-t">¿no sabés qué pedir? preguntanos</h2>
+        <Boton href={local.whatsapp} whatsapp>escribinos</Boton>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .hero { max-width: 1200px; margin: 0 auto; padding-block: 16px 30px; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
+  .hero-txt { flex: 1 1 520px; display: flex; flex-direction: column; gap: 16px; }
+  .lead { font-size: 18px; line-height: 1.5; max-width: 520px; }
+  .nota { font: 400 13px/18px var(--font-mono); color: var(--ink-muted); }
+  .hero-rana { flex: 0 1 320px; }
+  .banda { padding-top: var(--space-7); }
+  .pila { display: flex; flex-direction: column; gap: 32px; }
+  .fila-1 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 28px; align-items: start; }
+  .col { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .fila-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 28px; align-items: start; }
+  .cta {
+    display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between;
+    background: var(--crema); border: var(--border-ink) dashed var(--bordo); border-radius: var(--radius-lg); padding: 22px 28px;
+  }
+  .cta-t { font: 700 38px/1 var(--font-display); color: var(--terracota); flex: 1 1 280px; }
+  .cta-rana { flex: none; width: 170px; }
+  @media (max-width: 640px) {
+    .hero { display: grid; grid-template-columns: 1fr 130px; gap: 10px 8px; align-items: center; padding-block: 8px 20px; }
+    .hero-txt { display: contents; }
+    .hero h1 { grid-column: 1; grid-row: 1; }
+    .hero-rana { grid-column: 2; grid-row: 1; width: 130px; }
+    .lead, .nota { grid-column: 1 / -1; }
+    .cta { padding: 18px; }
+    .cta-t { font-size: 32px; }
+    .cta-rana { width: 110px; }
+  }
+</style>

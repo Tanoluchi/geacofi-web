@@ -1,0 +1,48 @@
+---
+// Anclas reales: funciona sin JS. El script solo marca la pestaña activa al scrollear.
+interface Props { tabs: { id: string; nombre: string }[] }
+const { tabs } = Astro.props;
+---
+<div class="barra">
+  <nav aria-label="Categorías de la carta" class="tabs">
+    {tabs.map((t, i) => <a href={`#${t.id}`} aria-current={i === 0 ? 'true' : undefined}>{t.nombre}</a>)}
+  </nav>
+</div>
+<style>
+  .barra { position: sticky; top: 0; z-index: 5; background: var(--durazno); border-block: var(--border-ink) solid var(--bordo); }
+  .tabs {
+    max-width: 1200px; margin: 0 auto; padding: 12px var(--side); display: flex; gap: 10px;
+    overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  a {
+    flex: none; display: inline-flex; align-items: center; min-height: 44px; padding: 8px 18px;
+    border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-pill);
+    background: var(--crema); color: var(--bordo); text-decoration: none;
+    font: italic 800 22px/1 var(--font-cond); transition: background-color .15s ease-out, color .15s ease-out;
+  }
+  a:hover { background: var(--durazno); color: var(--bordo); }
+  a[aria-current] { background: var(--terracota); color: var(--durazno); }
+  a:focus-visible { outline-offset: 2px; }
+</style>
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.tabs a')];
+  const secciones = links.map((a) => document.getElementById(a.hash.slice(1))).filter((s): s is HTMLElement => !!s);
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)');
+  const activar = (id: string) => {
+    links.forEach((a) => {
+      const on = a.hash === `#${id}`;
+      on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+      if (on) a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: quieto.matches ? 'auto' : 'smooth' });
+    });
+  };
+  // la sección activa es la última cuyo borde superior pasó por debajo de la barra
+  const actualizar = () => {
+    let actual = secciones[0];
+    for (const s of secciones) if (s.getBoundingClientRect().top <= 140) actual = s;
+    if (actual && links.find((a) => a.hash === `#${actual.id}`)?.getAttribute('aria-current') !== 'true') activar(actual.id);
+  };
+  let tick = false;
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; actualizar(); }); } }, { passive: true });
+  actualizar();
+</script>
