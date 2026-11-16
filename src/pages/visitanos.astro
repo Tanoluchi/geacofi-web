@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Rana from '../components/shared/Rana.astro';
+import Ticket from '../components/shared/Ticket.astro';
+import PastillaHorario from '../components/shared/PastillaHorario.astro';
+import Contacto from '../components/visitanos/Contacto.astro';
+---
+<Base title="visitanos" description="Geacofi está en 9 de Julio 996, Corrientes Capital. Horarios, cómo llegar y WhatsApp.">
+  <section class="hero">
+    <div class="txt">
+      <h1 class="t-hero">vení a vernos</h1>
+      <p>Estamos en el centro de Corrientes. Si querés consultar algo antes, escribinos por WhatsApp.</p>
+      <div><PastillaHorario /></div>
+    </div>
+    <Rana pose="senala" alt="La rana señalando hacia el local" class="rana" />
+  </section>
+  <section class="cuerpo">
+    <Ticket rana={false} />
+    <Contacto />
+  </section>
+</Base>
+<style>
+  .hero { max-width: 1100px; margin: 0 auto; padding: 16px var(--side) 30px; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
+  .txt { flex: 1 1 480px; display: flex; flex-direction: column; gap: 16px; }
+  .hero :global(.rana) { flex: 0 1 300px; width: 300px; }
+  .cuerpo { max-width: 1040px; margin: 0 auto; padding: 20px var(--side) 30px; display: flex; flex-direction: column; gap: 40px; }
+  .cuerpo > :global(.envoltorio) { max-width: none; }
+  @media (max-width: 640px) { .hero :global(.rana) { display: none; } }
+</style>

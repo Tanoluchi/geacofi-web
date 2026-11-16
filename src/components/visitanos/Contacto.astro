@@ -1,0 +1,27 @@
+---
+import { local } from '../../lib/data.ts';
+import Icon from '../shared/Icon.astro';
+---
+<ul class="vias">
+  <li><a class="v a" href={local.whatsapp} rel="noopener"><Icon name="whatsapp" size={30} /><b>WhatsApp</b><span>Consultas y reservas de cupos</span></a></li>
+  <li><a class="v b" href={local.instagram} rel="noopener"><b>Instagram</b><span class="m">@geacofi</span><span>Novedades y eventos</span></a></li>
+  <li><a class="v c" href={local.maps} rel="noopener"><b>Cómo llegar</b><span>Abrir en Google Maps</span></a></li>
+</ul>
+<style>
+  .vias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .v {
+    display: flex; flex-direction: column; gap: 6px; min-height: 100%; padding: 22px; text-decoration: none;
+    border: var(--border-ink) solid var(--bordo); border-radius: 22px; box-shadow: 6px 6px 0 var(--bordo);
+    transition: transform .15s ease-out, box-shadow .15s ease-out;
+  }
+  .v:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--bordo); }
+  .v b { font: italic 800 30px/1 var(--font-cond); }
+  .v span { font-size: 14px; line-height: 20px; }
+  .m { font-family: var(--font-mono); }
+  .a { background: var(--terracota); color: var(--durazno); }
+  .a:hover { color: var(--durazno); }
+  .b { background: var(--crema); color: var(--bordo); }
+  .c { background: var(--carbon); color: var(--crema); box-shadow: 6px 6px 0 var(--terracota); }
+  .c:hover { color: var(--crema); box-shadow: 8px 8px 0 var(--terracota); }
+  .c b { color: var(--durazno); }
+</style>

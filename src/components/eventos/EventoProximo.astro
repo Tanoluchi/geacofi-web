@@ -1,0 +1,27 @@
+---
+import type { Evento } from '../../lib/types.ts';
+import { fechaFlyer } from '../../lib/eventos.ts';
+import { local } from '../../lib/data.ts';
+import Boton from '../shared/Boton.astro';
+import Flyer from './Flyer.astro';
+
+interface Props { evento: Evento }
+const { evento } = Astro.props;
+---
+<article class="ev">
+  <div class="fl"><Flyer evento={evento} alto={210} /></div>
+  <div class="cu">
+    <time datetime={evento.fecha}>{fechaFlyer(evento)}</time>
+    <h3>{evento.titulo}</h3>
+    {evento.descripcion && <p>{evento.descripcion}</p>}
+    {evento.reserva === 'whatsapp' && <div><Boton href={local.whatsapp} variant="ghost" whatsapp>reservar cupo</Boton></div>}
+  </div>
+</article>
+<style>
+  .ev { background: var(--carbon); color: var(--crema); border-radius: 22px; padding: 18px; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; }
+  .fl { flex: 0 0 170px; }
+  .cu { flex: 1 1 300px; display: flex; flex-direction: column; gap: 10px; }
+  time { font: italic 800 26px/1 var(--font-cond); color: var(--ambar); }
+  h3 { font: 700 48px/.9 var(--font-display); color: var(--durazno); }
+  p { font-size: 15px; line-height: 22px; color: var(--ink-muted-noche); }
+</style>

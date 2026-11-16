@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Rana from '../components/shared/Rana.astro';
+import Boton from '../components/shared/Boton.astro';
+import EstadoVacio from '../components/shared/EstadoVacio.astro';
+import EventoProximo from '../components/eventos/EventoProximo.astro';
+import EventoPasado from '../components/eventos/EventoPasado.astro';
+import { eventos, local } from '../lib/data.ts';
+import { partirEventos } from '../lib/eventos.ts';
+
+const { proximos, pasados } = partirEventos(eventos);
+---
+<Base title="eventos" description="Vinilos, catas y pop-ups en geacofi, 9 de Julio 996, Corrientes. Los cupos se reservan por WhatsApp.">
+  <section class="hero">
+    <div class="txt">
+      <h1 class="t-hero">qué pasa en geacofi</h1>
+      <p>Los cupos se reservan por WhatsApp y todo se anuncia primero en Instagram.</p>
+    </div>
+    <Rana pose="dj" alt="La rana DJ con auriculares" class="dj" />
+  </section>
+  <section class="lista">
+    <h2>próximos</h2>
+    {proximos.length ? (
+      <ul>{proximos.map((e) => <li><EventoProximo evento={e} /></li>)}</ul>
+    ) : (
+      <EstadoVacio titulo="por ahora no hay eventos anunciados" texto="La rana se tomó una siesta. Seguinos en Instagram y te enterás del próximo antes que nadie." ranaAlt="La rana durmiendo una siesta">
+        <Boton href={local.instagram}>seguir a @geacofi</Boton>
+      </EstadoVacio>
+    )}
+    {pasados.length > 0 && (<>
+      <h2 class="pasaron">ya pasaron</h2>
+      <ul class="pasados">{pasados.map((e, i) => <li><EventoPasado evento={e} inclinacion={i % 2 ? 2 : -2} /></li>)}</ul>
+    </>)}
+  </section>
+</Base>
+<style>
+  .hero { max-width: 1200px; margin: 0 auto; padding: 16px var(--side) 30px; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
+  .txt { flex: 1 1 520px; display: flex; flex-direction: column; gap: 16px; }
+  .hero :global(.dj) { flex: 0 1 340px; width: 340px; }
+  .lista { max-width: 1200px; margin: 0 auto; padding: 30px var(--side) 40px; display: flex; flex-direction: column; gap: 32px; }
+  h2 { font: italic 800 40px/1 var(--font-cond); color: var(--bordo); }
+  .pasaron { margin-top: 20px; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 24px; }
+  .pasados { flex-direction: row; flex-wrap: wrap; gap: 30px; }
+  @media (max-width: 640px) {
+    .hero { padding-top: 16px; }
+    .hero :global(.dj) { display: none; }
+    h2 { font-size: 30px; }
+    /* en el celular los eventos pasados se deslizan de costado, como en M3 */
+    .pasados { flex-wrap: nowrap; overflow-x: auto; gap: 16px; padding: 6px 4px 16px; }
+    .pasados li { flex: none; }
+  }
+</style>

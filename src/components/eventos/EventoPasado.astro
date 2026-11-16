@@ -1,0 +1,27 @@
+---
+import type { Evento } from '../../lib/types.ts';
+import { fechaFlyer } from '../../lib/eventos.ts';
+import Flyer from './Flyer.astro';
+
+interface Props { evento: Evento; inclinacion?: number }
+const { evento, inclinacion = -2 } = Astro.props;
+---
+<article class="ev" style={`--giro:${inclinacion}deg`}>
+  <div class="foto">
+    <Flyer evento={evento} alto={280} />
+    <span class="ya">ya pasó</span>
+  </div>
+  <time datetime={evento.fecha}>{fechaFlyer(evento)}</time>
+  {evento.descripcion && <p>{evento.descripcion}</p>}
+</article>
+<style>
+  .ev {
+    width: 250px; flex: none; background: var(--crema); color: var(--bordo); border-radius: var(--radius-md);
+    padding: 12px 12px 16px; transform: rotate(var(--giro)); display: flex; flex-direction: column; gap: 8px;
+    box-shadow: var(--drop);
+  }
+  .foto { position: relative; }
+  .ya { position: absolute; top: 10px; left: 10px; background: var(--carbon); color: var(--durazno); font: 11px/1 var(--font-mono); padding: 5px 9px; border-radius: var(--radius-pill); }
+  time { font: italic 800 24px/1 var(--font-cond); }
+  p { font-size: 14px; line-height: 20px; color: var(--ink); }
+</style>
