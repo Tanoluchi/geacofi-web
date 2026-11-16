@@ -1,0 +1,196 @@
+---
+import { ranaUrl, logoUrl } from '../../lib/assets.ts';
+
+// Intro: la rana sirve el café, el vapor escribe "geacofi" y el telón se abre sobre el hero.
+// render(t) es función pura del tiempo (como Artina): ?t=1.8 congela el cuadro.
+// Trazos de la máscara: centro de cada letra en px del logo a 2x (viewBox 544×186 → 1088×372).
+const letras = [
+  'M130 135C105 100 50 105 36 160 30 215 80 235 128 215', // g: panza
+  'M133 125L135 270C135 330 110 350 75 345 50 342 42 325 40 305', // g: palo y gancho
+  'M215 215C260 215 310 210 335 175 345 140 300 105 255 125 205 150 185 215 205 255 230 295 290 270 335 250', // e
+  'M490 150C465 108 405 115 390 180 380 235 425 262 470 240 498 225 502 195 492 150', // a: panza
+  'M492 185C505 220 520 260 530 300', // a: pata
+  'M672 142C640 122 590 150 575 205 565 260 620 285 685 268', // c
+  'M770 130C730 125 715 190 722 235 730 275 800 280 810 235 820 190 795 135 765 128', // o
+  'M920 310L918 130C915 70 935 35 960 45 990 55 995 70 992 85', // f: palo
+  'M835 118L985 118', // f: travesaño
+  'M1043 90L1048 300', // i
+];
+---
+<div class="intro" data-intro hidden aria-label="Intro de geacofi" role="presentation">
+  <div class="escena" aria-hidden="true">
+    <svg viewBox="0 0 760 660" width="760" height="660" focusable="false">
+      <defs>
+        <mask id="intro-m" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="260">
+          <g transform="translate(270 10) scale(.441)" fill="none" stroke="#fff" stroke-width="68">
+            {letras.map((d) => <path d={d} pathLength="1" />)}
+          </g>
+        </mask>
+      </defs>
+      <image id="i-logo" href={logoUrl('bordo')} x="270" y="10" width="480" height="164" mask="url(#intro-m)" />
+      <g id="i-rana"><image href={ranaUrl('barra')} x="0" y="190" width="540" height="463" /></g>
+      <g class="trazo">
+        <path id="i-barra" pathLength="1" d="M528 518C575 521 640 515 705 519" />
+        <g id="i-taza">
+          <path d="M-46 -62C-49 -30 -45 -5 -27 -2 -8 1 10 1 26 -2 44 -5 47 -32 44 -62" />
+          <path d="M-51 -62C-20 -67 20 -58 49 -64" />
+          <path d="M45 -52C80 -58 82 -18 40 -20" />
+          <path d="M-64 5C-30 13 30 10 64 3" />
+        </g>
+        <path id="i-chorro" pathLength="1" d="M506 402C528 400 546 403 551 416M551 416C554 440 549 456 552 484" />
+        <g transform="translate(-22 0)"><path class="i-vapor" pathLength="1" d="M600 436C582 408 620 384 602 354 586 326 618 304 604 276 596 256 608 246 606 236" />
+        <path class="i-vapor" pathLength="1" d="M574 440C560 416 588 400 576 376 566 356 586 340 578 322 574 310 580 304 580 298" />
+        <path class="i-vapor" pathLength="1" d="M628 440C612 418 640 398 626 374 616 354 636 338 628 320 622 306 630 300 628 292" /></g>
+      </g>
+    </svg>
+  </div>
+  <button type="button" class="saltar-intro" data-skip>saltar intro</button>
+</div>
+<script is:inline>
+  // Antes del primer pintado: solo se muestra con JS, una vez por sesión y sin reduced-motion.
+  (function () {
+    var q = location.search;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!/[?&]t=/.test(q) && sessionStorage.getItem('gi-intro')) return;
+    document.documentElement.classList.add('intro-on');
+  })();
+</script>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-intro]')!;
+  const on = document.documentElement.classList.contains('intro-on');
+  if (!on) root.remove();
+  else {
+    const $ = (s: string) => root.querySelector<SVGElement>(s)!;
+    const rana = $('#i-rana'), barra = $('#i-barra'), taza = $('#i-taza'), chorro = $('#i-chorro');
+    const logo = $('#i-logo'), vapor = [...root.querySelectorAll<SVGElement>('.i-vapor')];
+    const trazos = [...root.querySelectorAll<SVGElement>('mask path')];
+    const skip = root.querySelector<HTMLElement>('[data-skip]')!;
+    const frozen = new URLSearchParams(location.search).get('t');
+    const DUR = 3.8, SALIDA = 3.15; // la salida (iris) arranca en 3.15 s
+    const seg = (t: number, a: number, b: number) => Math.min(1, Math.max(0, (t - a) / (b - a)));
+    const eo = (x: number) => 1 - (1 - x) ** 3;
+    const back = (x: number) => 1 + 2.7 * (x - 1) ** 3 + 1.7 * (x - 1) ** 2; // easeOutBack
+    // cubic-bezier(.22,.8,.24,1) resuelto por Newton
+    const bz = (x: number) => {
+      let u = x;
+      for (let i = 0; i < 6; i++) {
+        const f = 3 * (1 - u) ** 2 * u * .22 + 3 * (1 - u) * u * u * .24 + u ** 3 - x;
+        const d = 3 * (1 - u) ** 2 * .22 + 6 * (1 - u) * u * (.24 - .22) + 3 * u * u * (1 - .24);
+        u -= f / (d || 1);
+      }
+      u = Math.min(1, Math.max(0, u));
+      return 3 * (1 - u) ** 2 * u * .8 + 3 * (1 - u) * u * u + u ** 3;
+    };
+    // ventana de trazo [tail, head] sobre un path con pathLength=1
+    const ventana = (el: SVGElement, head: number, tail: number) => {
+      const len = Math.max(0, head - tail);
+      el.style.opacity = len < .01 ? '0' : '1';
+      el.setAttribute('stroke-dasharray', `${len} 2`);
+      el.setAttribute('stroke-dashoffset', String(-tail));
+    };
+    // un trazo por letra, en orden de escritura, con tiempo repartido por largo aproximado
+    const pesos = [1.1, 1.2, 1.8, 1.5, .5, 1.1, 1.4, 1.2, .5, .8];
+    const suma = pesos.reduce((a, b) => a + b);
+    const E0 = 1.55, E1 = 2.75; // el vapor escribe el lettering
+    let acc = 0;
+    const tramos = pesos.map((p) => { const a = E0 + (E1 - E0) * acc / suma; acc += p; return [a, E0 + (E1 - E0) * acc / suma]; });
+    trazos.forEach((p) => { p.setAttribute('stroke-dasharray', '1 2'); });
+
+    const render = (t: number) => {
+      const r = eo(seg(t, 0, .7));
+      rana.setAttribute('transform', `translate(0 ${(1 - r) * 110 - (r === 1 ? 2.5 * (1 + Math.sin((t - .7) * 1.96)) : 0)})`);
+      rana.style.opacity = String(Math.min(1, r * 4));
+      // barra que se prolonga y taza que llega con easeOutBack
+      barra.setAttribute('stroke-dasharray', '1 2');
+      barra.setAttribute('stroke-dashoffset', String(1 - eo(seg(t, .45, .85))));
+      const c = back(seg(t, .6, 1.05)), u = Math.max(0, t - 1.3);
+      const rebote = Math.exp(-7 * u) * Math.sin(20 * u) * .07;
+      taza.setAttribute('transform', `translate(580 516) scale(${(.8 + .2 * c) * (1 - rebote)} ${(.8 + .2 * c) * (1 + rebote)})`);
+      taza.style.opacity = String(seg(t, .6, .8));
+      // chorro: la cabeza cae y después la cola lo alcanza
+      ventana(chorro, eo(seg(t, .95, 1.3)), seg(t, 1.3, 1.5));
+      // vapor continuo desde que la taza está llena
+      vapor.forEach((v, i) => {
+        if (t < 1.35) return ventana(v, 0, 0);
+        const ph = ((t - 1.35 - i * .3) / 1.3) % 1;
+        if (ph < 0) return ventana(v, 0, 0);
+        ventana(v, Math.min(1, ph * 1.7), Math.max(0, (ph - .45) * 1.8));
+      });
+      // lettering: máscara que sigue la escritura; al terminar se quita y queda nítido
+      trazos.forEach((p, i) => p.setAttribute('stroke-dashoffset', String(1.001 - eo(seg(t, tramos[i][0], tramos[i][1])))));
+      if (t >= E1) logo.removeAttribute('mask'); else logo.setAttribute('mask', 'url(#intro-m)');
+      // salida: el iris se abre y deja ver el hero
+      const s = bz(seg(t, SALIDA, DUR));
+      const esc = root.firstElementChild as HTMLElement;
+      esc.style.transform = `scale(${1 + .05 * s})`;
+      root.style.setProperty('--r', `${s * 150}vmax`);
+    };
+
+    const abrir = () => document.documentElement.classList.add('intro-run');
+    let prev: Element | null = null, y = 0, fin = false;
+    const hijos = [...document.body.children].filter((e) => e !== root);
+    const terminar = () => {
+      if (fin) return;
+      fin = true;
+      document.documentElement.classList.remove('intro-on', 'intro-run');
+      hijos.forEach((e) => e.removeAttribute('inert'));
+      root.remove();
+      scrollTo(0, y);
+      if (prev instanceof HTMLElement && prev !== document.body) prev.focus({ preventScroll: true });
+      removeEventListener('keydown', tecla);
+    };
+    const tecla = (e: KeyboardEvent) => { if (e.key === 'Escape') saltar(); };
+    let t0 = 0;
+    const saltar = () => { const now = (performance.now() - t0) / 1000; if (now < SALIDA) t0 -= (SALIDA - now) * 1000; };
+
+    if (frozen !== null) {
+      const t = parseFloat(frozen) || 0;
+      abrir();
+      render(t);
+      if (t >= DUR) terminar();
+    } else {
+      sessionStorage.setItem('gi-intro', '1');
+      prev = document.activeElement; y = scrollY;
+      document.body.append(root);
+      root.hidden = false;
+      hijos.forEach((e) => e.setAttribute('inert', ''));
+      skip.addEventListener('click', saltar);
+      addEventListener('keydown', tecla);
+      skip.focus({ preventScroll: true });
+      abrir();
+      t0 = performance.now();
+      const paso = () => {
+        const t = (performance.now() - t0) / 1000;
+        render(Math.min(t, DUR));
+        t >= DUR ? terminar() : requestAnimationFrame(paso);
+      };
+      paso();
+    }
+  }
+</script>
+<style is:global>
+  /* sin JS (o sin la clase) la intro no existe: hidden por defecto y se muestra solo con html.intro-on */
+  .intro[hidden] { display: none; }
+  html.intro-on { overflow: hidden; }
+  html.intro-on .intro[hidden] { display: grid; }
+  .intro {
+    --r: 0vmax;
+    position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+    background: var(--durazno); overflow: hidden;
+    -webkit-mask: radial-gradient(circle at 50% 52%, transparent var(--r), #000 calc(var(--r) + 1px));
+    mask: radial-gradient(circle at 50% 52%, transparent var(--r), #000 calc(var(--r) + 1px));
+  }
+  .intro .escena { width: min(94vw, 920px, calc((100svh - 96px) * 1.15)); }
+  .intro svg { display: block; width: 100%; height: auto; overflow: visible; visibility: hidden; }
+  html.intro-run .intro svg { visibility: visible; }
+  .intro .trazo { fill: none; stroke: var(--carbon); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+  .intro .saltar-intro {
+    position: absolute; right: var(--space-5); bottom: var(--space-5); min-height: 44px; padding: 8px 20px;
+    font: italic 800 24px/1 var(--font-cond); text-transform: lowercase;
+    color: var(--bordo); background: var(--crema); border: var(--border-ink) solid var(--bordo);
+    border-radius: var(--radius-md); box-shadow: var(--sticker-sm); cursor: pointer;
+    transition: transform .15s ease-out, box-shadow .15s ease-out;
+  }
+  .intro .saltar-intro:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--bordo); }
+  .intro .saltar-intro:active { transform: translate(4px, 4px); box-shadow: none; }
+</style>
