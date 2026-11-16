@@ -12,9 +12,9 @@ Builds on odd/tasks/sitio-astro.md. Sources of truth: PRODUCT.md, DESIGN.md, src
 
 ## Tasks
 
-- [ ] T1 · S1 S2 S3 · worker · 17 drink SVGs in src/assets/bebidas/<slug>.svg · commit: —
-- [ ] T2 · S4 · worker · Carta grid for calientes and fríos using the illustrations (missing file → graceful fallback) · commit: —
-- [ ] T3 · S1–S4 · parent · build, browser check desktop/mobile, weight · commit: —
+- [x] T1 · S1 S2 S3 · worker · 17 drink SVGs in src/assets/bebidas/<slug>.svg · commit: see git log "feat: add 17 hand-drawn drink illustrations" (≈76 KB total)
+- [x] T2 · S4 · worker · Carta grid for calientes and fríos using the illustrations (missing file → graceful fallback) · commit: see git log "feat: illustrated drinks grid" (check 0, tests 5/5, build OK, no overflow 1440/390; fallback = rana pose)
+- [x] T3 · S1–S4 · parent · build, browser check desktop/mobile, weight · commit: same as T1 (production build: /carta 257 KB desktop / 209 KB mobile, no overflow, 0 rana fallbacks in calientes/fríos; screenshots reviewed. Open: carbón line on the noche fíos band is low-contrast, drinks still read through the washes)
 
 ## Log
 
