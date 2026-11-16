@@ -1,0 +1,164 @@
+---
+import { destacados } from '../../lib/data.ts';
+import { formatPrecio } from '../../lib/precio.ts';
+import { ranaUrl } from '../../lib/assets.ts';
+
+const n = destacados.length;
+const tintes = ['durazno', 'crema', 'terracota'];
+const flecha = 'M9 4l-8 8 8 8';
+---
+{n > 0 && (
+  <section class="banda destacados" aria-labelledby="h-dest" aria-roledescription="carrusel">
+    <div class="contenedor">
+      <div class="cab">
+        <span class="t-eyebrow">los favoritos de la barra</span>
+        <h2 id="h-dest" class="t-h2">lo que más sale</h2>
+      </div>
+      <div class="car" data-car>
+        <div class="escena" tabindex="0" role="group" aria-label="destacados de la carta, con las flechas ← → cambiás de tarjeta">
+          <ul class="pista">
+            {destacados.map((it, i) => (
+              <li class="slide" data-tinte={tintes[i % 3]} role="group" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${n}`}>
+                <article class="card">
+                  <div class="arte">
+                    <span class="chip">{it.categoria}</span>
+                    <img src={ranaUrl(it.pose ?? 'espresso')} alt="" width="200" height="200" loading="lazy" decoding="async" draggable="false" />
+                  </div>
+                  <div class="txt">
+                    <h3>{it.nombre}</h3>
+                    {it.descripcion && <p>{it.descripcion}</p>}
+                    <span class="t-price">{formatPrecio(it.precio)}</span>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="ctl" hidden>
+          <button type="button" class="flecha" data-prev aria-label="destacado anterior"><svg viewBox="0 0 12 24" aria-hidden="true"><path d={flecha} /></svg></button>
+          <div class="dots" role="group" aria-label="elegir destacado">
+            {destacados.map((it, i) => <button type="button" class="dot" data-dot={i} aria-label={`ir a ${it.nombre}`} aria-current={i === 0 ? 'true' : undefined}></button>)}
+          </div>
+          <button type="button" class="flecha sig" data-next aria-label="destacado siguiente"><svg viewBox="0 0 12 24" aria-hidden="true"><path d={flecha} /></svg></button>
+        </div>
+        <p class="sr-only" aria-live="polite" data-vivo></p>
+      </div>
+    </div>
+  </section>
+)}
+<style>
+  .cab { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-6); }
+  .car { --w: clamp(250px, 34vw, 460px); }
+  .pista { list-style: none; margin: 0; padding: 0 var(--side) 18px 0; display: flex; gap: var(--space-5); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-color: var(--bordo) transparent; }
+  .slide { flex: none; width: min(var(--w), 78vw); scroll-snap-align: center; container-type: inline-size; padding: 0 8px 10px 0; }
+  .card {
+    aspect-ratio: 4 / 5; display: flex; flex-direction: column; gap: var(--space-3); padding: 4cqw;
+    background: var(--surface-raised); color: var(--ink); border: var(--border-ink) solid var(--border);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden;
+  }
+  .arte { position: relative; flex: 1 1 0; min-height: 0; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; padding: 6%; background: color-mix(in srgb, var(--durazno) 70%, transparent); }
+  [data-tinte='crema'] .arte { background: color-mix(in srgb, var(--crema) 100%, var(--bordo) 8%); }
+  [data-tinte='terracota'] .arte { background: color-mix(in srgb, var(--terracota) 18%, var(--crema)); }
+  .arte img { height: 100%; width: auto; max-width: 100%; object-fit: contain; pointer-events: none; }
+  .chip {
+    position: absolute; top: 8px; left: 8px; padding: 3px 9px; border: 2px solid var(--bordo); border-radius: var(--radius-pill);
+    background: var(--crema); color: var(--bordo); font: 500 11px/16px var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .txt { display: grid; gap: 4px; padding: 0 2px 2px; }
+  h3 { margin: 0; font: 700 clamp(26px, 9cqw, 36px)/.9 var(--font-display); color: var(--heading); text-transform: lowercase; }
+  .txt p { margin: 0; font-size: 14px; line-height: 19px; color: var(--ink-muted); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 19px; }
+  .t-price { font-size: clamp(16px, 5.5cqw, 19px); color: var(--ink); }
+
+  .escena:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: var(--radius-md); }
+  .ctl { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-5); }
+  .ctl[hidden] { display: none; }
+  .flecha {
+    flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; padding: 0; cursor: pointer;
+    background: var(--terracota); color: var(--durazno); border: var(--border-ink) solid var(--bordo); box-shadow: var(--sticker-sm);
+    transition: transform .15s ease-out, box-shadow .15s ease-out;
+  }
+  .flecha svg { width: 14px; height: 24px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .flecha.sig svg { transform: scaleX(-1); }
+  .flecha:hover { transform: translate(-2px, -2px); box-shadow: var(--sticker); }
+  .flecha:active { transform: translate(4px, 4px); box-shadow: none; }
+  .flecha:focus-visible, .dot:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+  .dots { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; justify-content: center; }
+  .dot { position: relative; width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .dot::before { content: ''; position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; translate: -50% -50%; border-radius: var(--radius-pill); border: 2px solid var(--bordo); background: var(--crema); transition: width .3s cubic-bezier(.22, .8, .24, 1), background-color .3s; }
+  .dot[aria-current='true']::before { width: 26px; background: var(--terracota); }
+
+  /* con JS: slides absolutos, como el carrusel de Artina */
+  .car.js .escena { overflow: hidden; padding: 8px 0 14px; touch-action: pan-y; user-select: none; }
+  .car.js .pista { display: block; position: relative; overflow: visible; padding: 0; height: calc(var(--w) * 1.25 + 10px); scroll-snap-type: none; }
+  .car.js .slide {
+    position: absolute; top: 0; left: 50%; width: var(--w); padding: 0 8px 10px 0; cursor: pointer;
+    transform: translate(calc(-50% + var(--x, 0) * 88%), calc(var(--y, 0) * 9%)) scale(var(--s, 1));
+    opacity: var(--o, 1); filter: saturate(var(--sat, 1)) brightness(var(--br, 1)); z-index: var(--z, 1);
+    transition: transform .9s cubic-bezier(.22, .8, .24, 1), opacity .9s cubic-bezier(.22, .8, .24, 1), filter .9s cubic-bezier(.22, .8, .24, 1);
+  }
+  .car.js .slide[data-p='0'] { cursor: default; --z: 3; }
+  .car.js .slide[data-p='-1'], .car.js .slide[data-p='1'] { --s: .72; --o: .75; --y: 1; --sat: .8; --br: .97; --z: 2; }
+  .car.js .slide[data-p='-1'] { --x: -1; }
+  .car.js .slide[data-p='1'] { --x: 1; }
+  .car.js .slide[data-p='-2'], .car.js .slide[data-p='2'], .car.js .slide[data-p='-3'], .car.js .slide[data-p='3'] { --s: .5; --o: 0; --y: 1; --z: 1; pointer-events: none; }
+  .car.js .slide[data-p='-2'], .car.js .slide[data-p='-3'] { --x: -2; }
+  .car.js .slide[data-p='2'], .car.js .slide[data-p='3'] { --x: 2; }
+  @media (max-width: 640px) {
+    .car { --w: 70vw; }
+  }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-car]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const dots = [...root.querySelectorAll<HTMLElement>('[data-dot]')];
+    const live = root.querySelector<HTMLElement>('[data-vivo]')!;
+    const stage = root.querySelector<HTMLElement>('.escena')!;
+    const n = slides.length;
+    const mq = matchMedia('(prefers-reduced-motion: reduce)');
+    let cur = 0, timer = 0, seen = false, hold = false;
+    root.classList.add('js');
+    root.querySelector('.ctl')!.removeAttribute('hidden');
+
+    const render = (say = false) => {
+      slides.forEach((s, i) => {
+        let d = (((i - cur) % n) + n) % n;
+        if (d > n / 2) d -= n;
+        s.dataset.p = String(Math.max(-3, Math.min(3, d)));
+      });
+      dots.forEach((b, i) => (i === cur ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+      if (say) live.textContent = `${slides[cur].querySelector('h3')!.textContent}, ${cur + 1} de ${n}`;
+    };
+    const go = (i: number, user = true) => { cur = ((i % n) + n) % n; render(user); if (user) play(); };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    const play = () => {
+      stop();
+      if (seen && !hold && !mq.matches && !document.hidden) timer = window.setInterval(() => go(cur + 1, false), 2600);
+    };
+
+    root.querySelector('[data-prev]')!.addEventListener('click', () => go(cur - 1));
+    root.querySelector('[data-next]')!.addEventListener('click', () => go(cur + 1));
+    dots.forEach((b, i) => b.addEventListener('click', () => go(i)));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
+    });
+
+    let x0 = 0, moved = false;
+    stage.addEventListener('pointerdown', (e) => { x0 = e.clientX; moved = false; });
+    stage.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 40) { moved = true; go(cur + (dx < 0 ? 1 : -1)); }
+    });
+    slides.forEach((s, i) => s.addEventListener('click', () => { if (!moved && i !== cur) go(i); moved = false; }));
+
+    const hov = (v: boolean) => { hold = v || root.matches(':hover') || root.matches(':focus-within'); play(); };
+    root.addEventListener('pointerenter', () => hov(true));
+    root.addEventListener('pointerleave', () => { hold = root.matches(':focus-within'); play(); });
+    root.addEventListener('focusin', () => hov(true));
+    root.addEventListener('focusout', () => { hold = root.matches(':hover'); play(); });
+    new IntersectionObserver(([en]) => { seen = en.isIntersecting; play(); }).observe(root);
+    document.addEventListener('visibilitychange', play);
+    mq.addEventListener('change', play);
+    render();
+  });
+</script>

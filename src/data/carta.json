@@ -9,7 +9,9 @@
         {
           "nombre": "espresso",
           "descripcion": "shot chiquito",
-          "precio": 3700
+          "precio": 3700,
+          "destacado": true,
+          "pose": "espresso"
         },
         {
           "nombre": "cortadito",
@@ -59,12 +61,16 @@
             "caramelo",
             "vainilla",
             "avellana"
-          ]
+          ],
+          "destacado": true,
+          "pose": "latte"
         },
         {
           "nombre": "spicy orange",
           "descripcion": "espresso + leche + choco picante + almíbar de naranja",
-          "precio": 5500
+          "precio": 5500,
+          "destacado": true,
+          "pose": "tomando"
         }
       ]
     },
@@ -81,7 +87,9 @@
             "caramelo",
             "vainilla",
             "avellana"
-          ]
+          ],
+          "destacado": true,
+          "pose": "togo"
         },
         {
           "nombre": "espresso tonic",
@@ -119,7 +127,9 @@
         },
         {
           "nombre": "origami",
-          "precio": 6000
+          "precio": 6000,
+          "destacado": true,
+          "pose": "filtrado"
         },
         {
           "nombre": "v60",
@@ -127,7 +137,9 @@
         },
         {
           "nombre": "chemex",
-          "precio": 6500
+          "precio": 6500,
+          "destacado": true,
+          "pose": "chemex"
         }
       ]
     },
@@ -148,7 +160,9 @@
         {
           "nombre": "tostado de J&Q",
           "descripcion": "pan brioche con jamón y queso",
-          "precio": 9000
+          "precio": 9000,
+          "destacado": true,
+          "pose": "bandeja"
         },
         {
           "nombre": "korean egg",
@@ -185,7 +199,9 @@
         {
           "nombre": "roll de canela",
           "precio": 6500,
-          "grupo": "panadería"
+          "grupo": "panadería",
+          "destacado": true,
+          "pose": "bandeja"
         },
         {
           "nombre": "muffin de arándanos",

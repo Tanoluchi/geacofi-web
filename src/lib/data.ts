@@ -2,7 +2,7 @@ import cartaJson from '../data/carta.json';
 import cafesJson from '../data/cafes.json';
 import eventosJson from '../data/eventos.json';
 import localJson from '../data/local.json';
-import type { Carta, Cafes, Evento, Local } from './types.ts';
+import type { Carta, Cafes, Evento, Item, Local } from './types.ts';
 
 export const carta = cartaJson as Carta;
 export const cafes = cafesJson as Cafes;
@@ -14,3 +14,8 @@ export const turnosTexto = local.horarios
   .flatMap((h) => h.turnos)
   .map((t) => t.split('-').map((x) => `${Number(x.slice(0, 2))}:${x.slice(3)}`).join(' → '))
   .join(' · ');
+
+/** Items de la carta marcados `destacado: true`, en orden de carta, con su categoría. */
+export const destacados: (Item & { categoria: string })[] = carta.categorias.flatMap((c) =>
+  c.items.filter((i) => i.destacado).map((i) => ({ ...i, categoria: c.nombre })),
+);

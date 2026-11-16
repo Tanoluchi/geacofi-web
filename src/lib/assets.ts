@@ -4,7 +4,8 @@ const logos = import.meta.glob<string>('../assets/logos/*.svg', { eager: true, q
 
 export type Pose =
   | 'oficial' | 'barra' | 'filtrado' | 'moliendo' | 'espresso' | 'togo'
-  | 'carta' | 'senala' | 'saluda' | 'asoma' | 'dormido' | 'dj' | 'guino';
+  | 'carta' | 'senala' | 'saluda' | 'asoma' | 'dormido' | 'dj' | 'guino'
+  | 'latte' | 'chemex' | 'tomando' | 'bandeja';
 export type Tinta = 'carbon' | 'crema';
 
 export function ranaUrl(pose: Pose | string, tinta: Tinta = 'carbon'): string {

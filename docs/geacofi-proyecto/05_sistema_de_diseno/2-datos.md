@@ -54,13 +54,22 @@ Reglas del sobre: 5 figuritas, como máximo 2 del mismo tostador, solo cafés co
     {
       "id": "calientes", "nombre": "calientes", "lado": "Lado A",
       "items": [
-        { "nombre": "espresso", "descripcion": "shot chiquito", "precio": 3700 },
+        { "nombre": "espresso", "descripcion": "shot chiquito", "precio": 3700, "destacado": true, "pose": "espresso" },
         { "nombre": "latte", "descripcion": "espresso + leche · grande", "precio": 5500, "opciones": ["caramelo", "vainilla", "avellana"] }
       ]
     }
   ]
 }
 ```
+
+| Campo del ítem | Obligatorio | Nota |
+| --- | --- | --- |
+| nombre | sí | en minúscula, como en la carta |
+| descripcion | no | |
+| precio | sí | pesos, número entero |
+| opciones | no | sabores o variantes |
+| destacado | no | `true` lo suma al carrusel "lo que más sale" de la home. Conviene marcar entre 6 y 8 |
+| pose | no | pose de la rana que ilustra la tarjeta del carrusel: `espresso`, `latte`, `togo`, `filtrado`, `chemex`, `tomando`, `bandeja` o `moliendo`. Sin `pose`, usa `espresso` |
 
 Precios en pesos, como número entero; el sitio los formatea `$ 5.500` en DM Mono. Categorías actuales: calientes (Lado A), fríos (Lado B), filtrados (Edición especial), salado (Lado C), panadería y pastelería (Bonus track).
 
