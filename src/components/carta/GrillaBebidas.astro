@@ -7,9 +7,9 @@ import { slug } from '../../lib/slug.ts';
 import Esqueleto from '../shared/Esqueleto.astro';
 
 // Bebidas ilustradas (calientes y fríos): cada ítem flota sobre el fondo de la banda, sin caja.
-// `etiqueta` quedó sin uso: el lado A/B y el título de la banda ya dicen caliente/frío.
+// `lado`/`etiqueta` ya no se muestran: el título de la banda dice caliente/frío.
 interface Props { id: string; nombre: string; lado: string; items: Item[]; etiqueta?: string; noche?: boolean; respaldo: string }
-const { id, nombre, lado, items, noche = false, respaldo } = Astro.props;
+const { id, nombre, items, noche = false, respaldo } = Astro.props;
 const dibujos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/bebidas/*.png', { eager: true });
 // sin dibujo propio: la pose de la rana del ítem (o la de la categoría), ya existente
 const imagen = (it: Item) => dibujos[`/src/assets/bebidas/${slug(it.nombre)}.png`]?.default;
@@ -19,7 +19,6 @@ const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).joi
 <section class="banda" id={id} aria-labelledby={`${id}-t`} data-theme={noche ? 'noche' : undefined}>
   <div class="contenedor">
     <header class="cab">
-      <span class="t-eyebrow">{lado}</span>
       <h2 id={`${id}-t`}>{nombre}</h2>
     </header>
     <ul class="grilla">

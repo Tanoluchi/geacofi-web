@@ -21,7 +21,6 @@ const detalle = (it: Item) =>
       ? <Rana pose="moliendo" tinta="crema" width="132px" class="rana-esp" />
       : <span class="disco" aria-hidden="true">{letra}</span>}
     <div class="titulos">
-      <span class="etiqueta">{lado}</span>
       <h2 id={`${id}-t`}>{nombre}</h2>
     </div>
   </header>
@@ -53,11 +52,9 @@ const detalle = (it: Item) =>
   .compacta .disco { width: 44px; height: 44px; font-size: 22px; }
   [data-theme="noche"] .disco { background: var(--terracota); }
   .titulos { display: flex; flex-direction: column; }
-  .etiqueta { font: 400 11px/16px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
   h2 { font: italic 800 36px/1 var(--font-cond); color: var(--heading); }
   .compacta h2 { font-size: 28px; }
   .especial .cab { flex-direction: row; gap: 18px; }
-  .especial .etiqueta { color: var(--eyebrow); }
   .rana-esp { flex: none; }
   .pistas { list-style: none; margin: 0; padding: 0; }
   .pista {
