@@ -18,5 +18,5 @@ export interface Evento {
 export interface Horario { dias: string; turnos: string[] }
 export interface Local {
   nombre: string; direccion: string; ciudad: string; horarios: Horario[];
-  whatsapp: string; instagram: string; maps: string; mapsEmbed?: string; lema?: string;
+  whatsapp: string; instagram: string; maps: string; mapsEmbed?: string; lema?: string; nominacion?: string;
 }

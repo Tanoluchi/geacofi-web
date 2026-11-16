@@ -10,9 +10,10 @@ import { partirEventos } from '../lib/eventos.ts';
 
 const { proximos, pasados } = partirEventos(eventos);
 ---
-<Base title="eventos" description="Vinilos, catas y pop-ups en geacofi, 9 de Julio 996, Corrientes. Los cupos se reservan por WhatsApp.">
+<Base title="eventos" description={`Vinilos, catas y pop-ups en geacofi, ${local.direccion}, ${local.ciudad}. Los cupos se reservan por WhatsApp.`}>
   <section class="hero">
     <div class="txt">
+      <span class="t-eyebrow">Vinilos, catas y pop-ups</span>
       <h1 class="t-hero">qué pasa en geacofi</h1>
       <p>Los cupos se reservan por WhatsApp y todo se anuncia primero en Instagram.</p>
     </div>

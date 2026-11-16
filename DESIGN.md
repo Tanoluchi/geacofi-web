@@ -210,7 +210,7 @@ Una paleta cálida de papel, ladrillo y tinta, sacada del Instagram y de la cart
 El tema *Noche* se activa con `data-theme="noche"` en cada sección oscura.
 
 ### Named Rules
-**The Tostador Rule.** Los colores `tostador-*` (lavanda Komún, MOMO en carbón con brillo holográfico, naranja Motofeca, verde Lo de Pepe) existen solo en las figuritas del sobre de cafés. Fuera de ahí no aparecen.
+**The Tostador Rule.** Los colores `tostador-*` (lavanda Komún, MOMO en carbón con brillo holográfico, naranja Motofeca, verde Lo de Pepe) existen solo en las figuritas del sobre de cafés y, como puntito chico de identificación, en las pastillas de tostadores. Nunca son relleno en ningún otro lado.
 
 **The Puntito Verde Rule.** `status-open` es solo el puntito de "abierto" en la pastilla de horario. Nunca es texto ni fondo.
 

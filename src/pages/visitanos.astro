@@ -4,10 +4,12 @@ import Rana from '../components/shared/Rana.astro';
 import Ticket from '../components/shared/Ticket.astro';
 import PastillaHorario from '../components/shared/PastillaHorario.astro';
 import Contacto from '../components/visitanos/Contacto.astro';
+import { local } from '../lib/data.ts';
 ---
-<Base title="visitanos" description="Geacofi está en 9 de Julio 996, Corrientes Capital. Horarios, cómo llegar y WhatsApp.">
+<Base title="visitanos" description={`Geacofi está en ${local.direccion}, ${local.ciudad} Capital. Horarios, cómo llegar y WhatsApp.`}>
   <section class="hero">
     <div class="txt">
+      <span class="t-eyebrow">Visitanos</span>
       <h1 class="t-hero">vení a vernos</h1>
       <p>Estamos en el centro de Corrientes. Si querés consultar algo antes, escribinos por WhatsApp.</p>
       <div><PastillaHorario /></div>

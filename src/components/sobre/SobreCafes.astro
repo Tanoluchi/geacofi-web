@@ -80,7 +80,8 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
 
 <style is:global>
   .sobre { color: var(--ink); }
-  .sobre .stage { position: relative; height: 600px; perspective: 1400px; touch-action: manipulation; }
+  .sobre .stage { position: relative; height: 600px; perspective: 1400px; touch-action: manipulation; transition: height .5s cubic-bezier(.16,1,.3,1); }
+  .sobre [data-cards] { transition: transform .5s cubic-bezier(.16,1,.3,1); }
   .sobre .fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
 
   /* ---- sobre */
@@ -167,7 +168,7 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   }
   @media (prefers-reduced-motion: reduce) {
     .sobre .pack .float, .sobre .pack-body::after, .sobre .detalle[open] { animation: none; }
-    .sobre .card .inner, .sobre .sheen { transition: none; }
+    .sobre .card .inner, .sobre .sheen, .sobre .stage, .sobre [data-cards] { transition: none; }
   }
 </style>
 
@@ -344,7 +345,17 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
     }, 360);
   }
 
+  // con el abanico armado el escenario se achica a lo que ocupan las figuritas (sin hueco antes del botón)
+  function fit(L: { cw: number; pos: number[][] }) {
+    const ys = L.pos.map((p) => p[1]), pad = 28;
+    const top = Math.min(...ys), bottom = Math.max(...ys) + L.cw * 1.42;
+    stage.style.height = Math.ceil(bottom - top + pad * 2) + 'px';
+    cardsEl.style.transform = `translateY(${pad - top}px)`;
+  }
+  const unfit = () => { stage.style.height = ''; cardsEl.style.transform = ''; };
+
   function done(cards: HTMLElement[]) {
+    fit(layout());
     cards.forEach((el, i) => { tilt(el); el.addEventListener('click', () => showDetail(hand[i])); });
     pack.classList.remove('shake');
     again.hidden = false;
@@ -360,6 +371,7 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
     const cards = [...cardsEl.children] as HTMLElement[];
     const finish = () => {
       cardsEl.innerHTML = '';
+      stage.style.transition = 'none'; unfit(); sizeFx(); stage.offsetHeight; stage.style.transition = '';
       packIdx = (packIdx + 1) % PACKS.length;
       pack.style.setProperty('--pack', `var(${PACKS[packIdx]})`);
       pack.getAnimations().concat(top.getAnimations()).forEach((a) => a.cancel());
@@ -395,9 +407,12 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   addEventListener('resize', () => {
     clearTimeout(rt);
     rt = window.setTimeout(() => {
-      sizeFx();
       if (busy) return;
+      const fitted = !!cardsEl.children.length;
+      if (fitted) { stage.style.transition = 'none'; unfit(); }
+      sizeFx();
       const L = layout();
+      if (fitted) { fit(L); stage.offsetHeight; stage.style.transition = ''; }
       ([...cardsEl.children] as HTMLElement[]).forEach((el, i) => { el.style.setProperty('--cw', L.cw + 'px'); place(el, L.pos[i]); });
     }, 150);
   });

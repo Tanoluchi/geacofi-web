@@ -5,7 +5,7 @@ import SobreCafes from '../sobre/SobreCafes.astro';
 <section class="sobre" aria-labelledby="h-sobre">
   <div class="contenedor col">
     <div class="cab">
-      <h2 id="h-sobre" class="t-h2">abrí un sobre, descubrí un café</h2>
+      <div class="tit"><span class="t-eyebrow">Tostadores invitados</span><h2 id="h-sobre" class="t-h2">abrí un sobre, descubrí un café</h2></div>
       <div class="txt">
         <p>En Geacofi no tostamos: elegimos. Trabajamos con distintos tostadores y siempre estamos probando cosas nuevas.</p>
         <ul>
@@ -22,6 +22,7 @@ import SobreCafes from '../sobre/SobreCafes.astro';
   .sobre { padding: 70px var(--side) 90px; background: radial-gradient(ellipse at 50% 70%, #F7D6AC, var(--durazno) 70%); }
   .col { display: flex; flex-direction: column; gap: 30px; }
   .cab { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-end; justify-content: space-between; }
+  .tit { display: flex; flex-direction: column; gap: 10px; }
   .cab h2 { max-width: 11ch; }
   .txt { display: flex; flex-direction: column; gap: var(--space-3); max-width: 440px; }
   ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }

@@ -1,13 +1,17 @@
 ---
 import type { Evento } from '../../lib/types.ts';
+import { Image } from 'astro:assets';
 import { fechaFlyer } from '../../lib/eventos.ts';
+
+const flyers = import.meta.glob<{ default: ImageMetadata }>('../../assets/flyers/*.{jpg,png}', { eager: true });
 
 // Flyer de evento: foto si el dato la trae; si no, tratamiento tipográfico (nunca se inventa una imagen).
 interface Props { evento: Evento; alto?: number }
 const { evento, alto = 280 } = Astro.props;
+const foto = evento.flyer ? flyers[`../../assets/flyers/${evento.flyer}`]?.default : undefined;
 ---
-{evento.flyer ? (
-  <img src={evento.flyer} alt={`Flyer de ${evento.titulo}`} loading="lazy" decoding="async" style={`height:${alto}px`} />
+{foto ? (
+  <Image src={foto} alt={`Flyer de ${evento.titulo}`} width={540} quality={70} loading="lazy" decoding="async" style={`height:${alto}px`} />
 ) : (
   <div class="sinfoto" style={`height:${alto}px`} aria-hidden="true">
     <span class="f">{fechaFlyer(evento)}</span>

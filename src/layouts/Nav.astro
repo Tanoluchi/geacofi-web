@@ -58,9 +58,14 @@ const actual = Astro.url.pathname.replace(/\/$/, '') || '/';
 <script>
   const cab = document.querySelector<HTMLElement>('.cab')!;
   const btn = cab.querySelector<HTMLButtonElement>('.menu')!;
-  btn.addEventListener('click', () => {
-    const abierto = cab.toggleAttribute('data-abierto');
+  const poner = (abierto: boolean) => {
+    cab.toggleAttribute('data-abierto', abierto);
     btn.setAttribute('aria-expanded', String(abierto));
     btn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  };
+  btn.addEventListener('click', () => poner(!cab.hasAttribute('data-abierto')));
+  // Escape cierra el menú y devuelve el foco al botón
+  cab.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cab.hasAttribute('data-abierto')) { poner(false); btn.focus(); }
   });
 </script>

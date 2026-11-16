@@ -7,8 +7,9 @@ import SobreSeccion from '../components/home/SobreSeccion.astro';
 import Filtrados from '../components/home/Filtrados.astro';
 import EventosHome from '../components/home/EventosHome.astro';
 import Visita from '../components/home/Visita.astro';
+import { local } from '../lib/data.ts';
 ---
-<Base title="café, discos y eso…" description="Café de especialidad en 9 de Julio 996, Corrientes. Carta, eventos y cómo llegar.">
+<Base title="café, discos y eso…" description={`Café de especialidad en ${local.direccion}, ${local.ciudad}. Carta, eventos y cómo llegar.`}>
   <Hero />
   <Cinta />
   <CartaAB />

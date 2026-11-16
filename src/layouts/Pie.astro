@@ -16,7 +16,7 @@ import Rana from '../components/shared/Rana.astro';
       <a href={local.instagram} rel="noopener">Instagram @geacofi</a>
       <a href={local.maps} rel="noopener">Cómo llegar</a>
     </div>
-    <span class="nota">Nominado The Best Coffee Shops Argentina 2026</span>
+    {local.nominacion && <span class="nota">{local.nominacion}</span>}
   </div>
 </footer>
 <style>

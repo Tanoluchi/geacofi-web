@@ -6,12 +6,16 @@ const horas = 'de ' + turnosEnMinutos(local.horarios).map(([d, h]) => `${horaCor
 const palabras = ['espresso', 'filtrados', 'chipa', 'roll de canela', 'vinilos', local.direccion.toLowerCase(), horas];
 const fila = [...palabras, ...palabras]; // duplicada: el bucle -50% no se nota
 ---
-<div class="cinta" aria-hidden="true">
-  <div class="fila">
-    {fila.map((p) => <><span>{p}</span><span>✦</span></>)}
+<div class="recorte" aria-hidden="true">
+  <div class="cinta">
+    <div class="fila">
+      {fila.map((p) => <><span>{p}</span><span>✦</span></>)}
+    </div>
   </div>
 </div>
 <style>
+  /* la cinta inclinada se pasa del ancho: se recorta acá, no en el body */
+  .recorte { overflow-x: clip; }
   .cinta {
     background: var(--terracota); color: var(--durazno); border-block: var(--border-ink) solid var(--bordo);
     overflow: hidden; padding: 12px 0; transform: rotate(-1.2deg); margin: 0 -20px;
