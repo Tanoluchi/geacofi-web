@@ -6,8 +6,9 @@ import { Image } from 'astro:assets';
 import { slug } from '../../lib/slug.ts';
 
 // Bebidas ilustradas (calientes y fríos): cada ítem flota sobre el fondo de la banda, sin caja.
-interface Props { id: string; nombre: string; lado: string; items: Item[]; etiqueta: string; noche?: boolean; respaldo: string }
-const { id, nombre, lado, items, etiqueta, noche = false, respaldo } = Astro.props;
+// `etiqueta` quedó sin uso: el lado A/B y el título de la banda ya dicen caliente/frío.
+interface Props { id: string; nombre: string; lado: string; items: Item[]; etiqueta?: string; noche?: boolean; respaldo: string }
+const { id, nombre, lado, items, noche = false, respaldo } = Astro.props;
 const dibujos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/bebidas/*.png', { eager: true });
 // sin dibujo propio: la pose de la rana del ítem (o la de la categoría), ya existente
 const imagen = (it: Item) => dibujos[`/src/assets/bebidas/${slug(it.nombre)}.png`]?.default;
@@ -23,7 +24,6 @@ const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).joi
     <ul class="grilla">
       {items.map((it, i) => (
         <li class="beb">
-          <span class="tag">{etiqueta}</span>
           {imagen(it) ? (
             <Image
               class="dib" src={imagen(it)} alt={it.nombre} widths={[200, 300, 450, 600]} sizes="(min-width: 1100px) 240px, (min-width: 800px) 30vw, 46vw"
@@ -51,19 +51,16 @@ const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).joi
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .beb { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; position: relative; min-width: 0; }
-  .tag {
-    align-self: flex-start; font: 500 13px/18px var(--font-mono); letter-spacing: .1em; text-transform: uppercase;
-    color: var(--eyebrow); border: var(--border-dash) solid var(--border); border-radius: var(--radius-pill); padding: 2px 10px;
-  }
+  /* los PNG son 900×1200 con aire arriba y abajo: caja más baja que recorta el aire (el vaso llega al 90%) */
   .dib {
-    width: 100%; max-width: 240px; height: auto; aspect-ratio: 3 / 4; object-fit: contain; margin-block: var(--space-2);
+    width: 100%; max-width: 240px; height: auto; aspect-ratio: 33 / 35; object-fit: cover; object-position: 50% 61%;
     transition: transform 150ms ease-out;
   }
   /* noche: el contorno carbón no se lee sobre carbón; un disco crema suave detrás de cada dibujo */
   [data-theme='noche'] .dib:not(.respaldo) {
     background: radial-gradient(circle closest-side at 50% 56%, var(--crema) 0 90%, transparent 91%);
   }
-  .dib.respaldo { padding: 12%; opacity: .85; }
+  .dib.respaldo { padding: 12%; object-fit: contain; opacity: .85; }
   .nombre { font: 800 17px/22px var(--font-body); text-transform: lowercase; color: var(--ink); }
   .desc { font: 400 13px/18px var(--font-body); color: var(--ink-muted); }
   .precio { margin-top: auto; padding-top: var(--space-2); font: 400 16px/22px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }

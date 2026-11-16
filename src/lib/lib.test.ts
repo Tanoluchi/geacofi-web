@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { formatPrecio } from './precio.ts';
 import { estadoLocal } from './horario.ts';
-import { partirEventos, fechaFlyer } from './eventos.ts';
+import { partirEventos, fechaFlyer, fechaFlyerConAnio } from './eventos.ts';
 import { elegirSobre, TEXTO_SIN_CAFES } from './sobre.ts';
 import type { Cafe, Tostador } from './types.ts';
 
@@ -52,6 +52,15 @@ test('eventos: próximos / ya pasaron', () => {
   assert.deepEqual(pasados.map((e) => e.id), ['a']);
   assert.equal(fechaFlyer(ev[0]), 'vie 13/2 · 17 a 21');
   assert.equal(fechaFlyer({ id: 'd', titulo: 'd', fecha: '2025-11-23', desde: '16:00' }), 'dom 23/11 · 16 hs');
+});
+
+test('fechaFlyerConAnio: la misma fecha con el año; fechaFlyer no cambia', () => {
+  const conHorario = { id: 'a', titulo: 'a', fecha: '2026-02-13', desde: '17:00', hasta: '21:00' };
+  assert.equal(fechaFlyerConAnio(conHorario), 'vie 13/2/2026 · 17 a 21');
+  assert.equal(fechaFlyerConAnio({ id: 'b', titulo: 'b', fecha: '2025-11-23', desde: '16:00' }), 'dom 23/11/2025 · 16 hs');
+  assert.equal(fechaFlyerConAnio({ id: 'c', titulo: 'c', fecha: '2026-12-01' }), 'mar 1/12/2026');
+  // los otros llamadores del formateador corto siguen viendo lo de siempre
+  assert.equal(fechaFlyer(conHorario), 'vie 13/2 · 17 a 21');
 });
 
 const T: Tostador[] = ['a', 'b', 'c', 'd'].map((id) => ({ id, nombre: id, color: id, tinta: 'carbon' as const }));

@@ -16,9 +16,18 @@ export function partirEventos(eventos: Evento[], now: Date = new Date()) {
 
 /** "vie 13/2 · 17 a 21" o "dom 23/11 · 16 hs" */
 export function fechaFlyer(e: Evento): string {
+  return formatFecha(e, false);
+}
+
+/** Igual, con el año: "vie 13/2/2026 · 17 a 21". Para eventos ya pasados, donde el año importa. */
+export function fechaFlyerConAnio(e: Evento): string {
+  return formatFecha(e, true);
+}
+
+function formatFecha(e: Evento, conAnio: boolean): string {
   const [y, m, d] = e.fecha.split('-').map(Number);
   const dia = DIAS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
-  const base = `${dia} ${d}/${m}`;
+  const base = `${dia} ${d}/${m}${conAnio ? `/${y}` : ''}`;
   if (!e.desde) return base;
   const desde = horaCorta(aMin(e.desde));
   return e.hasta ? `${base} · ${desde} a ${horaCorta(aMin(e.hasta))}` : `${base} · ${desde} hs`;
