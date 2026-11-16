@@ -2,6 +2,7 @@
 import type { Evento } from '../../lib/types.ts';
 import { Image } from 'astro:assets';
 import { fechaFlyer } from '../../lib/eventos.ts';
+import Esqueleto from '../shared/Esqueleto.astro';
 
 const flyers = import.meta.glob<{ default: ImageMetadata }>('../../assets/flyers/*.{jpg,png}', { eager: true });
 
@@ -11,7 +12,9 @@ const { evento, alto = 280 } = Astro.props;
 const foto = evento.flyer ? flyers[`../../assets/flyers/${evento.flyer}`]?.default : undefined;
 ---
 {foto ? (
-  <Image src={foto} alt={`Flyer de ${evento.titulo}`} width={540} quality={70} loading="lazy" decoding="async" style={`height:${alto}px`} />
+  <Esqueleto ratio="auto" radio="sm" estilo={`height:${alto}px`}>
+    <Image src={foto} alt={`Flyer de ${evento.titulo}`} width={540} quality={70} loading="lazy" decoding="async" />
+  </Esqueleto>
 ) : (
   <div class="sinfoto" style={`height:${alto}px`} aria-hidden="true">
     <span class="f">{fechaFlyer(evento)}</span>
@@ -19,7 +22,7 @@ const foto = evento.flyer ? flyers[`../../assets/flyers/${evento.flyer}`]?.defau
   </div>
 )}
 <style>
-  img { width: 100%; object-fit: cover; border-radius: var(--radius-sm); display: block; }
+  img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm); display: block; }
   .sinfoto {
     display: flex; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px;
     background: var(--durazno); color: var(--bordo); border: 2px solid var(--bordo); border-radius: var(--radius-sm);

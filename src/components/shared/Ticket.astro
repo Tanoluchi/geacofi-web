@@ -3,6 +3,7 @@ import { local } from '../../lib/data.ts';
 import { horaLarga } from '../../lib/horario.ts';
 import Boton from './Boton.astro';
 import Rana from './Rana.astro';
+import Esqueleto from './Esqueleto.astro';
 
 // Ticket de visita con el mapa de la ubicación (iframe con carga diferida nativa).
 interface Props { rana?: boolean }
@@ -28,7 +29,11 @@ const dias = local.horarios[0]?.dias;
       </div>
     </div>
     <div class="r">
-      {local.mapsEmbed && <iframe src={local.mapsEmbed} title={`Mapa: ${local.direccion}, ${local.ciudad}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>}
+      {local.mapsEmbed && (
+        <Esqueleto lleno radio="0">
+          <iframe src={local.mapsEmbed} title={`Mapa: ${local.direccion}, ${local.ciudad}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </Esqueleto>
+      )}
     </div>
   </article>
 </div>

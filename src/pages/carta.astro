@@ -59,7 +59,7 @@ const fecha = carta.actualizada.split('-').reverse().join('/');
   .hero-txt { flex: 1 1 520px; display: flex; flex-direction: column; gap: 16px; }
   .lead { font-size: 18px; line-height: 1.5; max-width: 520px; }
   .nota { font: 400 13px/18px var(--font-mono); color: var(--ink-muted); }
-  .hero-rana { flex: 0 1 320px; }
+  .hero-rana { flex: 0 1 320px; aspect-ratio: 540 / 570; } /* reserva el alto: la rana entra sin correr el texto */
   .banda { padding-top: var(--space-7); }
   .pila { display: flex; flex-direction: column; gap: 32px; }
   .fila-1 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 28px; align-items: start; }

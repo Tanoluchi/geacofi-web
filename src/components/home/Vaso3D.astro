@@ -1,5 +1,6 @@
 ---
 import Boton from '../shared/Boton.astro';
+import Esqueleto from '../shared/Esqueleto.astro';
 import { carta, local } from '../../lib/data.ts';
 import fondo from '../../assets/dibujos/vaso-fondo.svg';
 import cuerpo from '../../assets/dibujos/vaso-cuerpo.svg';
@@ -36,6 +37,7 @@ const granos = [[grano1, 1, 'izq'], [grano2, 2, 'der'], [grano3, 3, 'izq'], [gra
 
     <div class="escena" aria-hidden="true">
       <div class="cup">
+        <Esqueleto lleno noche radio="md" espera="img" />
         <img class="l fondo" src={fondo.src} alt="" width="400" height="640" />
         <img class="l cuerpo" src={cuerpo.src} alt="" width="400" height="640" />
         <img class="l manga" src={manga.src} alt="" width="400" height="640" />
@@ -82,6 +84,7 @@ const granos = [[grano1, 1, 'izq'], [grano2, 2, 'der'], [grano3, 3, 'izq'], [gra
     if (!mq.matches && !css) { addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); upd(); }
   };
   apply(); mq.addEventListener('change', apply);
+  s.querySelector('.stage')?.setAttribute('data-listo', ''); // el esqueleto del vaso ya cumplió su función
   // will-change y el vaivén del vapor solo mientras la sección se ve
   new IntersectionObserver(([e]) => s.classList.toggle('vivo', e.isIntersecting)).observe(s);
 })();
@@ -97,6 +100,7 @@ const granos = [[grano1, 1, 'izq'], [grano2, 2, 'der'], [grano3, 3, 'izq'], [gra
   .vaso .marquee span { white-space: nowrap; font: italic 800 clamp(150px, 24vw, 340px)/.8 var(--font-cond); color: transparent; -webkit-text-stroke: 2px var(--border); transform: translateX(-12%); }
   .vaso .escena { --cw: 220px; perspective: 1200px; position: relative; z-index: 1; padding-top: 70px; }
   .vaso .cup { position: relative; width: var(--cw); aspect-ratio: 400 / 640; transform-style: preserve-3d; transform: rotateX(6deg) rotateY(-14deg); margin: 0 auto; }
+  .vaso .stage[data-listo] .esq { opacity: 0; }
   .vaso .cup img { position: absolute; display: block; max-width: none; }
   .vaso .l { inset: 0; width: 100%; height: 100%; }
   .vaso .fondo { transform: translateZ(-50px); }

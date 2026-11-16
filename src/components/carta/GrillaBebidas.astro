@@ -4,6 +4,7 @@ import { formatPrecio } from '../../lib/precio.ts';
 import { ranaUrl } from '../../lib/assets.ts';
 import { Image } from 'astro:assets';
 import { slug } from '../../lib/slug.ts';
+import Esqueleto from '../shared/Esqueleto.astro';
 
 // Bebidas ilustradas (calientes y fríos): cada ítem flota sobre el fondo de la banda, sin caja.
 // `etiqueta` quedó sin uso: el lado A/B y el título de la banda ya dicen caliente/frío.
@@ -24,14 +25,16 @@ const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).joi
     <ul class="grilla">
       {items.map((it, i) => (
         <li class="beb">
-          {imagen(it) ? (
-            <Image
-              class="dib" src={imagen(it)} alt={it.nombre} widths={[200, 300, 450, 600]} sizes="(min-width: 1100px) 240px, (min-width: 800px) 30vw, 46vw"
-              quality={78} loading={i < 4 ? 'eager' : 'lazy'} decoding="async"
-            />
-          ) : (
-            <img class="dib respaldo" src={respaldoUrl(it)} alt={it.nombre} width="300" height="400" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
-          )}
+          <Esqueleto ratio="33 / 35" radio="sm" noche={noche} estilo="width:100%;max-width:240px">
+            {imagen(it) ? (
+              <Image
+                class="dib" src={imagen(it)} alt={it.nombre} widths={[200, 300, 450, 600]} sizes="(min-width: 1100px) 240px, (min-width: 800px) 30vw, 46vw"
+                quality={78} loading={i < 4 ? 'eager' : 'lazy'} decoding="async"
+              />
+            ) : (
+              <img class="dib respaldo" src={respaldoUrl(it)} alt={it.nombre} width="300" height="400" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+            )}
+          </Esqueleto>
           <span class="nombre">{it.nombre}</span>
           {it.descripcion && <span class="desc">{it.descripcion}</span>}
           {it.opciones?.length ? <span class="desc">{opcion(it.opciones)}</span> : null}
@@ -51,9 +54,9 @@ const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).joi
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .beb { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; position: relative; min-width: 0; }
-  /* los PNG son 900×1200 con aire arriba y abajo: caja más baja que recorta el aire (el vaso llega al 90%) */
+  /* los PNG son 900×1200 con aire arriba y abajo: la caja del marco (33/35) recorta el aire (el vaso llega al 90%) */
   .dib {
-    width: 100%; max-width: 240px; height: auto; aspect-ratio: 33 / 35; object-fit: cover; object-position: 50% 61%;
+    position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 61%;
     transition: transform 150ms ease-out;
   }
   /* noche: el contorno carbón no se lee sobre carbón; un disco crema suave detrás de cada dibujo */

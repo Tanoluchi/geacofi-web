@@ -1,0 +1,61 @@
+---
+// Esqueleto de carga: la caja del contenido real, en un tono suave con un brillo que pasa.
+// El marco reserva el tamaño (ratio) para que nada salte; el script de abajo le pone `.lista`
+// cuando el media de adentro termina de cargar y el esqueleto se va con un fade.
+interface Props {
+  ratio?: string; // "3 / 4", "1 / 1", o "auto" si el alto ya lo fija el contenedor
+  radio?: '0' | 'sm' | 'md' | 'lg' | 'xl' | 'pill'; // token de DESIGN.md
+  noche?: boolean; // banda carbón
+  lleno?: boolean; // ocupa el contenedor posicionado (inset 0) en vez de fijar el ratio
+  espera?: string; // selector del media a esperar entre los hermanos, si no está adentro
+  class?: string;
+  estilo?: string;
+}
+const { ratio = '3 / 4', radio = 'sm', noche = false, lleno = false, espera, class: clase, estilo = '' } = Astro.props;
+const vars = `--ratio-esq:${ratio};--radio-esq:${radio === '0' ? '0' : `var(--radius-${radio})`};${estilo}`;
+---
+<span
+  class:list={['esq-marco', clase, { 'esq-lleno': lleno, 'esq-noche': noche }]}
+  data-esq data-esq-espera={espera} style={vars}
+>
+  <slot />
+  <span class="esq" aria-hidden="true"></span>
+</span>
+<noscript><style>.esq { display: none; }</style></noscript>
+<style is:global>
+  .esq-marco { position: relative; display: block; aspect-ratio: var(--ratio-esq, 3 / 4); border-radius: var(--radius-esq, var(--radius-sm)); }
+  .esq-marco.esq-lleno { position: absolute; inset: 0; aspect-ratio: auto; }
+  .esq {
+    position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+    background-color: color-mix(in srgb, var(--durazno) 72%, var(--crema));
+    background-image: linear-gradient(100deg, transparent 28%, color-mix(in srgb, var(--crema) 88%, #fff) 46%, transparent 64%);
+    background-size: 200% 100%; background-repeat: no-repeat; background-position: 100% 0;
+    animation: esq-brillo 1.5s linear infinite;
+    transition: opacity .22s ease-out;
+  }
+  .esq-noche .esq {
+    background-color: color-mix(in srgb, var(--durazno) 13%, var(--carbon));
+    background-image: linear-gradient(100deg, transparent 28%, color-mix(in srgb, var(--durazno) 26%, transparent) 46%, transparent 64%);
+  }
+  .esq-marco.lista .esq { opacity: 0; }
+  /* el brillo viaja de izquierda a derecha */
+  @keyframes esq-brillo { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .esq { animation: none; background-image: none; }
+  }
+</style>
+<script>
+  const marcar = (m: HTMLElement) => m.classList.add('lista');
+  document.querySelectorAll<HTMLElement>('[data-esq]').forEach((m) => {
+    // `espera` mira a los hermanos de la escena (el vaso arma sus capas fuera de este marco)
+    const extra = m.dataset.esqEspera;
+    const medios = [...(extra ? m.parentElement?.querySelectorAll(extra) ?? [] : m.querySelectorAll('img, iframe'))] as HTMLElement[];
+    if (!medios.length) return; // sin media propio: lo apaga el script de su componente
+    let faltan = medios.length;
+    const una = () => { if (--faltan <= 0) marcar(m); };
+    for (const h of medios) {
+      if (h instanceof HTMLImageElement && h.complete && h.naturalWidth > 0) una();
+      else { h.addEventListener('load', una, { once: true }); h.addEventListener('error', una, { once: true }); }
+    }
+  });
+</script>

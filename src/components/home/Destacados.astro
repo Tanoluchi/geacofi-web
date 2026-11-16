@@ -4,6 +4,7 @@ import { formatPrecio } from '../../lib/precio.ts';
 import { ranaUrl } from '../../lib/assets.ts';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import Esqueleto from '../shared/Esqueleto.astro';
 
 const fotos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/pasteleria/*.png', { eager: true });
 const fotoDe = (f?: string) => fotos[`/src/assets/pasteleria/${f}.png`]?.default;
@@ -34,9 +35,16 @@ const flecha = 'M9 4l-8 8 8 8';
                 <article class="card">
                   <div class="arte">
                     <span class="chip">{it.categoria}</span>
-                    {fotoDe(it.foto)
-                      ? <Image src={fotoDe(it.foto)} alt={altDe[it.foto!] ?? it.nombre} width={640} height={640} widths={[320, 480, 640]} sizes="(max-width: 640px) 70vw, 460px" quality={78} format="webp" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" draggable="false" class="foto" />
-                      : <img src={ranaUrl(it.pose ?? 'espresso')} alt="" width="200" height="200" loading="lazy" decoding="async" draggable="false" />}
+                    {fotoDe(it.foto) ? (
+                      <Esqueleto lleno radio="sm">
+                        <Image src={fotoDe(it.foto)} alt={altDe[it.foto!] ?? it.nombre} width={640} height={640} widths={[320, 480, 640]} sizes="(max-width: 640px) 70vw, 460px" quality={78} format="webp" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" draggable="false" class="foto" />
+                      </Esqueleto>
+                    ) : (
+                      <>
+                        <Esqueleto lleno radio="sm" espera="img" />
+                        <img src={ranaUrl(it.pose ?? 'espresso')} alt="" width="200" height="200" loading="lazy" decoding="async" draggable="false" />
+                      </>
+                    )}
                   </div>
                   <div class="txt">
                     <h3>{it.nombre}</h3>
@@ -75,7 +83,7 @@ const flecha = 'M9 4l-8 8 8 8';
   [data-tinte='terracota'] .arte { background: color-mix(in srgb, var(--terracota) 18%, var(--crema)); }
   .arte:has(.foto) { padding: 0; overflow: hidden; border: 3px solid var(--border); }
   .arte .foto { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-  .chip { z-index: 1; }
+  .chip { z-index: 2; }
   .arte img { height: 100%; width: auto; max-width: 100%; object-fit: contain; pointer-events: none; }
   .chip {
     position: absolute; top: 8px; left: 8px; padding: 3px 9px; border: 2px solid var(--bordo); border-radius: var(--radius-pill);
