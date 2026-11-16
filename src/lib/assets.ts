@@ -6,9 +6,9 @@ export type Pose =
   | 'oficial' | 'barra' | 'filtrado' | 'moliendo' | 'espresso' | 'togo'
   | 'carta' | 'senala' | 'saluda' | 'asoma' | 'dormido' | 'dj' | 'guino'
   | 'latte' | 'chemex' | 'tomando' | 'bandeja';
-export type Tinta = 'carbon' | 'crema' | 'verde'; // verde exists only for some poses (barra); ranaUrl throws if missing
+export type Tinta = 'carbon' | 'crema' | 'verde';
 
-export function ranaUrl(pose: Pose | string, tinta: Tinta = 'carbon'): string {
+export function ranaUrl(pose: Pose | string, tinta: Tinta = 'verde'): string {
   const url = ranas[`../assets/rana/${pose}-${tinta}.svg`];
   if (!url) throw new Error(`rana sin SVG: ${pose}-${tinta}`);
   return url;

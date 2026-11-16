@@ -10,12 +10,11 @@ const enBarra = cafes.cafes.filter((c) => c.en_barra);
 const quitar = (p: string) => p.replace(/^rana-/, '');
 const poses = [...new Set([...POSES_CAFE, ...enBarra.flatMap((c) => (c.pose ? [quitar(c.pose)] : []))])];
 const ranas = Object.fromEntries(
-  poses.map((p) => [p, { carbon: ranaUrl(p, 'carbon'), crema: ranaUrl(p, 'crema') }]),
+  poses.map((p) => [p, { carbon: ranaUrl(p, 'verde'), crema: ranaUrl(p, 'crema') }]), // keyed by card ink: carbón-ink cards get the green rana
 );
 // número de figurita = posición del café en la lista de la barra
 const numeros = Object.fromEntries(enBarra.map((c, i) => [c.id, i + 1]));
 const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, texto: TEXTO_SIN_CAFES };
-const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) => c.tostador === t.id) }));
 ---
 <section class="sobre" data-sobre aria-label="sobre de cafés">
   <div class="stage" data-stage>
@@ -40,26 +39,7 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   </div>
 
   <div class="todos">
-    <h3>todos los cafés que hay en la barra</h3>
-    <ul class="tostadores">
-      {porTostador.map(({ t, lista }) => (
-        <li><article class="tostador">
-          <h4><span class="muestra" style={`--sw:var(--${t.color})`}></span>{t.nombre}</h4>
-          {lista.length ? (
-            <ul>
-              {lista.map((c) => (
-                <li>
-                  <b>{c.nombre}</b>
-                  <small>{[c.origen, c.proceso ?? c.mood].filter(Boolean).join(' · ')}</small>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>{TEXTO_SIN_CAFES}</p>
-          )}
-        </article></li>
-      ))}
-      <li class="invita">
+    <div class="invita">
         <svg class="deco" viewBox="0 0 220 60" aria-hidden="true">
           <g fill="#6B3E26" stroke="#4A2A1A" stroke-width="2.5" stroke-linejoin="round">
             <ellipse cx="26" cy="36" rx="17" ry="12" transform="rotate(-24 26 36)" /><ellipse cx="150" cy="24" rx="14" ry="10" transform="rotate(30 150 24)" /><ellipse cx="196" cy="42" rx="16" ry="11" transform="rotate(-10 196 42)" />
@@ -75,8 +55,7 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
         <p>los cafés van rotando: cada tanto llegan nuevos de nuestros tostadores invitados. pasá a descubrir aromas nuevos y algo rico para acompañar.</p>
         <small>{cafes.tostadores.map((t) => t.nombre).join(" · ")}</small>
         <Boton href="/visitanos">cómo llegar</Boton>
-      </li>
-    </ul>
+    </div>
   </div>
 
   <dialog class="detalle" data-dialog aria-labelledby="sobre-d-titulo">
@@ -146,25 +125,14 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   .sobre .controls [hidden] { display: none; }
   .sobre .status { margin: 0; font: 500 13px/1.4 var(--font-mono); color: var(--ink-muted); }
 
-  /* ---- lista completa (lectores de pantalla y quien no quiere jugar) */
-  .sobre .todos { margin-top: 40px; }
-  .sobre .todos h3 { margin: 0 0 14px; font: italic 800 30px/1.1 var(--font-cond); color: var(--heading); }
-  .sobre .tostadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
-  .sobre .tostadores > li { display: flex; }
-  .sobre .tostador { flex: 1; }
-  .sobre .invita { position: relative; flex-direction: column; gap: 8px; padding: 16px 18px; background: var(--durazno); color: var(--ink-dia); border: 3px dashed var(--bordo); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); outline: 3px solid rgba(245,197,66,.6); outline-offset: 5px; }
+  /* ---- invitación bajo el sobre */
+  .sobre .todos { max-width: 520px; margin: 40px auto 0; }
+  .sobre .invita { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; background: var(--durazno); color: var(--ink-dia); border: 3px dashed var(--bordo); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); outline: 3px solid rgba(245,197,66,.6); outline-offset: 5px; }
   .sobre .invita .deco { width: 100%; max-width: 200px; height: auto; align-self: flex-start; }
   .sobre .invita h4 { margin: 0; font: 700 34px/.95 var(--font-display); color: var(--terracota); text-wrap: balance; }
   .sobre .invita p { margin: 0; font-size: 15px; }
   .sobre .invita small { font: 500 12px/1.4 var(--font-mono); letter-spacing: .06em; color: var(--ink-muted-dia); }
   .sobre .invita .boton { align-self: flex-start; margin-top: auto; }
-  .sobre .tostador { padding: 16px 18px; background: var(--surface-raised); border: var(--border-ink) solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
-  .sobre .tostador h4 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font: italic 800 24px/1.1 var(--font-cond); color: var(--heading); }
-  .sobre .muestra { flex: none; width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 50%; background: var(--sw); }
-  .sobre .tostador ul { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 15px; }
-  .sobre .tostador li b { font-weight: 800; }
-  .sobre .tostador li small { display: block; font: 400 12px/1.4 var(--font-mono); color: var(--ink-muted); }
-  .sobre .tostador p { margin: 0; font-size: 15px; color: var(--ink-muted); }
 
   /* ---- detalle */
   .sobre .detalle { width: min(760px, calc(100vw - 32px)); padding: 26px; background: var(--crema); color: var(--ink-dia); border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-xl); box-shadow: 10px 10px 0 var(--bordo); overflow: visible; }
@@ -282,14 +250,16 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   const fx = $<HTMLCanvasElement>('[data-fx]'), ctx = fx.getContext('2d')!;
   const RAIN = ['#E5484D', '#F0842C', '#F5C542', '#5DB86B', '#4F8FD9', '#8B6FD1'];
   const BEANS: [string, string, string][] = [['#8A5236', '#B98159', '#4A2A1A'], ['#6B3E26', '#9A6342', '#3A1E10'], ['#4A2A1A', '#7C4D31', '#241106']];
-  type P = { x: number; y: number; vx: number; vy: number; r: number; vr: number; f: number; vf: number; ph: number; spr: HTMLCanvasElement | null; c: string; s: number; life: number; floor: number; hit: boolean };
+  type P = { x: number; y: number; vx: number; vy: number; r: number; vr: number; f: number; vf: number; ph: number; spr: HTMLCanvasElement | null; c: string; s: number; dead: number; t0: number; keep: boolean; st: 0 | 1 | 2; ts: number; tk: number; sx: number; sy: number; sr: number; sf: number; ss: number; tx: number; ty: number; tr: number; tf: number };
   type Spark = { x: number; y: number; t0: number; d: number; s: number; r: number };
-  let parts: P[] = [], fxOn = false, fxStart = 0, org = [0, 0], raf = 0, last = 0, seen = true, cols: string[] = [], sparks: Spark[] = [];
+  let parts: P[] = [], fxOn = false, fxStart = 0, org = [0, 0], raf = 0, last = 0, fh = 0, seen = true, cols: string[] = [], sparks: Spark[] = [];
   let sprites: { beans: HTMLCanvasElement[]; glow: HTMLCanvasElement; ray: HTMLCanvasElement; star: HTMLCanvasElement } | null = null;
-  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf && (parts.length || fxOn)) { last = 0; raf = requestAnimationFrame(tick); } }).observe(stage);
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf && (parts.some((q) => q.st < 2) || fxOn)) { last = 0; raf = requestAnimationFrame(tick); } }).observe(stage);
   function sizeFx() {
     const d = devicePixelRatio || 1;
-    fx.width = stage.clientWidth * d; fx.height = (stage.clientHeight + PAD) * d;
+    fh = stage.clientHeight; // el bitmap y su tamaño CSS quedan fijos aunque el escenario se achique al armar el abanico (si no, se estira)
+    fx.style.height = fh + PAD + 'px';
+    fx.width = stage.clientWidth * d; fx.height = (fh + PAD) * d;
     ctx.setTransform(d, 0, 0, d, 0, PAD * d);
   }
   const mk = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void) => {
@@ -297,8 +267,8 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
   };
   // se dibujan una sola vez; después solo se copian con drawImage
   function makeSprites() {
-    const beans = BEANS.flatMap(([base, hi, dk]) => [19, 23].map((ry) => mk(72, 54, (g) => {
-      g.translate(36, 27);
+    const beans = BEANS.flatMap(([base, hi, dk]) => [19, 23].map((ry) => mk(144, 108, (g) => {
+      g.scale(2, 2); g.translate(36, 27);
       const gr = g.createRadialGradient(-10, -9, 2, 0, 0, 36);
       gr.addColorStop(0, hi); gr.addColorStop(.45, base); gr.addColorStop(1, dk);
       g.fillStyle = gr; g.beginPath(); g.ellipse(0, 0, 31, ry, 0, 0, TAU); g.fill();
@@ -328,22 +298,46 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
     });
     return { beans, glow, ray, star };
   }
+  // Granos que quedan en el piso: pocos, fuera de las figuritas (rects del abanico ya armado + margen), en los costados y en la franja de abajo.
+  const REST = 7, REST_S = .55;
+  let free: { x: number; y: number }[] = [];
+  function restSpots() {
+    const L = layout(), W = stage.clientWidth, ch = L.cw * 1.42, ys = L.pos.map((p) => p[1]), off = 28 - Math.min(...ys), cb = Math.max(...ys) + off + ch;
+    const box = L.pos.map(([x, y]) => [x - 8, y + off - 8, x + L.cw + 8, y + off + ch + 8]);
+    const out: { x: number; y: number }[] = [];
+    for (let n = 0; n < 600 && out.length < REST; n++) {
+      const x = Math.round(24 + Math.random() * (W - 48)), y = Math.round(cb + 22 - Math.random() ** 2 * 110);
+      if (box.some(([a, b, c, d]) => x + 24 > a && x - 24 < c && y + 14 > b && y - 14 < d)) continue;
+      if (out.some((o) => Math.hypot(o.x - x, (o.y - y) * 1.6) < 44)) continue;
+      out.push({ x, y });
+    }
+    return out;
+  }
+  function settle(q: P, t: number, e: number) {
+    let k = -1, m = 1e9;
+    free.forEach((s, i) => { const d = Math.abs(s.x - q.x); if (d < m) { m = d; k = i; } });
+    if (k < 0) { q.keep = false; q.dead = e + .4; return; }
+    const [s] = free.splice(k, 1), wrap = (a: number) => a - TAU * Math.round(a / TAU);
+    q.st = 1; q.tk = t; q.sx = q.x; q.sy = q.y; q.sr = q.r; q.sf = q.f; q.ss = q.s;
+    q.tx = s.x; q.ty = s.y; q.tr = q.r + wrap((Math.random() - .5) * 1.6 - q.r); q.tf = Math.round(q.f / Math.PI) * Math.PI;
+  }
   function burst(x: number, y: number) {
     sprites ||= makeSprites();
     cols = FX.map(css).concat(RAIN); org = [x, y]; fxOn = true; fxStart = performance.now();
-    const H = stage.clientHeight;
+    free = restSpots(); let kept = 0;
     sparks = Array.from({ length: 12 }, () => ({ x: x + (Math.random() - .5) * 340, y: y - 20 - Math.random() * 280, t0: Math.random() * .8, d: .5 + Math.random() * .6, s: 10 + Math.random() * 16, r: Math.random() * 1.5 }));
     for (let i = 0; i < 112; i++) {
       const a = -Math.PI / 2 + (Math.random() - .5) * 2.1, bean = i % 2 === 0, v = (bean ? 7 : 5) + Math.random() * (bean ? 9 : 10);
       parts.push({ x: x + (Math.random() - .5) * 60, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: Math.random() * TAU, vr: (Math.random() - .5) * (bean ? .16 : .3), f: Math.random() * TAU, vf: .08 + Math.random() * .14, ph: Math.random() * TAU,
-        spr: bean ? sprites.beans[(Math.random() * 6) | 0] : null, c: cols[(Math.random() * cols.length) | 0], s: bean ? .3 + Math.random() * .2 : 5 + Math.random() * 6, life: 1, floor: H - 12 - Math.random() * 50, hit: false });
+        spr: bean ? sprites.beans[(Math.random() * 6) | 0] : null, c: cols[(Math.random() * cols.length) | 0], s: bean ? .3 + Math.random() * .2 : 5 + Math.random() * 6,
+        dead: .9 + Math.random() * 1.1, t0: fxStart, keep: bean && kept++ < REST, st: 0, ts: .9 + Math.random() * .4, tk: 0, sx: 0, sy: 0, sr: 0, sf: 0, ss: 0, tx: 0, ty: 0, tr: 0, tf: 0 });
     }
     if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
   }
   function tick(t: number) {
     if (!seen) { raf = 0; return; }
     const dt = last ? Math.min(40, t - last) / 16.7 : 1; last = t;
-    const W = stage.clientWidth, H = stage.clientHeight, S = sprites!;
+    const W = stage.clientWidth, H = fh, S = sprites!;
     ctx.clearRect(0, -PAD, W, H + PAD);
     ctx.lineCap = ctx.lineJoin = 'round';
     if (fxOn) {
@@ -380,20 +374,30 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
       if (e > 2.2) fxOn = false;
     }
     for (const q of parts) {
-      const bean = !!q.spr;
-      q.vy += .28 * dt; q.vx *= Math.pow(bean ? .988 : .975, dt); q.vy *= Math.pow(bean ? .992 : .96, dt);
-      q.x += (q.vx + (bean ? 0 : Math.sin(t * .006 + q.ph) * 1.1)) * dt; q.y += q.vy * dt; q.r += q.vr * dt; q.f += q.vf * dt;
-      if (!q.hit && q.vy > 0 && q.y > q.floor) { q.hit = true; q.y = q.floor; q.vy *= bean ? -.28 : -.1; q.vx *= .4; q.vr *= .3; q.vf = 0; }
-      q.life -= (q.hit ? .018 : .0025) * dt;
-      ctx.save(); ctx.globalAlpha = Math.max(0, Math.min(1, q.life * 2)); ctx.translate(q.x, q.y); ctx.rotate(q.r);
+      const bean = !!q.spr, e = (t - q.t0) / 1000;
+      let sh = 0;
+      if (q.st === 1) { // se acomoda: llega plano, entero y con giro natural (nunca de canto)
+        const k = Math.min(1, (t - q.tk) / 700), z = 1 - Math.pow(1 - k, 3);
+        q.x = q.sx + (q.tx - q.sx) * z; q.y = q.sy + (q.ty - q.sy) * z; q.r = q.sr + (q.tr - q.sr) * z; q.f = q.sf + (q.tf - q.sf) * z; q.s = q.ss + (REST_S - q.ss) * z;
+        sh = z; if (k === 1) q.st = 2;
+      } else if (q.st === 2) sh = 1;
+      else {
+        q.vy += .28 * dt; q.vx *= Math.pow(bean ? .988 : .975, dt); q.vy *= Math.pow(bean ? .992 : .96, dt);
+        q.x += (q.vx + (bean ? 0 : Math.sin(t * .006 + q.ph) * 1.1)) * dt; q.y += q.vy * dt; q.r += q.vr * dt; q.f += q.vf * dt;
+        if (q.keep && ((e > q.ts && q.vy > 0) || e > 1.4)) settle(q, t, e);
+      }
+      const al = q.keep ? 1 : Math.max(0, Math.min(1, (q.dead - e) / .45));
+      ctx.save(); ctx.globalAlpha = al; ctx.translate(q.st === 2 ? q.tx : q.x, q.st === 2 ? q.ty : q.y); ctx.rotate(q.r);
       const fl = .2 + .8 * Math.abs(Math.cos(q.f)); // vuelta 3D falsa: el eje corto se achata
-      if (q.spr) { ctx.scale(q.s, q.s * fl); ctx.drawImage(q.spr, -36, -27); }
-      else { ctx.fillStyle = q.c; ctx.fillRect(-q.s / 2, -q.s * fl / 4, q.s, q.s * fl / 2); }
+      if (q.spr) {
+        if (sh) { ctx.save(); ctx.translate(2.5, 4); ctx.fillStyle = `rgba(25,10,4,${.28 * sh})`; ctx.beginPath(); ctx.ellipse(0, 0, 29 * q.s, 20 * q.s * fl, 0, 0, TAU); ctx.fill(); ctx.restore(); }
+        ctx.scale(q.s, q.s * fl); ctx.drawImage(q.spr, -36, -27, 72, 54);
+      } else { ctx.fillStyle = q.c; ctx.fillRect(-q.s / 2, -q.s * fl / 4, q.s, q.s * fl / 2); }
       ctx.restore();
     }
-    parts = parts.filter((q) => q.life > 0);
-    if (parts.length || fxOn) raf = requestAnimationFrame(tick);
-    else { raf = 0; last = 0; ctx.clearRect(0, -PAD, W, H + PAD); }
+    parts = parts.filter((q) => q.keep || (t - q.t0) / 1000 < q.dead);
+    if (fxOn || parts.some((q) => q.st < 2)) raf = requestAnimationFrame(tick);
+    else { raf = 0; last = 0; } // los granos ya en reposo quedan pintados, sin seguir animando
   }
 
   // ---------------------------------------------------------------- rasgado: la tira se despega de a poco, con tirones
@@ -488,7 +492,7 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
     const cards = [...cardsEl.children] as HTMLElement[];
     const finish = () => {
       cardsEl.innerHTML = '';
-      stage.style.transition = 'none'; unfit(); sizeFx(); stage.offsetHeight; stage.style.transition = '';
+      parts = []; stage.style.transition = 'none'; unfit(); sizeFx(); stage.offsetHeight; stage.style.transition = '';
       packIdx = (packIdx + 1) % PACKS.length;
       pack.style.setProperty('--pack', `var(${PACKS[packIdx]})`);
       pack.getAnimations().concat(top.getAnimations()).forEach((a) => a.cancel());
@@ -531,6 +535,9 @@ const porTostador = cafes.tostadores.map((t) => ({ t, lista: enBarra.filter((c) 
       sizeFx();
       const L = layout();
       if (fitted) { fit(L); stage.offsetHeight; stage.style.transition = ''; }
+      parts = parts.filter((q) => q.st === 2); free = restSpots(); // granos en reposo: se reubican en el piso nuevo
+      parts.forEach((q, i) => { const s = free[i]; if (s) { q.tx = s.x; q.ty = s.y; } else q.keep = false, q.dead = 0; });
+      if (parts.length && !raf) { sprites ||= makeSprites(); last = 0; raf = requestAnimationFrame(tick); }
       ([...cardsEl.children] as HTMLElement[]).forEach((el, i) => { el.style.setProperty('--cw', L.cw + 'px'); place(el, L.pos[i]); });
     }, 150);
   });

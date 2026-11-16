@@ -11,7 +11,7 @@ const { id, nombre, lado, items, etiqueta, noche = false, respaldo } = Astro.pro
 const dibujos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/bebidas/*.png', { eager: true });
 // sin dibujo propio: la pose de la rana del ítem (o la de la categoría), ya existente
 const imagen = (it: Item) => dibujos[`/src/assets/bebidas/${slug(it.nombre)}.png`]?.default;
-const respaldoUrl = (it: Item) => ranaUrl(it.pose ?? respaldo, noche ? 'crema' : 'carbon');
+const respaldoUrl = (it: Item) => ranaUrl(it.pose ?? respaldo, noche ? 'crema' : 'verde');
 const opcion = (o: string[]) => `opcional ${o.length > 1 ? `${o.slice(0, -1).join(', ')} o ` : ''}${o.at(-1)}`;
 ---
 <section class="banda" id={id} aria-labelledby={`${id}-t`} data-theme={noche ? 'noche' : undefined}>
