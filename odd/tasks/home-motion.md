@@ -1,0 +1,25 @@
+# Home motion: intro, carrusel de destacados y vaso 3D dibujado
+
+Add an intro, a featured-products carousel and a scroll-driven "3D in the drawn world" section to the Geacofi Home, inspired by artinacafe.com and the user's coffee.webm.
+Builds on odd/tasks/sitio-astro.md (site complete on feat/sitio-astro). Sources of truth: PRODUCT.md, DESIGN.md (rana rules are binding).
+
+## Specs
+
+- **S1** User request: "https://www.artinacafe.com/ Inspirate en esta pagina web, genera una intro." User choice: "La rana sirve el café" — the rana behind the bar serves a coffee, the steam draws "geacofi", and the hero opens. Modeled on Artina's intro (L2): ≈3–4 s, a "saltar intro" button, no intro under prefers-reduced-motion, page usable without JS.
+- **S2** User request: "Tambien me gustaria un carrousel con sus productos." User choice: "Los destacados de la carta" — a short selection (6 to 8 items) that the café marks in the data, shown with name and price. Modeled on Artina's carousel (L2): active card large, neighbours smaller and desaturated, autoplay only while visible, arrows, dots, click a side card, swipe.
+- **S3** User request: "Ademas dtoma de inspiracion los motion 3D de este video /Users/lucianovalenzuela/Downloads/coffee.webm, y como muestra los cafes". User choice: "3D en el mundo dibujado" — the same motion as the video (pin, rotation, zoom, beans in parallax) but with cups and beans drawn in the rana's stroke; no photoreal renders. Video beats in L3.
+- **S4** Inherited: prices and items only from src/data (no invented facts); the rana is never redrawn (DESIGN.md); everything stops under prefers-reduced-motion; page weight stays under 1 MB.
+
+## Tasks
+
+- [ ] T1 · S1 S4 · worker · Intro overlay (src/components/home/Intro.astro + assets) · commit: —
+- [ ] T2 · S2 S4 · worker · Carrusel de destacados (data flag + component) · commit: —
+- [ ] T3 · S3 S4 · worker · Vaso 3D dibujado scroll section (drawn assets + component) · commit: —
+- [ ] T4 · S1–S4 · parent · wire into src/pages/index.astro, build, browser check desktop/mobile + reduced motion, weight · commit: —
+
+## Log
+
+- **L1** (user, 2026-11-16): "https://www.artinacafe.com/ Inspirate en esta pagina web, genera una intro. Tambien me gustaria un carrousel con sus productos. Ademas dtoma de inspiracion los motion 3D de este video /Users/lucianovalenzuela/Downloads/coffee.webm, y como muestra los cafes"
+- **L2** (evidence, artinacafe.com source, vanilla JS, no libraries): Intro: a brush writes "Artina" stroke by stroke through SVG masks (≈0.85 s of strokes, brush lifts in arcs between strokes), the cup scales in 0.85→1 with easeOutBack, the brush flies on a Bézier and falls into the cup with a damped bounce, splash + ripple + three drops, then logo lockup and hero copy fade in (1 s); total ≈3.9 s; "Saltar intro" jumps to the end; reduced motion skips it; render(t) is a pure function of time (`?t=` freezes it). Scroll reveals: translateY(44px) → 0, opacity .7 s / transform .9 s, cubic-bezier(.22,.8,.24,1), 0.12 s stagger. Carousel: 5 slides absolutely positioned; active scale 1; ±1 scale .72, opacity .75, saturate(.8) brightness(.97), lowered 9%; ±2 scale .5 opacity 0; step = 88% of card width; card width clamp(250px, 34vw, 460px), 70vw on phones; 0.9 s transitions with the same easing; autoplay 2.6 s only while on screen (IntersectionObserver); 48 px round prev/next; pill dots; click a side card; swipe > 40 px; any interaction restarts the timer.
+- **L3** (evidence, coffee.webm frames, 14.8 s, 960×572, contact sheet /tmp/geacofi-ref/coffee-sheet.jpg): dark coffee landing scrolled top to bottom: hero with two cups and a coffee splash; a giant outlined marquee text ("…TED COFFEE SELECTION") sliding across; three product cards (cup image, name, rating, short description, price, round + button); a section where one cup is pinned in the center, grows and turns slightly as you scroll while four numbered feature blocks appear left and right of it; then coffee beans flying in from the side in parallax and a wooden spoon of beans next to a "find out which coffee suits you best" card.
+- **L4** (decision): the carousel uses the existing rana coffee poses (latte, espresso, togo, filtrado, chemex, tomando, bandeja) as card art, so it needs no new illustrations; the 3D section draws new cups/beans (never the rana) in the marker stroke. index.astro wiring is done by the parent in T4 so the three writers have disjoint surfaces.
