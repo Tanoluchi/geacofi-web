@@ -1,0 +1,31 @@
+{
+  "puntaje": 4.9,
+  "cantidad": 46,
+  "url": "https://www.google.com/maps?cid=13911638427527771350",
+  "items": [
+    {
+      "texto": "Cafe chiquito pero con alma gigante, se nota la calidad y la calidez en cada taza servida. Una opcion segura para repetir. Todo riquisimo, la atencion de 10.",
+      "autor": "Alejandro Piceda",
+      "meta": "Local Guide",
+      "cuando": "hace 4 meses"
+    },
+    {
+      "texto": "La calidad de los productos que ofrecen impecable. Café de especialidad para elegir, divina presentación y budines de sabor increíble. Lugar ideal para estar súper tranquilo y conversar.",
+      "autor": "Ivana A.",
+      "meta": "Local Guide",
+      "cuando": "hace 10 meses"
+    },
+    {
+      "texto": "Muy lindo lugar, pequeño, pero amable servicio, el ommelete koreano es lo mas delicioso.",
+      "autor": "Juan Cruz Pinat",
+      "meta": "Local Guide",
+      "cuando": "hace 3 meses"
+    },
+    {
+      "texto": "Muy buen lugar donde se toma verdadero café de especialidad y la atención de los chicos fue barbara, volveré.",
+      "autor": "ramon alberto miranda",
+      "meta": "",
+      "cuando": "hace 5 meses"
+    }
+  ]
+}
