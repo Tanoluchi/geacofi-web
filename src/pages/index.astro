@@ -1,7 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Cinta from '../components/home/Cinta.astro';
+import CartaAB from '../components/home/CartaAB.astro';
+import SobreSeccion from '../components/home/SobreSeccion.astro';
+import Filtrados from '../components/home/Filtrados.astro';
+import EventosHome from '../components/home/EventosHome.astro';
+import Visita from '../components/home/Visita.astro';
 ---
 <Base title="café, discos y eso…" description="Café de especialidad en 9 de Julio 996, Corrientes. Carta, eventos y cómo llegar.">
-  <!-- placeholder: T2 reemplaza esta página por la Home -->
-  <section class="banda"><div class="contenedor"><h1 class="t-hero">café, discos y eso…</h1></div></section>
+  <Hero />
+  <Cinta />
+  <CartaAB />
+  <SobreSeccion />
+  <Filtrados />
+  <EventosHome />
+  <Visita />
 </Base>

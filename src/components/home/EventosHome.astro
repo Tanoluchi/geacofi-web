@@ -1,0 +1,54 @@
+---
+import { eventos } from '../../lib/data.ts';
+import { partirEventos, fechaFlyer } from '../../lib/eventos.ts';
+import Boton from '../shared/Boton.astro';
+import EstadoVacio from '../shared/EstadoVacio.astro';
+
+const { proximos, pasados } = partirEventos(eventos);
+const hayProximos = proximos.length > 0;
+const lista = (hayProximos ? proximos : pasados).slice(0, 2);
+const giros = ['-3deg', '2.5deg'];
+---
+<section class="banda" aria-labelledby="h-eventos">
+  <div class="contenedor fila">
+    <div class="texto">
+      <h2 id="h-eventos" class="t-h2">qué pasa en geacofi</h2>
+      <p>Sets de vinilos, catas y pop-ups. Los anunciamos acá y en Instagram.</p>
+      <div class="botones">
+        <Boton href="/eventos">ver eventos</Boton>
+        <Boton href="https://instagram.com/geacofi" variant="ghost">@geacofi</Boton>
+      </div>
+    </div>
+    <div class="flyers">
+      {lista.length === 0 ? (
+        <EstadoVacio titulo="todavía no hay nada anunciado" texto="Mirá Instagram: ahí avisamos primero." pose="dormido" />
+      ) : lista.map((e, i) => (
+        <article class="flyer" style={`--giro: ${giros[i]}`}>
+          {!hayProximos && <span class="ya">ya pasó</span>}
+          <h3>{e.titulo}</h3>
+          <span class="fecha">{fechaFlyer(e)}</span>
+          {e.descripcion && <p>{e.descripcion}</p>}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .fila { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+  .texto { flex: 1 1 340px; display: flex; flex-direction: column; gap: var(--space-4); }
+  .t-h2 { font-size: 84px; }
+  .texto p { font-size: 18px; line-height: 27px; }
+  .botones { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+  .flyers { flex: 1.4 1 480px; display: flex; flex-wrap: wrap; gap: 26px; justify-content: center; }
+  /* flyer sin foto hasta tener los originales en alta */
+  .flyer {
+    position: relative; width: 270px; min-height: 300px; background: var(--crema); color: var(--bordo); border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-4) var(--space-4); transform: rotate(var(--giro)); display: flex; flex-direction: column; gap: var(--space-2);
+    box-shadow: var(--drop); border: var(--border-dash) dashed var(--bordo);
+  }
+  .flyer h3 { font: 700 40px/.9 var(--font-display); color: var(--terracota); margin-top: var(--space-4); }
+  .ya { position: absolute; top: 10px; left: 10px; background: var(--carbon); color: var(--durazno); font: 400 11px/1 var(--font-mono); padding: 4px 8px; border-radius: var(--radius-pill); }
+  .fecha { font: italic 800 24px/1 var(--font-cond); }
+  .flyer p { font-size: 14px; line-height: 20px; color: var(--ink-dia); }
+  @media (max-width: 640px) { .t-h2 { font-size: 56px; } .flyer { width: 100%; max-width: 270px; } .botones :global(.boton) { flex: 1 1 100%; justify-content: center; } }
+</style>

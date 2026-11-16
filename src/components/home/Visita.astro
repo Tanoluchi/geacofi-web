@@ -1,0 +1,9 @@
+---
+import Ticket from '../shared/Ticket.astro';
+---
+<section class="visita" aria-label="cómo llegar"><div class="contenedor"><Ticket /></div></section>
+<style>
+  .visita { padding: 80px var(--side) var(--space-5); }
+  .contenedor { max-width: 1040px; }
+  @media (max-width: 640px) { .visita { padding-top: 70px; } }
+</style>

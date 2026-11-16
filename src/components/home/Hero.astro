@@ -1,0 +1,64 @@
+---
+import { logoUrl } from '../../lib/assets.ts';
+import Boton from '../shared/Boton.astro';
+import PastillaHorario from '../shared/PastillaHorario.astro';
+import Rana from '../shared/Rana.astro';
+import { local } from '../../lib/data.ts';
+---
+<section class="hero">
+  <div class="texto">
+    <span class="pastilla"><PastillaHorario /></span>
+    <h1>café, discos y eso…</h1>
+    <p>Café de especialidad en {local.direccion}, {local.ciudad}. Filtrados, chipa, roll de canela y, a veces, vinilos.</p>
+    <div class="botones">
+      <Boton href="/carta">ver la carta</Boton>
+      <Boton href={local.maps} variant="ghost">cómo llegar</Boton>
+    </div>
+  </div>
+  <div class="escena">
+    <div class="disco-caja">
+      <div class="disco" aria-hidden="true"><div class="etiqueta"><img src={logoUrl('crema')} alt="" width="81" /></div></div>
+    </div>
+    <div class="barra"><div class="respira"><Rana pose="barra" width="100%" alt="La rana detrás de la barra de Geacofi, con una taza y la cafetera" /></div></div>
+    <span class="suena">♪ sonando en la barra</span>
+  </div>
+</section>
+<style>
+  .hero { max-width: 1200px; margin: 0 auto; padding: 10px var(--side) 56px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center; }
+  .texto { flex: 1 1 460px; display: flex; flex-direction: column; gap: 20px; }
+  .pastilla { align-self: flex-start; transform: rotate(-2deg); }
+  h1 { font: 700 clamp(72px, 9vw, 128px)/.82 var(--font-display); color: var(--heading); }
+  p { font-size: 20px; line-height: 30px; max-width: 460px; }
+  .botones { display: flex; flex-wrap: wrap; gap: 18px; }
+  .escena { flex: 1 1 520px; position: relative; height: 560px; }
+  .disco-caja { position: absolute; top: 0; right: 10px; }
+  .disco {
+    width: 340px; height: 340px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: repeating-radial-gradient(circle, var(--carbon) 0 6px, var(--carbon-raised) 6px 8px);
+    animation: gira 6s linear infinite;
+  }
+  .etiqueta { width: 122px; height: 122px; border-radius: 50%; background: var(--terracota); display: flex; align-items: center; justify-content: center; }
+  .barra {
+    position: absolute; left: 0; right: 40px; bottom: 0; background: var(--crema); border: var(--border-ink) solid var(--bordo);
+    border-radius: var(--radius-xl); box-shadow: 10px 10px 0 var(--bordo); padding: 20px 10px 0; overflow: hidden;
+  }
+  .respira { animation: respira 3.2s ease-in-out infinite; }
+  .respira :global(img) { display: block; width: 100%; }
+  .suena {
+    position: absolute; top: 30px; left: 10px; background: var(--terracota); color: var(--durazno);
+    font: italic 800 22px/1.2 var(--font-cond); padding: 6px 14px; border: var(--border-ink) solid var(--bordo);
+    border-radius: var(--radius-pill); transform: rotate(-7deg);
+  }
+  @keyframes gira { to { transform: rotate(360deg); } }
+  @keyframes respira { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @media (max-width: 640px) {
+    .hero { padding-bottom: var(--space-6); gap: var(--space-5); }
+    p { font-size: 17px; line-height: 26px; }
+    .botones { flex-direction: column; align-items: stretch; }
+    .botones :global(.boton) { justify-content: center; }
+    .escena { height: auto; flex-basis: 100%; }
+    .disco-caja { display: none; }
+    .suena { display: none; }
+    .barra { position: static; box-shadow: var(--card); }
+  }
+</style>

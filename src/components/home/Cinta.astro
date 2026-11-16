@@ -1,0 +1,22 @@
+---
+import { local } from '../../lib/data.ts';
+import { horaCorta, turnosEnMinutos } from '../../lib/horario.ts';
+
+const horas = 'de ' + turnosEnMinutos(local.horarios).map(([d, h]) => `${horaCorta(d)} a ${horaCorta(h)}`).join(' y de ');
+const palabras = ['espresso', 'filtrados', 'chipa', 'roll de canela', 'vinilos', local.direccion.toLowerCase(), horas];
+const fila = [...palabras, ...palabras]; // duplicada: el bucle -50% no se nota
+---
+<div class="cinta" aria-hidden="true">
+  <div class="fila">
+    {fila.map((p) => <><span>{p}</span><span>✦</span></>)}
+  </div>
+</div>
+<style>
+  .cinta {
+    background: var(--terracota); color: var(--durazno); border-block: var(--border-ink) solid var(--bordo);
+    overflow: hidden; padding: 12px 0; transform: rotate(-1.2deg); margin: 0 -20px;
+  }
+  .fila { display: flex; width: max-content; gap: 34px; font: italic 800 30px/1.2 var(--font-cond); white-space: nowrap; animation: corre 30s linear infinite; }
+  .cinta:hover .fila { animation-play-state: paused; }
+  @keyframes corre { to { transform: translateX(-50%); } }
+</style>

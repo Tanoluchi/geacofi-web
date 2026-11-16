@@ -1,0 +1,35 @@
+---
+import { carta } from '../../lib/data.ts';
+import { formatPrecio } from '../../lib/precio.ts';
+import Rana from '../shared/Rana.astro';
+
+const cat = carta.categorias.find((c) => c.id === 'filtrados');
+---
+{cat && (
+  <section class="banda" data-theme="noche" aria-labelledby="h-filtrados">
+    <div class="contenedor fila">
+      <div class="rana"><Rana pose="filtrado" tinta="crema" width="100%" alt="La rana preparando un filtrado con pava cuello de cisne" /></div>
+      <div class="cuerpo">
+        <h2 id="h-filtrados" class="t-h2">cuatro formas de colar un café</h2>
+        <p>Si no sabés cuál pedir, preguntá en la barra. No hace falta saber nada.</p>
+        <ul>
+          {cat.items.map((it) => (
+            <li><span class="nom">{it.nombre}</span><span class="t-price">{formatPrecio(it.precio)}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}
+<style>
+  .fila { display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: center; }
+  .rana { flex: 1 1 380px; display: flex; justify-content: center; }
+  .rana :global(img) { width: 100%; max-width: 440px; }
+  .cuerpo { flex: 1 1 420px; display: flex; flex-direction: column; gap: var(--space-4); }
+  .t-h2 { font-size: 80px; color: var(--durazno); }
+  p { font-size: 18px; line-height: 27px; color: var(--ink-muted); }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: var(--border-dash) dashed var(--carbon-raised); }
+  .nom { font: italic 800 30px/1 var(--font-cond); color: var(--durazno); }
+  @media (max-width: 640px) { .t-h2 { font-size: 56px; } .rana :global(img) { max-width: 300px; } .nom { font-size: 26px; } }
+</style>
