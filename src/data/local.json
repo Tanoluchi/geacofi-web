@@ -4,7 +4,8 @@
   "ciudad": "Corrientes",
   "horarios": [
     {
-      "dias": "[a confirmar]",
+      "dias": "lunes a sábado",
+      "semana": [1, 2, 3, 4, 5, 6],
       "turnos": [
         "07:00-13:00",
         "17:00-21:00"

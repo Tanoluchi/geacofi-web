@@ -15,7 +15,7 @@ export interface Evento {
   descripcion?: string; flyer?: string; reserva?: string;
 }
 
-export interface Horario { dias: string; turnos: string[] }
+export interface Horario { dias: string; semana?: number[]; turnos: string[] } // semana: 0 = domingo … 6 = sábado
 export interface Local {
   nombre: string; direccion: string; ciudad: string; horarios: Horario[];
   whatsapp: string; instagram: string; maps: string; mapsEmbed?: string; lema?: string; nominacion?: string;

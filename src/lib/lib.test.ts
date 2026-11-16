@@ -6,7 +6,7 @@ import { partirEventos, fechaFlyer } from './eventos.ts';
 import { elegirSobre, TEXTO_SIN_CAFES } from './sobre.ts';
 import type { Cafe, Tostador } from './types.ts';
 
-const H = [{ dias: '[a confirmar]', turnos: ['07:00-13:00', '17:00-21:00'] }];
+const H = [{ dias: 'lunes a sábado', semana: [1, 2, 3, 4, 5, 6], turnos: ['07:00-13:00', '17:00-21:00'] }];
 // hora Argentina (UTC-3) -> instante
 const ar = (iso: string) => new Date(`${iso}-03:00`);
 
@@ -24,13 +24,21 @@ test('formatPrecio: sin precio muestra [a confirmar]', () => {
   assert.equal(formatPrecio(0), '$ 0');
 });
 
-test('estadoLocal en hora de Argentina', () => {
-  assert.deepEqual(estadoLocal(H, ar('2026-11-15T09:00:00')), { abierto: true, texto: 'abierto hasta las 13' });
-  assert.deepEqual(estadoLocal(H, ar('2026-11-15T13:00:00')), { abierto: false, texto: 'volvemos a las 17' });
-  assert.deepEqual(estadoLocal(H, ar('2026-11-15T05:00:00')), { abierto: false, texto: 'volvemos a las 7' });
-  assert.deepEqual(estadoLocal(H, ar('2026-11-15T21:00:00')), { abierto: false, texto: 'volvemos mañana a las 7' });
-  // 23:30 UTC del 15 = 20:30 en Argentina -> abierto, aunque en UTC ya sería de noche
-  assert.equal(estadoLocal(H, new Date('2026-11-15T23:30:00Z')).abierto, true);
+test('estadoLocal en hora de Argentina (lunes 16/11/2026)', () => {
+  assert.deepEqual(estadoLocal(H, ar('2026-11-16T09:00:00')), { abierto: true, texto: 'abierto hasta las 13' });
+  assert.deepEqual(estadoLocal(H, ar('2026-11-16T13:00:00')), { abierto: false, texto: 'volvemos a las 17' });
+  assert.deepEqual(estadoLocal(H, ar('2026-11-16T05:00:00')), { abierto: false, texto: 'volvemos a las 7' });
+  assert.deepEqual(estadoLocal(H, ar('2026-11-16T21:00:00')), { abierto: false, texto: 'volvemos mañana a las 7' });
+  // 23:30 UTC del 16 = 20:30 en Argentina -> abierto, aunque en UTC ya sería de noche
+  assert.equal(estadoLocal(H, new Date('2026-11-16T23:30:00Z')).abierto, true);
+});
+
+test('estadoLocal: abre de lunes a sábado, el domingo está cerrado', () => {
+  assert.deepEqual(estadoLocal(H, ar('2026-11-21T09:00:00')), { abierto: true, texto: 'abierto hasta las 13' }); // sábado
+  assert.deepEqual(estadoLocal(H, ar('2026-11-21T21:30:00')), { abierto: false, texto: 'volvemos el lunes a las 7' }); // sábado de noche
+  assert.deepEqual(estadoLocal(H, ar('2026-11-22T10:00:00')), { abierto: false, texto: 'volvemos mañana a las 7' }); // domingo
+  // 01:00 UTC del lunes 23 = 22:00 del domingo en Argentina -> cerrado
+  assert.equal(estadoLocal(H, new Date('2026-11-23T01:00:00Z')).abierto, false);
 });
 
 test('eventos: próximos / ya pasaron', () => {

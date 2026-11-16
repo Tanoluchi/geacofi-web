@@ -4,7 +4,7 @@ import { horaLarga } from '../../lib/horario.ts';
 import Boton from './Boton.astro';
 import Rana from './Rana.astro';
 
-// Ticket de visita. El mapa se carga recién al tocar "ver mapa".
+// Ticket de visita con el mapa de la ubicación (iframe con carga diferida nativa).
 interface Props { rana?: boolean }
 const { rana = true } = Astro.props;
 const turnos = local.horarios.flatMap((h) => h.turnos).map((t) => {
@@ -21,14 +21,14 @@ const dias = local.horarios[0]?.dias;
       <h2>{local.direccion}</h2>
       <span class="ciudad">{local.ciudad} Capital</span>
       <div class="pastillas">{turnos.map((t) => <span class="pill">{t}</span>)}</div>
-      {dias?.startsWith('[') && <span class="dias">[días de apertura a confirmar]</span>}
+      {dias && <span class="dias">{dias}</span>}
       <div class="botones">
         <Boton href={local.whatsapp} whatsapp>escribinos</Boton>
         <Boton href={local.maps} variant="ghost">cómo llegar</Boton>
       </div>
     </div>
-    <div class="r" data-mapa={local.mapsEmbed}>
-      <Boton variant="ghost" data-ver-mapa>ver mapa</Boton>
+    <div class="r">
+      {local.mapsEmbed && <iframe src={local.mapsEmbed} title={`Mapa: ${local.direccion}, ${local.ciudad}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>}
     </div>
   </article>
 </div>
@@ -58,15 +58,3 @@ const dias = local.horarios[0]?.dias;
     .r { border-left: 0; border-top: 3px dashed var(--bordo); }
   }
 </style>
-<script>
-  document.querySelectorAll<HTMLElement>('[data-mapa]').forEach((r) => {
-    r.querySelector('[data-ver-mapa]')?.addEventListener('click', () => {
-      const f = document.createElement('iframe');
-      f.src = r.dataset.mapa!;
-      f.title = 'Mapa: dónde queda Geacofi';
-      f.loading = 'lazy';
-      f.referrerPolicy = 'no-referrer-when-downgrade';
-      r.replaceChildren(f);
-    });
-  });
-</script>

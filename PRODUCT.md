@@ -26,7 +26,7 @@ Coffee from fixed guest roasters (Komún, MOMO, La Motofeca and Lo de Pepe) with
 ## Operating Context
 
 - Four pages: Home, Carta, Eventos, Visitanos. No online ordering or reservations; contact and event bookings go through WhatsApp.
-- Opening hours on record: 07:00–13:00 and 17:00–21:00. The home shows an open/closed indicator computed from these hours in Argentina time (UTC−3).
+- Opening hours: Monday to Saturday, 07:00–13:00 and 17:00–21:00 (days confirmed by the user on 2026-11-16). The home shows an open/closed indicator computed from these hours in Argentina time (UTC−3).
 - Anything that changes often (carta and prices, coffees on the bar, events, hours) lives in data files, never in the design. The model is four sources: `carta`, `cafes`, `eventos`, `local`. See `docs/geacofi-proyecto/05_sistema_de_diseno/2-datos.md`.
 - Coffee pack rules: 5 stickers, at most 2 from the same roaster, only coffees that are on the bar. A roaster with no coffees loaded shows "café de la semana · preguntá en la barra".
 - Events sort themselves: future dates are "próximos", past ones "ya pasaron". With no upcoming events the page shows the empty state.
@@ -35,7 +35,7 @@ Coffee from fixed guest roasters (Komún, MOMO, La Motofeca and Lo de Pepe) with
 
 - **Open decision:** who maintains the data and how (the owner in Google Sheets published as CSV with automatic rebuilds, or JSON in the repo). Keep the data model the same either way.
 - **Open decision:** hosting provider and domain.
-- **Pending from the owner:** opening days, the coffees currently on the bar (including Lo de Pepe's), upcoming events, high-resolution photos, and the story behind the name "gea".
+- **Pending from the owner:** the coffees currently on the bar (including Lo de Pepe's), upcoming events, high-resolution photos, and the story behind the name "gea".
 - Prices are whole pesos, displayed as `$ 5.500`.
 - Carta categories as the café names them: calientes (Lado A), fríos (Lado B), filtrados (Edición especial), salado (Lado C), panadería y pastelería (Bonus track).
 - Performance target: under 1 MB per page, LCP under 2.5 s on 4G. Google Maps loads only on demand.
@@ -55,7 +55,7 @@ Coffee from fixed guest roasters (Komún, MOMO, La Motofeca and Lo de Pepe) with
 - Instagram captures (low resolution), the original logo with the rana, and the roasters' logos: `docs/geacofi-proyecto/00_referencias/`.
 - Completed stages: brand diagnosis (`01_diagnostico/`), three art directions with direction **C · Café y eso** chosen (`02_direcciones_de_arte/`), the rana bible with 26 SVG/PNG illustrations and their generator code (`03_biblia_rana/`), screens and the coffee-pack prototype (`04_pantallas/`), the design system with tokens and components (`05_sistema_de_diseno/`), and the HTML sources of every sheet (`06_html_fuente/`).
 - Real carta items and prices from the printed carta, as recorded in `2-datos.md`. Refresh them before launch.
-- **Absent, and must not be fabricated:** opening days, current coffees, upcoming events, high-resolution photos, the name's story, testimonials, and press. Missing values are written as `[a confirmar]` until confirmed.
+- **Absent, and must not be fabricated:** current coffees, upcoming events, high-resolution photos, the name's story, testimonials, and press. Missing values are written as `[a confirmar]` until confirmed.
 
 ## Product Principles
 
