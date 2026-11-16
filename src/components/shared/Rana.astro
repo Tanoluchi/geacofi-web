@@ -1,0 +1,9 @@
+---
+import { ranaUrl, type Pose, type Tinta } from '../../lib/assets.ts';
+
+// Rana decorativa por defecto (alt=""). Si comunica algo, pasá `alt` con texto real.
+interface Props { pose: Pose; tinta?: Tinta; alt?: string; width?: number | string; class?: string }
+const { pose, tinta = 'carbon', alt = '', width, class: cls } = Astro.props;
+---
+<img src={ranaUrl(pose, tinta)} alt={alt} class={cls} width={typeof width === 'number' ? width : undefined}
+  style={typeof width === 'string' ? `width:${width}` : undefined} loading="lazy" decoding="async" />

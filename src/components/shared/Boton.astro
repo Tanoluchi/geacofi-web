@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost';
+  whatsapp?: boolean;
+  type?: 'button' | 'submit';
+  class?: string;
+  [attr: string]: unknown;
+}
+// <a> si navega, <button> si hace algo en la página.
+const { href, variant = 'primary', whatsapp = false, type = 'button', class: cls, ...rest } = Astro.props;
+const external = href?.startsWith('http');
+---
+{href ? (
+  <a class:list={['boton', variant, cls]} href={href} {...(external ? { rel: 'noopener' } : {})} {...rest}>
+    {whatsapp && <Icon name="whatsapp" />}<slot />
+  </a>
+) : (
+  <button class:list={['boton', variant, cls]} type={type} {...rest}>
+    {whatsapp && <Icon name="whatsapp" />}<slot />
+  </button>
+)}
+<style is:global>
+  .boton {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 24px;
+    border: var(--border-ink) solid var(--bordo); border-radius: var(--radius-md);
+    background: var(--terracota); color: var(--durazno);
+    font: italic 800 24px/1 var(--font-cond); text-decoration: none; cursor: pointer;
+    box-shadow: var(--sticker); transform: rotate(-1.5deg);
+    transition: transform .15s ease-out, box-shadow .15s ease-out;
+  }
+  .boton:hover { color: var(--durazno); transform: rotate(0) translate(-2px, -2px); box-shadow: var(--sticker-hover); }
+  .boton:active { transform: translate(5px, 5px); box-shadow: none; }
+  .boton:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+  .boton.ghost { background: var(--durazno); color: var(--bordo); transform: rotate(1.5deg); }
+  .boton.ghost:hover { color: var(--bordo); transform: rotate(0) translate(-2px, -2px); }
+  .boton.ghost:active { transform: translate(5px, 5px); }
+  /* sobre carbón el contorno pasa a ámbar, como el resto de los controles */
+  [data-theme="noche"] .boton { border-color: var(--ambar); box-shadow: 5px 5px 0 var(--ambar); }
+  [data-theme="noche"] .boton:hover { box-shadow: 8px 8px 0 var(--ambar); }
+  [data-theme="noche"] .boton:active { box-shadow: none; }
+</style>

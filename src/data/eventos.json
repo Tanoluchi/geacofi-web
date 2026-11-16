@@ -1,0 +1,19 @@
+[
+  {
+    "id": "cafe-y-eso-2026-02",
+    "titulo": "café y eso…",
+    "fecha": "2026-02-13",
+    "desde": "17:00",
+    "hasta": "21:00",
+    "descripcion": "Vinyl set, pop-up de lostclub y feria de vinilos.",
+    "reserva": "whatsapp"
+  },
+  {
+    "id": "cata-tomi-garcia-2025-11",
+    "titulo": "cata con Tomi Garcia",
+    "fecha": "2025-11-23",
+    "desde": "16:00",
+    "descripcion": "Cata con Tomi Garcia. Sin conocimiento previo.",
+    "reserva": "whatsapp"
+  }
+]

@@ -1,0 +1,216 @@
+{
+  "actualizada": "2026-11-15",
+  "categorias": [
+    {
+      "id": "calientes",
+      "nombre": "calientes",
+      "lado": "Lado A",
+      "items": [
+        {
+          "nombre": "espresso",
+          "descripcion": "shot chiquito",
+          "precio": 3700
+        },
+        {
+          "nombre": "cortadito",
+          "descripcion": "espresso + leche",
+          "precio": 3900
+        },
+        {
+          "nombre": "uno y uno",
+          "descripcion": "espresso + cortadito",
+          "precio": 4100
+        },
+        {
+          "nombre": "americano",
+          "descripcion": "doble espresso + agua",
+          "precio": 4200
+        },
+        {
+          "nombre": "americano cortado",
+          "descripcion": "doble espresso + agua + leche",
+          "precio": 4800
+        },
+        {
+          "nombre": "café con leche",
+          "descripcion": "espresso + leche · mediano",
+          "precio": 4500
+        },
+        {
+          "nombre": "flat white",
+          "descripcion": "doble espresso + leche",
+          "precio": 5000
+        },
+        {
+          "nombre": "moca",
+          "descripcion": "espresso + choco + leche",
+          "precio": 5000
+        },
+        {
+          "nombre": "capu",
+          "descripcion": "espresso + cacao + leche",
+          "precio": 5000
+        },
+        {
+          "nombre": "latte",
+          "descripcion": "espresso + leche · grande",
+          "precio": 5500,
+          "opciones": [
+            "caramelo",
+            "vainilla",
+            "avellana"
+          ]
+        },
+        {
+          "nombre": "spicy orange",
+          "descripcion": "espresso + leche + choco picante + almíbar de naranja",
+          "precio": 5500
+        }
+      ]
+    },
+    {
+      "id": "frios",
+      "nombre": "fríos",
+      "lado": "Lado B",
+      "items": [
+        {
+          "nombre": "ice latte",
+          "descripcion": "latte pero con hielo",
+          "precio": 5500,
+          "opciones": [
+            "caramelo",
+            "vainilla",
+            "avellana"
+          ]
+        },
+        {
+          "nombre": "espresso tonic",
+          "descripcion": "doble espresso + tónica",
+          "precio": 6500
+        },
+        {
+          "nombre": "affogato",
+          "descripcion": "doble espresso + helado de mantecol",
+          "precio": 7000
+        },
+        {
+          "nombre": "limonada",
+          "precio": 4500
+        },
+        {
+          "nombre": "jugo de naranja",
+          "precio": 4500
+        },
+        {
+          "nombre": "licuado",
+          "descripcion": "banana o frutilla",
+          "precio": 4500
+        }
+      ]
+    },
+    {
+      "id": "filtrados",
+      "nombre": "filtrados",
+      "lado": "Edición especial",
+      "items": [
+        {
+          "nombre": "aeropress",
+          "precio": 5500
+        },
+        {
+          "nombre": "origami",
+          "precio": 6000
+        },
+        {
+          "nombre": "v60",
+          "precio": 6000
+        },
+        {
+          "nombre": "chemex",
+          "precio": 6500
+        }
+      ]
+    },
+    {
+      "id": "salado",
+      "nombre": "salado",
+      "lado": "Lado C",
+      "items": [
+        {
+          "nombre": "chipa",
+          "descripcion": "5 unidades",
+          "precio": 5000
+        },
+        {
+          "nombre": "huevos revueltos",
+          "precio": 4000
+        },
+        {
+          "nombre": "tostado de J&Q",
+          "descripcion": "pan brioche con jamón y queso",
+          "precio": 9000
+        },
+        {
+          "nombre": "korean egg",
+          "descripcion": "huevito revuelto, panceta y salsa holandesa",
+          "precio": 10000
+        },
+        {
+          "nombre": "tostón de palta",
+          "descripcion": "palta, huevo revuelto y queso crema",
+          "precio": 9500
+        }
+      ]
+    },
+    {
+      "id": "panaderia-pasteleria",
+      "nombre": "panadería y pastelería",
+      "lado": "Bonus track",
+      "items": [
+        {
+          "nombre": "medialuna",
+          "precio": 2500,
+          "grupo": "panadería"
+        },
+        {
+          "nombre": "medialuna de J&Q",
+          "precio": 4000,
+          "grupo": "panadería"
+        },
+        {
+          "nombre": "pain au chocolat",
+          "precio": 6500,
+          "grupo": "panadería"
+        },
+        {
+          "nombre": "roll de canela",
+          "precio": 6500,
+          "grupo": "panadería"
+        },
+        {
+          "nombre": "muffin de arándanos",
+          "descripcion": "con crumble",
+          "precio": 5000,
+          "grupo": "pastelería"
+        },
+        {
+          "nombre": "budín de limón",
+          "descripcion": "con ganache de chocolate blanco",
+          "precio": 7000,
+          "grupo": "pastelería"
+        },
+        {
+          "nombre": "budín de banana",
+          "descripcion": "con chocolate",
+          "precio": 7000,
+          "grupo": "pastelería"
+        },
+        {
+          "nombre": "cookie clásica",
+          "precio": 4500,
+          "grupo": "pastelería"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+---
+import { local } from '../../lib/data.ts';
+import { estadoLocal } from '../../lib/horario.ts';
+
+// Se calcula al construir y se corrige en el navegador al cargar y cada minuto.
+const estado = estadoLocal(local.horarios);
+---
+<span class="pastilla" data-pastilla data-horarios={JSON.stringify(local.horarios)}>
+  <span class="punto" data-abierto={String(estado.abierto)} aria-hidden="true"></span>
+  <span data-texto>{estado.texto}</span>
+</span>
+<style>
+  .pastilla {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--carbon); color: var(--durazno);
+    font: 400 14px/1.2 var(--font-mono); padding: 8px 14px; border-radius: var(--radius-sm);
+  }
+  .punto { width: 10px; height: 10px; border-radius: 50%; background: var(--ambar); flex: none; }
+  .punto[data-abierto="true"] { background: var(--status-open); }
+</style>
+<script>
+  import { estadoLocal } from '../../lib/horario.ts';
+  const pintar = () => document.querySelectorAll<HTMLElement>('[data-pastilla]').forEach((el) => {
+    const e = estadoLocal(JSON.parse(el.dataset.horarios!));
+    el.querySelector<HTMLElement>('[data-texto]')!.textContent = e.texto;
+    el.querySelector<HTMLElement>('.punto')!.dataset.abierto = String(e.abierto);
+  });
+  pintar();
+  setInterval(pintar, 60_000);
+</script>

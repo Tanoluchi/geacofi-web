@@ -1,0 +1,37 @@
+---
+import { local, turnosTexto } from '../lib/data.ts';
+import { logoUrl } from '../lib/assets.ts';
+import Rana from '../components/shared/Rana.astro';
+---
+<footer class="pie">
+  <Rana pose="asoma" alt="La rana asomándose sobre el pie de página" class="asoma" />
+  <div class="fila">
+    <div class="col">
+      <img src={logoUrl('crema')} alt="geacofi" height="50" />
+      <span class="dir">Café de especialidad · {local.direccion}, {local.ciudad}</span>
+      <span class="horas">{turnosTexto}</span>
+    </div>
+    <div class="links">
+      <a href={local.whatsapp} rel="noopener">WhatsApp</a>
+      <a href={local.instagram} rel="noopener">Instagram @geacofi</a>
+      <a href={local.maps} rel="noopener">Cómo llegar</a>
+    </div>
+    <span class="nota">Nominado The Best Coffee Shops Argentina 2026</span>
+  </div>
+</footer>
+<style>
+  .pie { position: relative; background: var(--terracota); color: var(--durazno); padding: 44px var(--side); margin-top: 110px; }
+  .pie :global(.asoma) { position: absolute; left: 50%; top: 0; transform: translate(-50%, -88%); width: 230px; }
+  .fila { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start; justify-content: space-between; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .col img { height: 50px; width: auto; align-self: flex-start; }
+  .dir { font-size: 15px; }
+  .horas { font: 13px/1.4 var(--font-mono); }
+  .links { display: flex; flex-direction: column; gap: 8px; font: italic 800 22px/1.2 var(--font-cond); }
+  .links a { color: var(--durazno); }
+  .nota { font: 12px/1.5 var(--font-mono); max-width: 260px; }
+  @media (max-width: 640px) {
+    .pie { padding: 28px 18px 36px; margin-top: 70px; }
+    .pie :global(.asoma) { width: 170px; }
+  }
+</style>

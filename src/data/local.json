@@ -1,0 +1,19 @@
+{
+  "nombre": "Geacofi",
+  "direccion": "9 de Julio 996",
+  "ciudad": "Corrientes",
+  "horarios": [
+    {
+      "dias": "[a confirmar]",
+      "turnos": [
+        "07:00-13:00",
+        "17:00-21:00"
+      ]
+    }
+  ],
+  "whatsapp": "https://wa.me/message/KFA3BBGBV2PLA1",
+  "instagram": "https://instagram.com/geacofi",
+  "maps": "https://maps.google.com/?q=9+de+Julio+996+Corrientes",
+  "mapsEmbed": "https://maps.google.com/maps?q=9+de+Julio+996+Corrientes&output=embed",
+  "lema": "café, discos y eso…"
+}

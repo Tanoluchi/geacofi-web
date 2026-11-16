@@ -1,0 +1,92 @@
+/* Tokens de Geacofi. Fuente: docs/geacofi-proyecto/05_sistema_de_diseno/tokens.json (+ DESIGN.md). */
+:root {
+  /* paleta */
+  --durazno: #FBE6C8;
+  --crema: #F1E5D9;
+  --terracota: #9A4A38;
+  --bordo: #783E32;
+  --carbon: #14171B;
+  --carbon-raised: #22262C;
+  --verde: #445012;
+  --ambar: #BF834E;
+  --ink-dia: #23251C;
+  --ink-muted-dia: #5B4A40;
+  --ink-muted-noche: #D8CFC2;
+  --status-open: #7BC67E; /* solo el puntito de "abierto" */
+
+  /* tostadores: solo en figuritas del sobre */
+  --tostador-komun: #CFC6EA;
+  --tostador-momo: #14171B;
+  --tostador-motofeca: #E58A43;
+  --tostador-pepe: #445012;
+
+  /* roles, tema día por defecto */
+  --surface: var(--durazno);
+  --surface-raised: var(--crema);
+  --ink: var(--ink-dia);
+  --ink-muted: var(--ink-muted-dia);
+  --heading: var(--terracota);
+  --eyebrow: var(--terracota);
+  --border: var(--bordo);
+  --on-accent: var(--durazno);
+  --focus: var(--carbon);
+  --shadow-card: var(--card);
+
+  /* tipografía */
+  --font-display: Gaegu, "Comic Sans MS", cursive;
+  --font-cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: Nunito, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+
+  /* espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 80px;
+
+  /* radios */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* sombras: siempre blur 0 */
+  --sticker-sm: 4px 4px 0 #783E32;
+  --sticker: 5px 5px 0 #783E32;
+  --sticker-hover: 8px 8px 0 #783E32;
+  --card: 8px 8px 0 #783E32;
+  --card-noche: 8px 8px 0 #9A4A38;
+  --drop: 6px 8px 0 rgba(20, 23, 27, 0.28);
+
+  /* contornos */
+  --border-ink: 3px;
+  --border-dash: 2px;
+
+  /* layout */
+  --section-pad: var(--space-8);
+  --side: var(--space-5);
+}
+
+[data-theme="noche"] {
+  --surface: var(--carbon);
+  --surface-raised: var(--carbon-raised);
+  --ink: var(--crema);
+  --ink-muted: var(--ink-muted-noche);
+  --heading: var(--durazno);
+  --eyebrow: var(--ambar);
+  --border: var(--ambar);
+  --focus: var(--durazno);
+  --shadow-card: var(--card-noche);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --section-pad: 50px;
+    --side: 18px;
+  }
+}

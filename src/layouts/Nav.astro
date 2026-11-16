@@ -1,0 +1,66 @@
+---
+import { local } from '../lib/data.ts';
+import { logoUrl } from '../lib/assets.ts';
+import Boton from '../components/shared/Boton.astro';
+import Icon from '../components/shared/Icon.astro';
+
+const links = [
+  { href: '/', texto: 'inicio' },
+  { href: '/carta', texto: 'la carta' },
+  { href: '/eventos', texto: 'eventos' },
+  { href: '/visitanos', texto: 'visitanos' },
+];
+const actual = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="cab">
+  <a class="logo" href="/" aria-label="geacofi, inicio"><img src={logoUrl('bordo')} alt="geacofi" height="54" /></a>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="nav-principal" aria-label="Abrir menú">
+    <Icon name="menu" size={26} />
+  </button>
+  <nav id="nav-principal" aria-label="Principal">
+    {links.map((l) => (
+      <a href={l.href} aria-current={actual === l.href ? 'page' : undefined}>{l.texto}</a>
+    ))}
+    <span class="wa"><Boton href={local.whatsapp} whatsapp class="nav-wa">WhatsApp</Boton></span>
+  </nav>
+</header>
+<style>
+  .cab {
+    max-width: 1200px; margin: 0 auto; padding: 18px var(--side);
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;
+  }
+  .logo img { height: 54px; width: auto; display: block; }
+  nav { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font: italic 800 22px/1 var(--font-cond); }
+  nav > a { text-decoration: none; padding: 10px 12px; color: var(--bordo); border-bottom: 4px solid transparent; min-height: 44px; display: inline-flex; align-items: center; }
+  nav > a:hover { border-bottom-color: var(--ambar); }
+  nav > a[aria-current="page"] { border-bottom-color: var(--terracota); }
+  .wa { margin-left: 10px; }
+  .wa :global(.nav-wa) { font-size: 20px; transform: none; }
+  .menu { display: none; }
+
+  @media (max-width: 720px) {
+    .cab { padding: 14px 18px; border-bottom: var(--border-ink) solid var(--bordo); }
+    .logo img { height: 44px; }
+    .menu {
+      display: flex; align-items: center; justify-content: center; width: 48px; height: 48px;
+      border: var(--border-ink) solid var(--bordo); border-radius: 14px; background: var(--crema); color: var(--bordo);
+      box-shadow: var(--sticker-sm); cursor: pointer;
+    }
+    .menu:active { transform: translate(4px, 4px); box-shadow: none; }
+    nav { flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 0; }
+    nav > a { font-size: 26px; border-bottom: var(--border-dash) dashed var(--bordo); }
+    .wa { margin: 14px 0 4px; }
+    /* sin JS el menú queda abierto; con JS se oculta hasta tocar el botón */
+    :global(.js) nav { display: none; }
+    :global(.js) .cab[data-abierto] nav { display: flex; }
+  }
+</style>
+<script>
+  const cab = document.querySelector<HTMLElement>('.cab')!;
+  const btn = cab.querySelector<HTMLButtonElement>('.menu')!;
+  btn.addEventListener('click', () => {
+    const abierto = cab.toggleAttribute('data-abierto');
+    btn.setAttribute('aria-expanded', String(abierto));
+    btn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  });
+</script>

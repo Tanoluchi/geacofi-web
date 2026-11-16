@@ -1,0 +1,51 @@
+---
+import Rana from './Rana.astro';
+import type { Pose } from '../../lib/assets.ts';
+
+// vacio: lista vacía (rana dormida / asomada) · carga: rana moliendo · confirmacion: toast con guiño.
+interface Props { variante?: 'vacio' | 'carga' | 'confirmacion'; titulo?: string; texto?: string; pose?: Pose; ranaAlt?: string }
+const { variante = 'vacio', titulo, texto, pose, ranaAlt = '' } = Astro.props;
+---
+{variante === 'vacio' && (
+  <div class="vacio">
+    <Rana pose={pose ?? 'dormido'} alt={ranaAlt} width={180} />
+    <div class="cuerpo">
+      <h3>{titulo}</h3>
+      {texto && <p>{texto}</p>}
+      <slot />
+    </div>
+  </div>
+)}
+{variante === 'carga' && (
+  <div class="carga" role="status">
+    <Rana pose="moliendo" alt="" width={120} class="muele" />
+    <span>{titulo ?? 'moliendo…'}</span>
+  </div>
+)}
+{variante === 'confirmacion' && (
+  <div class="toast" role="status">
+    <Rana pose="guino" tinta="crema" width={60} />
+    <div>
+      <div class="etq">confirmación</div>
+      <b>{titulo ?? '¡listo! te respondemos pronto'}</b>
+    </div>
+  </div>
+)}
+<style>
+  .vacio {
+    max-width: 720px; display: flex; flex-wrap: wrap; align-items: center; gap: 22px; padding: 24px;
+    background: var(--crema); color: var(--ink-dia); border: var(--border-ink) solid var(--bordo);
+    border-radius: var(--radius-xl); box-shadow: var(--card);
+  }
+  .cuerpo { flex: 1 1 280px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  h3 { font: 700 46px/.9 var(--font-display); color: var(--terracota); }
+  .cuerpo p { font-size: 16px; line-height: 24px; margin-bottom: 6px; }
+  .carga { display: inline-flex; align-items: center; gap: 12px; font: 700 40px/.9 var(--font-display); color: var(--heading); }
+  .carga :global(.muele) { animation: muele 1.2s linear infinite; transform-origin: 50% 80%; }
+  @keyframes muele { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .toast {
+    display: flex; align-items: center; gap: 12px; max-width: 360px; padding: 10px 14px;
+    background: var(--carbon); color: var(--crema); border-radius: var(--radius-md);
+  }
+  .etq { font: 500 12px/1.4 var(--font-mono); color: var(--ambar); }
+</style>

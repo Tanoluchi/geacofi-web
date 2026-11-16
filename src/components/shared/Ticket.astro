@@ -1,0 +1,72 @@
+---
+import { local } from '../../lib/data.ts';
+import { horaLarga } from '../../lib/horario.ts';
+import Boton from './Boton.astro';
+import Rana from './Rana.astro';
+
+// Ticket de visita. El mapa se carga recién al tocar "ver mapa".
+interface Props { rana?: boolean }
+const { rana = true } = Astro.props;
+const turnos = local.horarios.flatMap((h) => h.turnos).map((t) => {
+  const [d, h] = t.split('-');
+  return `${Number(d.slice(0, 2)) < 13 ? 'mañana' : 'tarde'} ${horaLarga(d)} → ${horaLarga(h)}`;
+});
+const dias = local.horarios[0]?.dias;
+---
+<div class="envoltorio">
+  {rana && <Rana pose="saluda" width={120} class="saluda" />}
+  <article class="tk">
+    <div class="l">
+      <span class="t-eyebrow">Pasá cuando quieras</span>
+      <h2>{local.direccion}</h2>
+      <span class="ciudad">{local.ciudad} Capital</span>
+      <div class="pastillas">{turnos.map((t) => <span class="pill">{t}</span>)}</div>
+      {dias?.startsWith('[') && <span class="dias">[días de apertura a confirmar]</span>}
+      <div class="botones">
+        <Boton href={local.whatsapp} whatsapp>escribinos</Boton>
+        <Boton href={local.maps} variant="ghost">cómo llegar</Boton>
+      </div>
+    </div>
+    <div class="r" data-mapa={local.mapsEmbed}>
+      <Boton variant="ghost" data-ver-mapa>ver mapa</Boton>
+    </div>
+  </article>
+</div>
+<style>
+  .envoltorio { position: relative; max-width: 820px; }
+  .envoltorio :global(.saluda) { position: absolute; top: -78px; right: 28px; z-index: 1; }
+  .tk {
+    background: var(--crema); color: var(--ink-dia); border: var(--border-ink) solid var(--bordo);
+    border-radius: var(--radius-xl); box-shadow: 10px 10px 0 var(--bordo);
+    display: flex; flex-wrap: wrap; overflow: hidden;
+  }
+  .l { flex: 1 1 320px; padding: 28px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  h2 { font: 700 64px/.82 var(--font-display); color: var(--terracota); }
+  .ciudad { font: italic 800 24px/1 var(--font-cond); color: var(--bordo); }
+  .pastillas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pill { background: var(--carbon); color: var(--durazno); font: 14px/1.2 var(--font-mono); padding: 8px 14px; border-radius: var(--radius-sm); }
+  .dias { font: 13px/18px var(--font-mono); color: var(--ink-muted); }
+  .botones { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+  .r {
+    flex: 1 1 240px; min-height: 240px; border-left: 3px dashed var(--bordo); position: relative;
+    background: repeating-linear-gradient(45deg, var(--durazno) 0 14px, var(--crema) 14px 28px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .r :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  @media (max-width: 640px) {
+    h2 { font-size: 52px; }
+    .r { border-left: 0; border-top: 3px dashed var(--bordo); }
+  }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-mapa]').forEach((r) => {
+    r.querySelector('[data-ver-mapa]')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = r.dataset.mapa!;
+      f.title = 'Mapa: dónde queda Geacofi';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      r.replaceChildren(f);
+    });
+  });
+</script>

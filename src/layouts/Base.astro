@@ -1,0 +1,82 @@
+---
+import '@fontsource/gaegu/latin-700.css';
+import '@fontsource/barlow-condensed/latin-700-italic.css';
+import '@fontsource/barlow-condensed/latin-800-italic.css';
+import '@fontsource/nunito/latin-400.css';
+import '@fontsource/nunito/latin-800.css';
+import '@fontsource/nunito/latin-900.css';
+import '@fontsource/dm-mono/latin-400.css';
+import '@fontsource/dm-mono/latin-500.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import { local } from '../lib/data.ts';
+import Nav from './Nav.astro';
+import Pie from './Pie.astro';
+import Icon from '../components/shared/Icon.astro';
+
+interface Props { title: string; description: string; noindex?: boolean }
+const { title, description, noindex = false } = Astro.props;
+const fullTitle = `${title} · geacofi`;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+
+// Solo datos confirmados: sin días de apertura ni teléfono hasta que el café los pase.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CafeOrCoffeeShop',
+  name: local.nombre,
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: local.direccion,
+    addressLocality: local.ciudad,
+    addressCountry: 'AR',
+  },
+  hasMap: local.maps,
+  sameAs: [local.instagram],
+  ...(canonical ? { url: new URL('/', Astro.site).href } : {}),
+};
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#FBE6C8" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="geacofi" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">ir al contenido</a>
+    <Nav />
+    <main id="contenido"><slot /></main>
+    <Pie />
+    <a class="wa-flotante" href={local.whatsapp} rel="noopener" aria-label="Escribinos por WhatsApp"><Icon name="whatsapp" size={28} /></a>
+  </body>
+</html>
+<style is:global>
+  .saltar {
+    position: absolute; left: 8px; top: -60px; z-index: 20; background: var(--carbon); color: var(--durazno);
+    padding: 10px 14px; border-radius: var(--radius-sm); font: italic 800 20px/1 var(--font-cond);
+  }
+  .saltar:focus { top: 8px; color: var(--durazno); }
+  .wa-flotante {
+    position: fixed; right: 18px; bottom: 18px; z-index: 10; width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--terracota); color: var(--durazno); border: var(--border-ink) solid var(--bordo);
+    border-radius: 50%; box-shadow: var(--sticker-sm); transition: transform .15s ease-out, box-shadow .15s ease-out;
+  }
+  .wa-flotante:hover { color: var(--durazno); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--bordo); }
+  .wa-flotante:active { transform: translate(4px, 4px); box-shadow: none; }
+</style>

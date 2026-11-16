@@ -1,0 +1,153 @@
+{
+  "tostadores": [
+    {
+      "id": "komun",
+      "nombre": "Komún Tostadores",
+      "color": "tostador-komun",
+      "tinta": "carbon"
+    },
+    {
+      "id": "momo",
+      "nombre": "MOMO",
+      "color": "tostador-momo",
+      "tinta": "crema",
+      "holo": true
+    },
+    {
+      "id": "motofeca",
+      "nombre": "La Motofeca",
+      "color": "tostador-motofeca",
+      "tinta": "carbon"
+    },
+    {
+      "id": "pepe",
+      "nombre": "Lo de Pepe Tostadores",
+      "color": "tostador-pepe",
+      "tinta": "crema"
+    }
+  ],
+  "cafes": [
+    {
+      "id": "komun-colombia-lavado",
+      "tostador": "komun",
+      "nombre": "Colombia",
+      "origen": "Colombia",
+      "proceso": "Lavado",
+      "en_barra": true
+    },
+    {
+      "id": "komun-colombia-natural",
+      "tostador": "komun",
+      "nombre": "Colombia",
+      "origen": "Colombia",
+      "proceso": "Natural",
+      "en_barra": true
+    },
+    {
+      "id": "komun-etiopia-natural",
+      "tostador": "komun",
+      "nombre": "Etiopía",
+      "origen": "Etiopía",
+      "proceso": "Natural",
+      "en_barra": true
+    },
+    {
+      "id": "komun-honduras-natural",
+      "tostador": "komun",
+      "nombre": "Honduras",
+      "origen": "Honduras",
+      "proceso": "Natural",
+      "en_barra": true
+    },
+    {
+      "id": "komun-costa-rica-lavado",
+      "tostador": "komun",
+      "nombre": "Costa Rica",
+      "origen": "Costa Rica",
+      "proceso": "Lavado",
+      "en_barra": true
+    },
+    {
+      "id": "momo-gran-rift",
+      "tostador": "momo",
+      "nombre": "Gran Rift",
+      "origen": "África Oriental",
+      "en_barra": true
+    },
+    {
+      "id": "momo-rift-guji",
+      "tostador": "momo",
+      "nombre": "Rift Guji",
+      "origen": "Guji, Etiopía",
+      "proceso": "Natural",
+      "variedad": "Variedades nativas",
+      "notas": [
+        "miel",
+        "damascos",
+        "floral"
+      ],
+      "en_barra": true,
+      "pose": "filtrado"
+    },
+    {
+      "id": "momo-rift-yirga-natural",
+      "tostador": "momo",
+      "nombre": "Rift Yirga",
+      "origen": "Yirgacheffe, Etiopía",
+      "proceso": "Natural",
+      "variedad": "Variedades nativas",
+      "notas": [
+        "azúcar mascabo",
+        "arándanos",
+        "floral"
+      ],
+      "en_barra": true
+    },
+    {
+      "id": "momo-bourbon-rojo-natural",
+      "tostador": "momo",
+      "nombre": "Bourbon Rojo",
+      "origen": "Carmo de Minas, Brasil",
+      "proceso": "Natural",
+      "variedad": "Bourbon rojo",
+      "notas": [
+        "caramelo",
+        "cacao",
+        "mascabo"
+      ],
+      "en_barra": true
+    },
+    {
+      "id": "motofeca-bourbon-chiroso",
+      "tostador": "motofeca",
+      "nombre": "Bourbon Chiroso",
+      "origen": "Colombia",
+      "mood": "Funky",
+      "en_barra": true
+    },
+    {
+      "id": "motofeca-ruanda",
+      "tostador": "motofeca",
+      "nombre": "Ruanda",
+      "origen": "Ruanda",
+      "mood": "Funky",
+      "en_barra": true
+    },
+    {
+      "id": "motofeca-etiopia",
+      "tostador": "motofeca",
+      "nombre": "Etiopía",
+      "origen": "Etiopía",
+      "mood": "Funky",
+      "en_barra": true
+    },
+    {
+      "id": "motofeca-motoblend",
+      "tostador": "motofeca",
+      "nombre": "Motoblend",
+      "origen": "Blend de la casa",
+      "mood": "Fusion",
+      "en_barra": true
+    }
+  ]
+}
