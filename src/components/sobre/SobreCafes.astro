@@ -440,6 +440,7 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
     const cx = pr.left - sr.left + pr.width / 2, ty = pr.top - sr.top + 40;
     cardsEl.innerHTML = hand.map((f) => cardHTML(f, L.cw)).join('');
     const cards = [...cardsEl.children] as HTMLElement[];
+    if (!reduce) cards.forEach((el) => (el.style.opacity = '0')); // ocultas hasta que el sobre revienta
 
     if (reduce) { pack.classList.add('is-gone'); cards.forEach((el, i) => place(el, L.pos[i])); return done(cards); }
 
@@ -458,6 +459,7 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
           { transform: `translate(${x}px,${y}px) scale(1) rotate(${r}deg)`, opacity: 1 },
         ], { duration: 1150, delay: 120 + i * 90, easing: EASE, fill: 'both' })
           .finished.then(() => { place(el, L.pos[i]); el.getAnimations().forEach((a) => a.cancel()); });
+        el.style.opacity = ''; // desde acá manda la animación (fill both)
         const inner = el.querySelector<HTMLElement>('.inner')!;
         inner.style.transform = 'rotateY(180deg)';
         inner.animate([{ transform: 'rotateY(180deg)' }, { transform: 'rotateY(0deg)' }], { duration: 700, delay: 650 + i * 110, easing: EASE, fill: 'forwards' })
