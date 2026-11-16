@@ -1,4 +1,4 @@
-export interface Item { nombre: string; descripcion?: string; precio: number; opciones?: string[]; grupo?: string; destacado?: boolean; pose?: string }
+export interface Item { nombre: string; descripcion?: string; precio?: number; foto?: string; opciones?: string[]; grupo?: string; destacado?: boolean; pose?: string }
 export interface Categoria { id: string; nombre: string; lado: string; items: Item[] }
 export interface Carta { actualizada: string; categorias: Categoria[] }
 

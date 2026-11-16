@@ -17,5 +17,5 @@ export const turnosTexto = local.horarios
 
 /** Items de la carta marcados `destacado: true`, en orden de carta, con su categoría. */
 export const destacados: (Item & { categoria: string })[] = carta.categorias.flatMap((c) =>
-  c.items.filter((i) => i.destacado).map((i) => ({ ...i, categoria: c.nombre })),
+  c.items.filter((i) => i.destacado).map((i) => ({ ...i, categoria: i.grupo ?? c.nombre })),
 );

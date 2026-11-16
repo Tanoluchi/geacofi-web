@@ -17,6 +17,13 @@ test('formatPrecio', () => {
   assert.throws(() => formatPrecio(12.5));
 });
 
+test('formatPrecio: sin precio muestra [a confirmar]', () => {
+  assert.equal(formatPrecio(undefined), '[a confirmar]');
+  assert.equal(formatPrecio(null), '[a confirmar]');
+  assert.equal(formatPrecio(5500), '$ 5.500');
+  assert.equal(formatPrecio(0), '$ 0');
+});
+
 test('estadoLocal en hora de Argentina', () => {
   assert.deepEqual(estadoLocal(H, ar('2026-11-15T09:00:00')), { abierto: true, texto: 'abierto hasta las 13' });
   assert.deepEqual(estadoLocal(H, ar('2026-11-15T13:00:00')), { abierto: false, texto: 'volvemos a las 17' });

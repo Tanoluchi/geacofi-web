@@ -66,10 +66,11 @@ Reglas del sobre: 5 figuritas, como máximo 2 del mismo tostador, solo cafés co
 | --- | --- | --- |
 | nombre | sí | en minúscula, como en la carta |
 | descripcion | no | |
-| precio | sí | pesos, número entero |
+| precio | no | pesos, número entero. Si falta, se muestra `[a confirmar]` en el mismo lugar del precio |
 | opciones | no | sabores o variantes |
-| destacado | no | `true` lo suma al carrusel "lo que más sale" de la home. Conviene marcar entre 6 y 8 |
+| destacado | no | `true` lo suma al carrusel "lo que más sale" de la home. Hoy solo pastelería y panadería con foto (5). Conviene marcar entre 5 y 8 |
 | pose | no | pose de la rana que ilustra la tarjeta del carrusel: `espresso`, `latte`, `togo`, `filtrado`, `chemex`, `tomando`, `bandeja` o `moliendo`. Sin `pose`, usa `espresso` |
+| foto | no | nombre (sin extensión) de un archivo de `src/assets/pasteleria/`, p. ej. `"roll-de-canela"`. En el carrusel, la foto reemplaza a la rana; sin `foto`, se usa la rana |
 
 Precios en pesos, como número entero; el sitio los formatea `$ 5.500` en DM Mono. Categorías actuales: calientes (Lado A), fríos (Lado B), filtrados (Edición especial), salado (Lado C), panadería y pastelería (Bonus track).
 
