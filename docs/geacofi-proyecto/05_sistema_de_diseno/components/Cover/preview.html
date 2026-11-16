@@ -1,0 +1,31 @@
+<!-- @dsCard height=300 -->
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Nunito:wght@400&display=swap">
+<style>
+body{margin:0;background:var(--durazno)}
+.c{position:relative;width:960px;height:300px;overflow:hidden;background:var(--durazno)}
+.t{position:absolute;left:40px;bottom:36px;width:420px}
+.t h1{margin:0;font:700 100px/.95 var(--font-display);color:var(--terracota)}
+.t p{margin:8px 0 0;font:14px var(--font-body);color:var(--ink-muted)}
+.ter{fill:var(--terracota)}.car{fill:var(--carbon)}.ver{fill:var(--verde)}.cre{fill:var(--crema)}.bor{fill:var(--bordo)}
+.groove{fill:none;stroke:var(--durazno);stroke-opacity:.18;stroke-width:2}
+.tile{rx:var(--radius-xl)}
+</style></head><body>
+<div class="c">
+<svg width="960" height="300" viewBox="0 0 960 300" aria-hidden="true" style="position:absolute;inset:0">
+<!-- blocks: terracota slab 288x300 (bleeds top), carbon disc r=150, crema 160x112 radius-xl, verde 80x80 radius-pill, bordo strip 160x24
+     arrangement: one tall terracota slab with satellites, the vinyl disc overlapping its left edge, right of x=480
+     pattern: literal motif (vinyl record) — "café, discos y eso": concentric grooves in durazno cut into the carbon disc, 6 rings at a 16px (space-4) pitch
+     scales: space-4 groove pitch, space-6 gaps, radius-xl and radius-pill corners -->
+<rect class="ter" x="656" y="-24" width="288" height="348" rx="28"/>
+<rect class="cre tile" x="496" y="20" width="160" height="112" rx="28"/>
+<rect class="bor" x="496" y="148" width="160" height="24" rx="12"/>
+<circle class="car" cx="640" cy="240" r="150"/>
+<circle class="groove" cx="640" cy="240" r="134"/><circle class="groove" cx="640" cy="240" r="118"/><circle class="groove" cx="640" cy="240" r="102"/>
+<circle class="groove" cx="640" cy="240" r="86"/><circle class="groove" cx="640" cy="240" r="70"/>
+<circle class="ter" cx="640" cy="240" r="48"/><circle class="car" cx="640" cy="240" r="7"/>
+<rect class="ver" x="840" y="40" width="80" height="80" rx="40"/>
+</svg>
+<div class="t"><h1>Geacofi</h1><p>café, discos y eso…</p></div>
+</div>
+</body></html>

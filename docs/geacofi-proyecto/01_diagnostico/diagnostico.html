@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geacofi · Diagnóstico de marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,600;1,700&family=DM+Mono:wght@400;500&family=Gaegu:wght@400;700&family=Mali:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Paleta tomada de las piezas de la marca */
+  --crema:#F1E5D9; --oliva:#445012; --terracota:#9A4A38; --bordo:#783E32;
+  --carbon:#14171B; --ambar:#BF834E; --durazno:#FBE6C8; --papel:#FAF6F0;
+  --tinta:#23251C; --tinta-suave:#5B5A4E; --linea:#D9CBB9;
+  --f-display:"Gaegu","Mali","Comic Sans MS",cursive;
+  --f-body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Menlo,monospace;
+  /* Layout: documento de una columna (máx. 1080px) con dos registros, día crema y noche carbón, igual que la marca */
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--crema);color:var(--tinta);font:16px/1.6 var(--f-body)}
+img{max-width:100%;display:block}
+a{color:var(--oliva)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--terracota);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2{font:700 2.6rem/1 var(--f-display);color:var(--oliva);letter-spacing:-.01em}
+h3{font:800 1.05rem/1.3 var(--f-body);color:var(--tinta)}
+p{margin:0;max-width:65ch}
+.sec{padding:64px 0;border-top:2px dashed var(--linea)}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;margin-bottom:32px}
+.num{font:500 .85rem var(--f-mono);color:var(--terracota)}
+.sec-head p{grid-column:2;color:var(--tinta-suave)}
+.chip{display:inline-block;font:500 .7rem/1 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:99px;vertical-align:middle}
+.obs{background:var(--oliva);color:var(--crema)}
+.int{background:transparent;color:var(--terracota);border:1.5px solid var(--terracota)}
+.legend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;font-size:.9rem;color:var(--tinta-suave)}
+
+/* Portada */
+.cover{padding:56px 0 48px}
+.cover-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+.eyebrow{font:500 .8rem var(--f-mono);color:var(--terracota);letter-spacing:.08em;text-transform:uppercase}
+.cover h1{font:700 clamp(3rem,8vw,5.4rem)/.9 var(--f-display);color:var(--oliva);margin:14px 0 18px}
+.cover .lead{font-size:1.15rem;max-width:52ch}
+.cover-art{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cover-art img{border-radius:14px;aspect-ratio:1;object-fit:cover;width:100%}
+.cover-art .wide{grid-column:span 2;aspect-ratio:2.2}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.fact{background:var(--papel);border:1.5px solid var(--linea);border-radius:10px;padding:8px 12px;font-size:.88rem}
+.fact b{font-family:var(--f-mono);font-weight:500;color:var(--oliva)}
+
+/* Insight principal */
+.insight{background:var(--carbon);color:var(--crema);border-radius:22px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.insight h3{color:var(--durazno);font:700 1.9rem/1.05 var(--f-display)}
+.insight p{color:#D8CFC2}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.duo figure{margin:0}
+.duo img{border-radius:12px;aspect-ratio:3/4;object-fit:cover;width:100%}
+.duo figcaption{font:500 .72rem var(--f-mono);color:#A69C8F;margin-top:6px;text-transform:uppercase;letter-spacing:.05em}
+
+/* Atributos */
+.attrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.attr{background:var(--papel);border-radius:16px;padding:22px;display:grid;gap:10px;border:1.5px solid var(--linea)}
+.attr .name{font:700 1.75rem/1 var(--f-display);color:var(--terracota)}
+.attr .ev{font-size:.88rem;color:var(--tinta-suave)}
+.attr .web{font-size:.9rem;border-top:1.5px dashed var(--linea);padding-top:10px}
+.attr .web b{font-family:var(--f-mono);font-weight:500;font-size:.72rem;color:var(--oliva);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.list li{padding-left:22px;position:relative}
+.list li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:9px;border:2px solid var(--oliva);border-radius:50% 45% 55% 40%}
+
+/* Paleta */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.sw{border-radius:16px;overflow:hidden;background:var(--papel);border:1.5px solid var(--linea)}
+.sw .c{height:110px;display:flex;align-items:flex-end;padding:10px;font:700 1.4rem var(--f-display)}
+.sw .meta{padding:10px 12px;font-size:.82rem;display:grid;gap:2px}
+.sw .meta b{font-size:.92rem}
+.sw .hex{font-family:var(--f-mono);color:var(--tinta-suave)}
+.ratio{display:flex;height:46px;border-radius:12px;overflow:hidden;margin:26px 0 8px;border:1.5px solid var(--linea)}
+.ratio div{display:flex;align-items:center;justify-content:center;font:500 .72rem var(--f-mono);min-width:0}
+.combos{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:22px}
+.combo{border-radius:14px;padding:18px;display:grid;gap:4px}
+.combo .t{font:700 1.7rem/1 var(--f-display)}
+.combo .s{font:500 .72rem var(--f-mono);opacity:.85}
+
+/* Tipografía */
+.type-grid{display:grid;gap:14px}
+.spec{background:var(--papel);border:1.5px solid var(--linea);border-radius:16px;padding:22px 24px;display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center}
+.spec .who{display:grid;gap:4px;font-size:.85rem;color:var(--tinta-suave)}
+.spec .who b{font:800 1rem var(--f-body);color:var(--tinta)}
+.spec .role{font:500 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--terracota)}
+.sample{min-width:0;overflow-wrap:anywhere}
+.menu-demo{background:var(--papel);border-radius:18px;padding:28px;border:1.5px solid var(--linea);display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px}
+.menu-demo h4{font:700 2.2rem/1 var(--f-display);color:var(--oliva);margin:0 0 12px}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:baseline;padding:6px 0}
+.row .n{font:800 1rem var(--f-body)}
+.row .d{border-bottom:2px dotted var(--linea);transform:translateY(-4px)}
+.row .p{font:500 .95rem var(--f-mono);font-variant-numeric:tabular-nums;color:var(--oliva)}
+.row small{grid-column:1/-1;font-size:.8rem;color:var(--tinta-suave);margin-top:-6px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:800 1rem var(--f-body);padding:12px 22px;border-radius:999px 999px 999px 999px / 60% 60% 70% 70%;border:2.5px solid var(--oliva);background:var(--oliva);color:var(--crema);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--oliva)}
+.event-demo{background:var(--durazno);border-radius:18px;padding:28px;color:var(--bordo);display:grid;gap:10px}
+.event-demo .big{font:700 3rem/.9 var(--f-display)}
+.event-demo .cond{font:italic 700 1.6rem/1 var(--f-cond);color:var(--terracota)}
+.event-demo .info{font:800 .85rem var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+
+/* Lenguaje gráfico */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.gallery img{border-radius:12px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.posters{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:14px;align-items:start}
+.posters figure{margin:0}
+.posters img{border-radius:14px;width:100%}
+figcaption{font-size:.82rem;color:var(--tinta-suave);margin-top:8px}
+.copy-quotes{display:flex;flex-wrap:wrap;gap:10px}
+.copy-quotes span{font:700 1.35rem/1 var(--f-display);color:var(--oliva);background:var(--papel);border:1.5px solid var(--linea);padding:10px 14px;border-radius:14px 18px 12px 16px}
+
+/* Personaje */
+.refs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ref{background:var(--papel);border:1.5px solid var(--linea);border-radius:16px;overflow:hidden}
+.ref img{width:100%;aspect-ratio:1;object-fit:cover}
+.ref .cap{padding:12px 14px;display:grid;gap:4px;font-size:.86rem}
+.ref .cap b{font-size:.95rem}
+.anat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:22px}
+.anat div{background:var(--papel);border-left:4px solid var(--oliva);border-radius:4px 12px 12px 4px;padding:14px 16px;font-size:.9rem}
+.anat b{display:block;font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--oliva);margin-bottom:4px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.rules > div{border-radius:16px;padding:22px}
+.keep{background:var(--oliva);color:var(--crema)}
+.keep h3,.flex h3{color:inherit;font:700 1.6rem/1 var(--f-display);margin-bottom:12px}
+.keep .list li::before{border-color:var(--durazno)}
+.flex{background:var(--papel);border:2px dashed var(--terracota);color:var(--tinta)}
+.flex .list li::before{border-color:var(--terracota)}
+.warn{margin-top:18px;background:var(--durazno);border-radius:14px;padding:16px 18px;color:var(--bordo);font-size:.93rem}
+.warn b{font-family:var(--f-mono);font-weight:500;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+
+/* Oportunidades */
+.ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;counter-reset:op}
+.op{background:var(--carbon);color:var(--crema);border-radius:16px;padding:20px;display:grid;gap:8px;align-content:start}
+.op h3{color:var(--durazno);font:700 1.45rem/1.05 var(--f-display)}
+.op p{font-size:.9rem;color:#D8CFC2}
+
+/* Preguntas */
+.qs{display:grid;gap:10px;counter-reset:q;padding:0;margin:0;list-style:none}
+.qs li{counter-increment:q;background:var(--papel);border:1.5px solid var(--linea);border-radius:14px;padding:14px 16px 14px 56px;position:relative}
+.qs li::before{content:counter(q);position:absolute;left:16px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--terracota);color:var(--crema);font:500 .85rem/28px var(--f-mono);text-align:center}
+.qs li span{display:block;font-size:.85rem;color:var(--tinta-suave)}
+.next{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+footer{padding:36px 0 56px;color:var(--tinta-suave);font-size:.82rem;border-top:2px dashed var(--linea)}
+
+@media (max-width:820px){
+  .cover-grid,.insight,.two,.rules,.menu-demo{grid-template-columns:1fr}
+  .spec{grid-template-columns:1fr;gap:10px}
+  .refs{grid-template-columns:1fr 1fr}
+  .posters{grid-template-columns:1fr 1fr}
+  .insight{padding:26px}
+  h2{font-size:2.1rem}
+}
+@media (max-width:440px){.refs,.posters{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){
+  .cover-art img{transition:transform .5s ease}
+  .cover-art img:hover{transform:rotate(-1.5deg) scale(1.02)}
+}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap cover-grid">
+    <div>
+      <div class="eyebrow">Etapa 1 · Diagnóstico de marca</div>
+      <h1>geacofi, de cerca</h1>
+      <p class="lead">Lectura de la identidad visual, la personalidad y el personaje de Geacofi a partir de 9 piezas de Instagram, la carta impresa y el vaso. Es la base para las tres direcciones de arte de la Etapa 2.</p>
+      <div class="facts">
+        <span class="fact"><b>café</b> de especialidad</span>
+        <span class="fact"><b>9 de Julio 996</b></span>
+        <span class="fact"><b>@geacofi</b> · 3.187 seguidores · 42 posts</span>
+        <span class="fact"><b>nominado</b> The Best Coffee Shops Argentina 2026</span>
+        <span class="fact"><b>contacto</b> WhatsApp desde la bio</span>
+      </div>
+      <div class="legend" style="margin-top:22px">
+        <span><span class="chip obs">Observado</span> visible en las imágenes</span>
+        <span><span class="chip int">Interpretación</span> lectura o propuesta nuestra</span>
+      </div>
+    </div>
+    <div class="cover-art">
+      <img src="img/avatar.jpg" alt="Avatar de Instagram: la rana de Geacofi en línea verde oliva sobre crema, sosteniendo una taza humeante">
+      <img src="img/logo.jpg" alt="Logotipo manuscrito geacofi en verde oliva sobre crema">
+      <img class="wide" src="img/interior.jpg" alt="Interior del local con estructura de vigas de hierro negro, entrepiso, paredes de revoque cálido y barra gris">
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>La idea central</h2>
+      <p>Lo más distintivo de la marca es la convivencia de dos registros que se complementan.</p></div>
+    <div class="insight">
+      <div style="display:grid;gap:16px;align-content:start">
+        <span class="chip int" style="color:var(--durazno);border-color:var(--durazno);justify-self:start">Interpretación</span>
+        <h3>De día, un dibujo en una servilleta. De noche, un bar de café con luz baja.</h3>
+        <p>Las piezas gráficas son claras, crema, dibujadas a mano y con humor: la rana medio dormida, el lettering redondeado, la carta en minúsculas. Las fotografías y el local van al revés: fondos oscuros, luz ámbar de tungsteno, hierro negro, primeros planos de métodos de filtrado y masas laminadas.</p>
+        <p>Esa tensión es la marca: <strong style="color:var(--durazno)">sabe mucho de café pero no se lo toma en serio</strong>. Una web genérica elegiría uno de los dos registros. La propuesta debería usar los dos y hacer que el pasaje entre ellos sea parte de la experiencia.</p>
+      </div>
+      <div class="duo">
+        <figure><img src="img/sensorial.jpg" alt="Flyer Studio Sensorial: ilustraciones de V60, moka y tazas en bordó sobre durazno"><figcaption>Registro día · gráfico</figcaption></figure>
+        <figure><img src="img/p_v60.jpg" alt="Foto en penumbra de un V60 sobre balanza con luz cálida"><figcaption>Registro noche · fotográfico</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Personalidad</h2>
+      <p>Seis atributos, cada uno con su evidencia en las piezas y lo que implica para la web.</p></div>
+    <div class="attrs">
+      <article class="attr">
+        <div class="name">pachorra</div>
+        <p class="ev"><span class="chip obs">Obs.</span> La rana tiene párpados caídos y sonrisa de satisfacción; siempre está quieta, con la taza.</p>
+        <p class="web"><b>En la web</b>Ritmo lento: aire generoso, animaciones suaves y largas, nada que grite "comprá ya".</p>
+      </article>
+      <article class="attr">
+        <div class="name">sabe, pero no presume</div>
+        <p class="ev"><span class="chip obs">Obs.</span> Carta con Aeropress, Origami, V60 y Chemex; el taller sensorial aclara "no se requiere conocimiento previo".</p>
+        <p class="web"><b>En la web</b>Explicar cada método en una línea simple, con datos de barista (gramos, tiempo) como detalle, no como barrera.</p>
+      </article>
+      <article class="attr">
+        <div class="name">hecho a mano</div>
+        <p class="ev"><span class="chip obs">Obs.</span> Logo manuscrito, íconos dibujados, recuadros de la carta con línea temblorosa, vaso marcado con la rana.</p>
+        <p class="web"><b>En la web</b>Bordes, subrayados y separadores con trazo irregular; nada de íconos de librería.</p>
+      </article>
+      <article class="attr">
+        <div class="name">humor de barra</div>
+        <p class="ev"><span class="chip obs">Obs.</span> "shot chiquito", "huevito revuelto", "latte pero con hielo", "café y eso…", el "golden cofi".</p>
+        <p class="web"><b>En la web</b>Microcopy en minúsculas y con voz propia en botones, estados vacíos y confirmaciones.</p>
+      </article>
+      <article class="attr">
+        <div class="name">cultura de vinilo</div>
+        <p class="ev"><span class="chip obs">Obs.</span> Música de Madlib y MF Doom en un post, set de vinilos, feria de discos, pop-up de streetwear (lostclub).</p>
+        <p class="web"><b>En la web</b>Una sección de eventos con estética de flyer y lugar para la música (playlist o "lo que suena hoy").</p>
+      </article>
+      <article class="attr">
+        <div class="name">de barrio, con estándar</div>
+        <p class="ev"><span class="chip obs">Obs.</span> Contacto por WhatsApp, chipa en la carta, gente trabajando con la compu; y a la vez una nominación nacional.</p>
+        <p class="web"><b>En la web</b>Cercanía directa (WhatsApp, cómo llegar) sin perder la prolijidad de un lugar premiado.</p>
+      </article>
+    </div>
+    <div class="two" style="margin-top:36px">
+      <div style="display:grid;gap:12px">
+        <h3>Emociones y promesa <span class="chip int">Interpretación</span></h3>
+        <ul class="list">
+          <li>Promete un lugar donde quedarse: frenar, trabajar un rato, volver a la noche por un evento.</li>
+          <li>Busca despertar complicidad (el chiste interno de la rana) más que admiración distante.</li>
+          <li>Valores: oficio, curiosidad, comunidad y no tomarse demasiado en serio.</li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:12px">
+        <h3>Público probable <span class="chip int">Interpretación</span></h3>
+        <ul class="list">
+          <li>Jóvenes adultos, estudiantes y gente que trabaja remoto (fotos con laptop).</li>
+          <li>Escena creativa local: música, vinilos, streetwear, ilustración.</li>
+          <li>Curiosos del café de especialidad que todavía no son expertos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Paleta cromática</h2>
+      <p>HEX muestreados de las piezas digitales (logo, destacadas, flyers y fotos). Son aproximados: la carta impresa da un verde más claro por la impresión.</p></div>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#445012;color:#F1E5D9">Aa</div><div class="meta"><b>Verde geacofi</b><span class="hex">#445012</span><span>Logo, avatar, carta. Principal.</span></div></div>
+      <div class="sw"><div class="c" style="background:#F1E5D9;color:#445012">Aa</div><div class="meta"><b>Crema</b><span class="hex">#F1E5D9</span><span>Fondo de marca.</span></div></div>
+      <div class="sw"><div class="c" style="background:#9A4A38;color:#F1E5D9">Aa</div><div class="meta"><b>Terracota</b><span class="hex">#9A4A38</span><span>Destacada "cookie", título "café y eso".</span></div></div>
+      <div class="sw"><div class="c" style="background:#14171B;color:#F1E5D9">Aa</div><div class="meta"><b>Carbón</b><span class="hex">#14171B</span><span>Destacada, fondos de foto, hierro.</span></div></div>
+      <div class="sw"><div class="c" style="background:#783E32;color:#FBE6C8">Aa</div><div class="meta"><b>Bordó café</b><span class="hex">#783E32</span><span>Línea de ilustración en eventos.</span></div></div>
+      <div class="sw"><div class="c" style="background:#FBE6C8;color:#783E32">Aa</div><div class="meta"><b>Durazno</b><span class="hex">#FBE6C8</span><span>Fondo de flyers de eventos.</span></div></div>
+      <div class="sw"><div class="c" style="background:#BF834E;color:#14171B">Aa</div><div class="meta"><b>Ámbar luz</b><span class="hex">#BF834E</span><span>Tono dominante de las fotos.</span></div></div>
+    </div>
+    <p style="margin-top:26px"><span class="chip int">Propuesta</span> Proporción sugerida para la web</p>
+    <div class="ratio" role="img" aria-label="Proporción sugerida: crema 50%, carbón 20%, verde 15%, terracota 8%, durazno 5%, bordó 2%">
+      <div style="flex:50;background:#F1E5D9;color:#445012">crema 50</div>
+      <div style="flex:20;background:#14171B;color:#F1E5D9">carbón 20</div>
+      <div style="flex:15;background:#445012;color:#F1E5D9">verde 15</div>
+      <div style="flex:8;background:#9A4A38;color:#F1E5D9">8</div>
+      <div style="flex:5;background:#FBE6C8;color:#783E32">5</div>
+      <div style="flex:2;background:#783E32"></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--tinta-suave)">El ámbar no se usa como color de interfaz: vive en las fotos.</p>
+    <div class="combos">
+      <div class="combo" style="background:#F1E5D9;color:#445012;border:1.5px solid var(--linea)"><span class="t">verde sobre crema</span><span class="s">Contraste 7,1:1 · identidad base</span></div>
+      <div class="combo" style="background:#14171B;color:#F1E5D9"><span class="t">crema sobre carbón</span><span class="s">Contraste 14,5:1 · secciones de noche</span></div>
+      <div class="combo" style="background:#FBE6C8;color:#783E32"><span class="t">bordó sobre durazno</span><span class="s">Contraste 6,8:1 · eventos</span></div>
+      <div class="combo" style="background:#9A4A38;color:#F1E5D9"><span class="t">crema sobre terracota</span><span class="s">Contraste 5,0:1 · acentos y botones</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Tipografía</h2>
+      <p>Lo que hay hoy y cinco fuentes que lo continúan, todas gratuitas en Google Fonts.</p></div>
+    <div class="two" style="margin-bottom:28px">
+      <div style="display:grid;gap:10px">
+        <h3>Lo que se ve en las piezas <span class="chip obs">Observado</span></h3>
+        <ul class="list">
+          <li><strong>Logo:</strong> lettering manuscrito propio, monolínea gruesa, terminaciones redondas, todo en minúsculas, "a" de un solo piso. No es una fuente: hay que conservarlo como dibujo.</li>
+          <li><strong>Títulos de la carta:</strong> la misma mano ("calientes", "frios", "salado").</li>
+          <li><strong>Ítems de la carta y datos de eventos:</strong> sans redondeada geométrica, de la familia de Nunito, con mayúsculas espaciadas en los flyers.</li>
+          <li><strong>Flyer "café y eso":</strong> sans condensada en itálica para la info.</li>
+          <li><strong>Studio Sensorial:</strong> mayúsculas manuscritas finas, distinta del logo.</li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:10px">
+        <h3>Criterio <span class="chip int">Interpretación</span></h3>
+        <ul class="list">
+          <li>El logo y los títulos grandes deben sentirse dibujados; el resto, limpio y muy legible.</li>
+          <li>Hoy conviven tres o cuatro manos distintas en los títulos de eventos. La web es la oportunidad de fijar una sola voz manuscrita.</li>
+          <li>La fuente manuscrita va solo en tamaños grandes; en textos chicos pierde legibilidad.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="type-grid">
+      <div class="spec">
+        <div class="who"><span class="role">Títulos · recomendada</span><b>Gaegu</b><span>Manuscrita redondeada, trazo parejo. La más cercana a la mano del logo.</span></div>
+        <div class="sample" style="font:700 3rem/1 var(--f-display);color:var(--oliva)">calientes, frios y filtrados</div>
+      </div>
+      <div class="spec">
+        <div class="who"><span class="role">Títulos · alternativa</span><b>Mali</b><span>Más firme y redonda; mejor si hace falta más peso en pantallas chicas.</span></div>
+        <div class="sample" style="font:700 2.5rem/1.05 'Mali',cursive;color:var(--oliva)">café y eso…</div>
+      </div>
+      <div class="spec">
+        <div class="who"><span class="role">Texto, menú y botones</span><b>Nunito</b><span>Sans redondeada, igual de amable que la carta actual y excelente en párrafos.</span></div>
+        <div class="sample" style="font:400 1.1rem/1.55 var(--f-body)"><strong style="font-weight:800">espresso tonic</strong> · doble espresso + tónica. Un café con burbujas para la tarde. <span style="font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--bordo)">reservá tu cupo</span></div>
+      </div>
+      <div class="spec">
+        <div class="who"><span class="role">Flyers y eventos</span><b>Barlow Condensed</b><span>Itálica condensada, continúa la info del flyer "café y eso".</span></div>
+        <div class="sample" style="font:italic 700 2.3rem/1 var(--f-cond);color:var(--terracota)">vinyl set · feria de vinilos · 17:00 a 21:00</div>
+      </div>
+      <div class="spec">
+        <div class="who"><span class="role">Datos de barista y precios</span><b>DM Mono</b><span>Para recetas, gramos, tiempos y precios alineados. Suma el lado nerd sin frialdad.</span></div>
+        <div class="sample" style="font:500 1.15rem/1.5 var(--f-mono);color:var(--tinta)">v60 · 15 g · 250 ml · 2:45 min</div>
+      </div>
+    </div>
+
+    <p style="margin-top:28px"><span class="chip int">Ejemplo</span> Cómo funcionarían juntas</p>
+    <div class="menu-demo">
+      <div>
+        <h4>calientes</h4>
+        <div class="row"><span class="n">espresso</span><span class="d"></span><span class="p">$ 3.700</span><small>shot chiquito</small></div>
+        <div class="row"><span class="n">uno y uno</span><span class="d"></span><span class="p">$ 4.100</span><small>espresso + cortadito</small></div>
+        <div class="row"><span class="n">spicy orange</span><span class="d"></span><span class="p">$ 5.500</span><small>espresso + leche + choco picante + almíbar de naranja</small></div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+          <button class="btn" type="button">ver la carta</button>
+          <button class="btn ghost" type="button">cómo llegar</button>
+        </div>
+        <p style="font-size:.78rem;color:var(--tinta-suave);margin-top:12px">Precios tal como figuran en la carta fotografiada.</p>
+      </div>
+      <div class="event-demo">
+        <span class="big">studio sensorial</span>
+        <span class="cond">Tomi Garcia x geacofi</span>
+        <span class="info">Domingo 23/11 · 16 hs</span>
+        <span style="font-size:.9rem">No se requiere conocimiento previo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Lenguaje gráfico</h2>
+      <p>Ilustración de línea, fotografía de luz baja y un espacio industrial cálido.</p></div>
+    <div class="posters">
+      <figure><img src="img/menu.jpg" alt="Carta impresa en verde sobre blanco con íconos dibujados y recuadros a mano"><figcaption><span class="chip obs">Obs.</span> Carta: monocromo verde, íconos de línea, recuadros irregulares, puntos guía.</figcaption></figure>
+      <figure><img src="img/sensorial.jpg" alt="Flyer Studio Sensorial"><figcaption><span class="chip obs">Obs.</span> Eventos: durazno y bordó, objetos de café dibujados, destellos de cuatro puntas.</figcaption></figure>
+      <figure><img src="img/cafeyeso.jpg" alt="Flyer café y eso con la rana y otro personaje haciendo de DJ"><figcaption><span class="chip obs">Obs.</span> "café y eso": la rana como DJ, título manuscrito terracota, info condensada itálica.</figcaption></figure>
+    </div>
+
+    <div class="two" style="margin-top:36px">
+      <div style="display:grid;gap:12px">
+        <h3>Ilustración y símbolos <span class="chip obs">Observado</span></h3>
+        <ul class="list">
+          <li>Línea monocroma sin relleno (o relleno crema plano), trazo de marcador con leve temblor.</li>
+          <li>Repertorio de objetos: V60 con jarra, moka, tazas apiladas, vaso, reloj, galleta, sándwich, Chemex.</li>
+          <li>Íconos de destacadas en círculos de color plano: crema, verde, terracota y negro.</li>
+          <li>Recursos sueltos: destellos de cuatro puntas, garabatos en espiral, vapor en "S".</li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:12px">
+        <h3>Fotografía <span class="chip obs">Observado</span></h3>
+        <ul class="list">
+          <li>Clave baja: fondos casi negros, una sola fuente de luz cálida, alto contraste.</li>
+          <li>Primeros planos de producto (roll de canela, babka, tostado) en platos negros.</li>
+          <li>Manos en acción: verter, cortar, moler. El proceso importa tanto como el resultado.</li>
+          <li>Métodos de filtrado como protagonistas (V60, Origami, Chemex).</li>
+        </ul>
+      </div>
+    </div>
+    <img src="img/highlights.jpg" alt="Cuatro íconos de historias destacadas: reloj verde sobre crema, V60 crema sobre verde, galleta sobre terracota y vaso sobre negro" style="border-radius:16px;margin-top:26px;width:100%">
+    <div class="gallery" style="margin-top:12px">
+      <img src="img/p_roll.jpg" alt="Roll de canela con glaseado sobre plato negro">
+      <img src="img/p_babka.jpg" alt="Babka de chocolate con azúcar impalpable">
+      <img src="img/p_sandwich.jpg" alt="Tostado dorado cortado a cuchillo">
+      <img src="img/p_origami.jpg" alt="Gotero Origami rosa con luz lateral">
+      <img src="img/p_chemex.jpg" alt="Chemex con café en penumbra">
+      <img src="img/p_shelf.jpg" alt="Estante con bolsas de café y vigas de hierro">
+    </div>
+
+    <div style="margin-top:36px;display:grid;gap:14px">
+      <h3>Tono de voz <span class="chip obs">Observado</span></h3>
+      <div class="copy-quotes">
+        <span>shot chiquito</span><span>latte pero con hielo</span><span>huevito revuelto</span><span>café y eso…</span><span>golden cofi</span><span>no se requiere conocimiento previo</span>
+      </div>
+      <p style="color:var(--tinta-suave)">Minúsculas, diminutivos, vocabulario de barra y guiños. El nombre mismo castellaniza "coffee" en "cofi".</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>El personaje</h2>
+      <p>Una rana de párpados pesados que toma café. Es el activo más fuerte de la marca y hoy aparece en tres versiones de dibujo.</p></div>
+    <div class="refs">
+      <div class="ref"><img src="img/avatar.jpg" alt="Rana en línea verde sosteniendo una taza humeante, avatar de Instagram"><div class="cap"><b>Versión avatar</b><span>Línea verde sobre crema, busto, taza con vapor. La más sintética.</span></div></div>
+      <div class="ref"><img src="img/cup.jpg" alt="Rana dibujada en negro sobre un vaso de papel"><div class="cap"><b>Versión vaso</b><span>Línea negra, más cruda y temblorosa. Misma pose que el avatar.</span></div></div>
+      <div class="ref"><img src="img/dj.jpg" alt="La rana con auriculares pasando discos junto a otro personaje"><div class="cap"><b>Versión flyer DJ</b><span>Cuerpo entero, auriculares, sombras grises, más detalle en manos.</span></div></div>
+    </div>
+
+    <h3 style="margin-top:32px">Anatomía <span class="chip obs">Observado</span></h3>
+    <div class="anat">
+      <div><b>Silueta</b>Forma de campana o pera: cabeza y cuerpo son una sola masa, sin cuello. Arriba, dos bultos que marcan los ojos.</div>
+      <div><b>Proporciones</b>En la versión busto, la cabeza ocupa cerca del 55% de la altura. Cuerpo ancho, brazos cortos.</div>
+      <div><b>Ojos</b>El rasgo clave. Párpados pesados en forma de media luna con 2 o 3 líneas horizontales; mirada entrecerrada y relajada.</div>
+      <div><b>Boca y nariz</b>Una línea ancha, apenas curvada, de lado a lado. Dos puntitos de narinas en el centro.</div>
+      <div><b>Manos</b>Dedos gruesos y redondeados que envuelven la taza. En el flyer, dedos separados y articulados.</div>
+      <div><b>Trazo</b>Monolínea de marcador, grosor parejo, terminaciones redondas, temblor leve. Sin contorno doble ni degradés.</div>
+      <div><b>Color</b>Una sola tinta: verde (#445012), negro o bordó, según el soporte. Relleno crema o ninguno.</div>
+      <div><b>Actitud</b>Satisfecho, sin apuro, un poco canchero. Nunca sobresaltado ni con energía de mascota infantil.</div>
+    </div>
+
+    <div class="rules">
+      <div class="keep">
+        <h3>Esencial, no cambia</h3>
+        <ul class="list">
+          <li>Los párpados pesados y la mirada entrecerrada.</li>
+          <li>Silueta de campana sin cuello y bultos de los ojos.</li>
+          <li>Boca de línea ancha y narinas en dos puntos.</li>
+          <li>Línea monocroma de una tinta, trazo de marcador.</li>
+          <li>Actitud tranquila.</li>
+        </ul>
+      </div>
+      <div class="flex">
+        <h3>Puede adaptarse</h3>
+        <ul class="list">
+          <li>Color de la línea según el fondo (verde, negro, bordó, crema).</li>
+          <li>Accesorios: auriculares, gorra, delantal de barista, objetos de café.</li>
+          <li>Pose y encuadre: busto, cuerpo entero, asomándose desde un borde (como en el flyer sensorial).</li>
+          <li>Intensidad de la sonrisa y apertura de ojos, sin perder el párpado caído.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warn"><b>Inconsistencias a resolver</b>La versión DJ tiene sombras grises y más detalle que las otras dos; el vaso tiene un trazo más crudo. Hay que elegir una versión maestra antes de dibujar la hoja de personaje. El personaje con gorra "LOST" del mismo flyer parece pertenecer a la marca invitada (lostclub) y no lo tomamos como parte del universo Geacofi. <span class="chip int">Interpretación</span></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">07</span><h2>Oportunidades para la web</h2>
+      <p>Dónde la identidad actual puede convertirse en experiencia digital. <span class="chip int">Interpretación</span></p></div>
+    <div class="ops">
+      <div class="op"><h3>Día y noche</h3><p>Secciones crema ilustradas que se alternan con bloques carbón de fotografía. El scroll como recorrido del día en el local.</p></div>
+      <div class="op"><h3>La rana anfitriona</h3><p>Acompaña sin invadir: se asoma en bordes, parpadea lento, levanta la taza cuando algo se confirma.</p></div>
+      <div class="op"><h3>Carta viva</h3><p>Traducir la carta impresa a la web con sus categorías e íconos, editable fácil para actualizar precios.</p></div>
+      <div class="op"><h3>Filtrados explicados</h3><p>Una sección corta para V60, Origami, Chemex y Aeropress con su dibujo y su perfil, para acercar al curioso.</p></div>
+      <div class="op"><h3>Agenda tipo flyer</h3><p>Los eventos (vinilos, talleres, pop-ups) tienen un lenguaje propio que merece un espacio que se actualice solo.</p></div>
+      <div class="op"><h3>WhatsApp primero</h3><p>El canal real de contacto ya es WhatsApp: botón fijo en mobile, sin formularios innecesarios.</p></div>
+      <div class="op"><h3>Logo como sistema</h3><p>Vectorizar el lettering y usar la misma mano para un set de íconos y separadores propios.</p></div>
+      <div class="op"><h3>Sello del premio</h3><p>La nominación 2026 suma confianza; ubicarla con discreción, sin volverla protagonista.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">08</span><h2>Antes de seguir, necesito saber</h2>
+      <p>Datos que las imágenes no responden y que cambian decisiones de la Etapa 2.</p></div>
+    <ol class="qs">
+      <li>¿La rana tiene nombre? ¿Quién la dibujó y existen archivos originales (vector, PSD, Procreate)?<span>Define si redibujamos sobre el original o vectorizamos desde capturas.</span></li>
+      <li>De las tres versiones (avatar, vaso, flyer DJ), ¿cuál considera el café como "la verdadera"?<span>Será la versión maestra de la biblia visual.</span></li>
+      <li>¿Hay archivo vectorial del logo?<span>Si no, hay que redibujarlo fiel a partir de la mejor imagen disponible.</span></li>
+      <li>¿En qué ciudad está? El teléfono de la publicación tiene característica 362, que corresponde a Resistencia, Chaco. ¿Es correcto? ¿Cuáles son los horarios?<span>No inventamos horarios ni ubicación.</span></li>
+      <li>¿La web debe tomar pedidos, reservas o solo mostrar carta, eventos y contacto por WhatsApp?<span>Cambia la arquitectura y el presupuesto de desarrollo.</span></li>
+      <li>¿Quién va a actualizar la carta y los eventos, y con qué frecuencia?<span>Decide si conviene un CMS simple o una planilla conectada.</span></li>
+      <li>¿Qué significa "gea"? ¿Hay una historia detrás del nombre o del local?<span>Alimenta la sección "nuestra historia" sin inventar.</span></li>
+      <li>¿Tienen las fotos de Instagram en alta resolución, o una sesión prevista?<span>La propuesta se apoya mucho en la fotografía de noche.</span></li>
+    </ol>
+    <div class="next">
+      <span class="chip obs">Próximo paso</span>
+      <span>Con tu aprobación de este diagnóstico, paso a la Etapa 2: tres direcciones de arte con moodboard y mockup de home cada una.</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Diagnóstico elaborado a partir de 9 imágenes de Instagram, la carta y el vaso de Geacofi, compartidas en noviembre de 2026. Colores muestreados digitalmente; los HEX son aproximados.</div>
+</footer>
+</body>
+</html>

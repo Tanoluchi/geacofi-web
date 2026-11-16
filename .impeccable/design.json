@@ -1,0 +1,591 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T00:24:40.244553+00:00",
+  "title": "Design System: Geacofi",
+  "extensions": {
+    "colorMeta": {
+      "terracota": {
+        "role": "primary",
+        "displayName": "Terracota de ladrillo",
+        "canonical": "#9A4A38",
+        "oklch": "oklch(50.6% 0.111 34.0)",
+        "tonalRamp": [
+          "#190402",
+          "#3E1810",
+          "#663023",
+          "#924939",
+          "#B76B59",
+          "#D39383",
+          "#EEBBAF",
+          "#FFE5DC"
+        ]
+      },
+      "bordo": {
+        "role": "secondary",
+        "displayName": "Bordó de marcador",
+        "canonical": "#783E32",
+        "oklch": "oklch(43.4% 0.084 32.8)",
+        "tonalRamp": [
+          "#160604",
+          "#381C16",
+          "#5E352C",
+          "#875045",
+          "#AB7165",
+          "#C9988D",
+          "#E6BFB6",
+          "#FFE7E1"
+        ]
+      },
+      "ambar": {
+        "role": "secondary",
+        "displayName": "Ámbar de lámpara",
+        "canonical": "#BF834E",
+        "oklch": "oklch(66.0% 0.101 61.1)",
+        "tonalRamp": [
+          "#160700",
+          "#381E04",
+          "#5E3812",
+          "#875423",
+          "#AA7546",
+          "#C89B75",
+          "#E5C1A5",
+          "#FFE9D5"
+        ]
+      },
+      "verde": {
+        "role": "tertiary",
+        "displayName": "Verde de carta impresa",
+        "canonical": "#445012",
+        "oklch": "oklch(40.7% 0.085 119.9)",
+        "tonalRamp": [
+          "#090D01",
+          "#22280C",
+          "#3E471E",
+          "#5C6833",
+          "#7C8953",
+          "#A0AB7F",
+          "#C5CEAC",
+          "#EBF2DA"
+        ]
+      },
+      "durazno": {
+        "role": "neutral",
+        "displayName": "Papel durazno",
+        "canonical": "#FBE6C8",
+        "oklch": "oklch(93.4% 0.046 76.8)",
+        "tonalRamp": [
+          "#0F0A04",
+          "#2C2417",
+          "#4C402E",
+          "#6F5E47",
+          "#917F67",
+          "#B1A38E",
+          "#D3C7B7",
+          "#F5EDE2"
+        ]
+      },
+      "crema": {
+        "role": "neutral",
+        "displayName": "Crema",
+        "canonical": "#F1E5D9",
+        "oklch": "oklch(92.8% 0.021 67.6)",
+        "tonalRamp": [
+          "#0D0B08",
+          "#29241F",
+          "#48413A",
+          "#695F56",
+          "#8A8077",
+          "#ACA39B",
+          "#CEC8C1",
+          "#F2EEE9"
+        ]
+      },
+      "carbon": {
+        "role": "neutral",
+        "displayName": "Carbón de noche",
+        "canonical": "#14171B",
+        "oklch": "oklch(20.3% 0.009 255.6)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#232528",
+          "#404246",
+          "#5E6166",
+          "#7F8387",
+          "#A2A5A9",
+          "#C7C9CC",
+          "#EDEFF1"
+        ]
+      },
+      "carbon-raised": {
+        "role": "neutral",
+        "displayName": "Carbón elevado",
+        "canonical": "#22262C",
+        "oklch": "oklch(26.7% 0.013 258.4)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#232529",
+          "#3F4247",
+          "#5D6268",
+          "#7E8389",
+          "#A1A5AB",
+          "#C6C9CE",
+          "#ECEFF2"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta de lectura",
+        "canonical": "#23251C",
+        "oklch": "oklch(25.9% 0.017 117.7)",
+        "tonalRamp": [
+          "#0B0C09",
+          "#252621",
+          "#41433C",
+          "#606259",
+          "#81847A",
+          "#A4A69E",
+          "#C8CAC3",
+          "#EEEFEA"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "#5B4A40",
+        "oklch": "oklch(42.4% 0.028 52.1)",
+        "tonalRamp": [
+          "#0F0A07",
+          "#2B231E",
+          "#4B3F38",
+          "#6E5D54",
+          "#8F7E74",
+          "#B0A299",
+          "#D2C7C0",
+          "#F5EDE8"
+        ]
+      },
+      "ink-muted-noche": {
+        "role": "neutral",
+        "displayName": "Tinta suave de noche",
+        "canonical": "#D8CFC2",
+        "oklch": "oklch(85.8% 0.020 77.3)",
+        "tonalRamp": [
+          "#0D0B08",
+          "#28241F",
+          "#474139",
+          "#676056",
+          "#898176",
+          "#AAA49B",
+          "#CDC8C1",
+          "#F1EEE9"
+        ]
+      },
+      "status-open": {
+        "role": "status",
+        "displayName": "Puntito de abierto",
+        "canonical": "#7BC67E",
+        "oklch": "oklch(75.9% 0.126 145.1)",
+        "tonalRamp": [
+          "#001001",
+          "#092D0D",
+          "#1C4E20",
+          "#307235",
+          "#529456",
+          "#80B581",
+          "#ADD6AE",
+          "#DBF8DB"
+        ]
+      },
+      "tostador-komun": {
+        "role": "special",
+        "displayName": "Lavanda Komún",
+        "canonical": "#CFC6EA",
+        "oklch": "oklch(84.5% 0.050 296.8)",
+        "tonalRamp": [
+          "#0C0912",
+          "#262231",
+          "#443E54",
+          "#645C79",
+          "#857D9B",
+          "#A7A1BA",
+          "#CBC6DA",
+          "#EFECFA"
+        ]
+      },
+      "tostador-momo": {
+        "role": "special",
+        "displayName": "Carbón MOMO",
+        "canonical": "#14171B",
+        "oklch": "oklch(20.3% 0.009 255.6)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#232528",
+          "#404246",
+          "#5E6166",
+          "#7F8387",
+          "#A2A5A9",
+          "#C7C9CC",
+          "#EDEFF1"
+        ]
+      },
+      "tostador-motofeca": {
+        "role": "special",
+        "displayName": "Naranja Motofeca",
+        "canonical": "#E58A43",
+        "oklch": "oklch(71.7% 0.140 55.9)",
+        "tonalRamp": [
+          "#1B0400",
+          "#401800",
+          "#693000",
+          "#964900",
+          "#BB6B2A",
+          "#D69464",
+          "#F1BD98",
+          "#FFE6CD"
+        ]
+      },
+      "tostador-pepe": {
+        "role": "special",
+        "displayName": "Verde Lo de Pepe",
+        "canonical": "#445012",
+        "oklch": "oklch(40.7% 0.085 119.9)",
+        "tonalRamp": [
+          "#090D01",
+          "#22280C",
+          "#3E471E",
+          "#5C6833",
+          "#7C8953",
+          "#A0AB7F",
+          "#C5CEAC",
+          "#EBF2DA"
+        ]
+      }
+    },
+    "themes": {
+      "dia": {
+        "surface": "durazno",
+        "surface-raised": "crema",
+        "ink": "ink",
+        "ink-muted": "ink-muted",
+        "heading": "terracota",
+        "eyebrow": "terracota",
+        "border": "bordo",
+        "on-accent": "durazno",
+        "focus": "carbon"
+      },
+      "noche": {
+        "surface": "carbon",
+        "surface-raised": "carbon-raised",
+        "ink": "crema",
+        "ink-muted": "ink-muted-noche",
+        "heading": "durazno",
+        "eyebrow": "ambar",
+        "border": "ambar",
+        "on-accent": "durazno",
+        "focus": "durazno"
+      },
+      "activation": "data-theme=\"noche\" en cada sección oscura"
+    },
+    "typographyMeta": {
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "Un solo título por página. 72-76px en celular."
+      },
+      "h2": {
+        "displayName": "Título de sección",
+        "purpose": "56-60px en celular."
+      },
+      "h3": {
+        "displayName": "Título de estado",
+        "purpose": "Estados vacíos y títulos de eventos."
+      },
+      "card-name": {
+        "displayName": "Nombre de café",
+        "purpose": "Figurita, ≈ 15% del ancho."
+      },
+      "button": {
+        "displayName": "Botón",
+        "purpose": "Itálica. Botones sticker; navegación a 22px.",
+        "fontStyle": "italic"
+      },
+      "card-title": {
+        "displayName": "Categoría",
+        "purpose": "Itálica. Nombre de categoría en la carta.",
+        "fontStyle": "italic"
+      },
+      "date": {
+        "displayName": "Fecha de flyer",
+        "purpose": "Itálica. Fechas de eventos; marquesina a 30px.",
+        "fontStyle": "italic"
+      },
+      "lead": {
+        "displayName": "Bajada",
+        "purpose": "Bajada del hero."
+      },
+      "body": {
+        "displayName": "Texto",
+        "purpose": "Párrafos, 65 caracteres como máximo."
+      },
+      "item": {
+        "displayName": "Ítem",
+        "purpose": "Nombre de ítem de la carta, en minúscula."
+      },
+      "small": {
+        "displayName": "Chico",
+        "purpose": "Descripciones y notas."
+      },
+      "price": {
+        "displayName": "Precio",
+        "purpose": "Cifras tabulares, formato $ 5.500."
+      },
+      "eyebrow": {
+        "displayName": "Etiqueta",
+        "purpose": "Mayúscula, sobre títulos y en horarios."
+      }
+    },
+    "borders": [
+      {
+        "name": "border-ink",
+        "value": "3px",
+        "purpose": "Todo contorno de control o tarjeta."
+      },
+      {
+        "name": "border-dash",
+        "value": "2px dashed",
+        "purpose": "Separadores entre ítems de la carta."
+      }
+    ],
+    "shadows": [
+      {
+        "name": "sticker-sm",
+        "value": "4px 4px 0 #783E32",
+        "purpose": "Botón de menú, WhatsApp flotante, chips grandes."
+      },
+      {
+        "name": "sticker",
+        "value": "5px 5px 0 #783E32",
+        "purpose": "Botón sticker en reposo."
+      },
+      {
+        "name": "sticker-hover",
+        "value": "8px 8px 0 #783E32",
+        "purpose": "Botón al pasar el mouse."
+      },
+      {
+        "name": "card",
+        "value": "8px 8px 0 #783E32",
+        "purpose": "Tarjetas de la carta; el ticket lleva 10px."
+      },
+      {
+        "name": "card-noche",
+        "value": "8px 8px 0 #9A4A38",
+        "purpose": "Tarjetas sobre carbón."
+      },
+      {
+        "name": "drop",
+        "value": "6px 8px 0 rgba(20,23,27,0.28)",
+        "purpose": "Figuritas y flyers sueltos."
+      }
+    ],
+    "motion": [
+      {
+        "name": "disco",
+        "value": "6s linear infinite",
+        "purpose": "Disco que gira."
+      },
+      {
+        "name": "respira",
+        "value": "3.2s ease-in-out infinite, 5px",
+        "purpose": "Rana que respira."
+      },
+      {
+        "name": "cinta",
+        "value": "30s linear infinite",
+        "purpose": "Cinta de texto; pausa al pasar el mouse."
+      },
+      {
+        "name": "sticker",
+        "value": "150ms ease-out",
+        "purpose": "Botón sticker."
+      },
+      {
+        "name": "sobre",
+        "value": "≈2s cubic-bezier(.2,.8,.2,1)",
+        "purpose": "Apertura del sobre de cafés."
+      },
+      {
+        "name": "moliendo",
+        "value": "1.2s linear infinite",
+        "purpose": "Rana moliendo, carga."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce → todo quieto",
+        "purpose": "Obligatorio."
+      }
+    ],
+    "source": "docs/geacofi-proyecto/05_sistema_de_diseno/tokens.json"
+  },
+  "components": [
+    {
+      "name": "Botón sticker principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Una acción principal por bloque. Se endereza y despega al pasar el mouse.",
+      "html": "<a class=\"ds-btn\" href=\"#\">ver la carta</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 24px;border:3px solid #783E32;border-radius:16px;background:#9A4A38;color:#FBE6C8;font:italic 800 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif;text-decoration:none;box-shadow:5px 5px 0 #783E32;transform:rotate(-1.5deg);transition:transform .15s ease-out,box-shadow .15s ease-out;cursor:pointer}.ds-btn:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:8px 8px 0 #783E32}.ds-btn:active{transform:translate(5px,5px);box-shadow:none}.ds-btn:focus-visible{outline:3px solid #14171B;outline-offset:4px}@media (prefers-reduced-motion:reduce){.ds-btn{transition:none}}"
+    },
+    {
+      "name": "Botón sticker secundario",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Acción secundaria, inclinada al otro lado.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">cómo llegar</a>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 24px;border:3px solid #783E32;border-radius:16px;background:#FBE6C8;color:#783E32;font:italic 800 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif;text-decoration:none;box-shadow:5px 5px 0 #783E32;transform:rotate(1.5deg);transition:transform .15s ease-out,box-shadow .15s ease-out;cursor:pointer}.ds-btn-ghost:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:8px 8px 0 #783E32}.ds-btn-ghost:active{transform:translate(5px,5px);box-shadow:none}.ds-btn-ghost:focus-visible{outline:3px solid #14171B;outline-offset:4px}@media (prefers-reduced-motion:reduce){.ds-btn-ghost{transition:none}}"
+    },
+    {
+      "name": "Pastilla de horario",
+      "kind": "chip",
+      "refersTo": "pill-horario",
+      "description": "Abierto o cerrado, calculado con los horarios en hora de Argentina.",
+      "html": "<span class=\"ds-pill\"><span class=\"ds-pill-dot\"></span>abierto · 17 a 21</span>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;gap:8px;background:#14171B;color:#FBE6C8;font:14px 'DM Mono', ui-monospace, monospace;padding:8px 14px;border-radius:10px}.ds-pill-dot{width:9px;height:9px;border-radius:50%;background:#7BC67E}"
+    },
+    {
+      "name": "Chip de nota",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Nota del café en la figurita: sin contorno, hasta 3.",
+      "html": "<span class=\"ds-chip\">miel</span><span class=\"ds-chip\">damascos</span><span class=\"ds-chip\">floral</span>",
+      "css": ".ds-chip{display:inline-block;margin-right:4px;padding:4px 7px;border-radius:999px;background:#14171B;color:#CFC6EA;font:800 10px/1 Nunito, system-ui, sans-serif}"
+    },
+    {
+      "name": "Tarjeta de carta",
+      "kind": "card",
+      "refersTo": "card-carta",
+      "description": "Una categoría de la carta como el tracklist de un disco.",
+      "html": "<div class=\"ds-carta\"><div class=\"ds-carta-head\"><span class=\"ds-carta-disco\">A</span><div><div class=\"ds-carta-eyebrow\">LADO A</div><div class=\"ds-carta-title\">calientes</div></div></div><div class=\"ds-carta-row\"><span class=\"ds-carta-n\">01</span><div class=\"ds-carta-txt\"><div class=\"ds-carta-item\">espresso</div><div class=\"ds-carta-desc\">shot chiquito</div></div><span class=\"ds-carta-price\">$ 3.700</span></div><div class=\"ds-carta-row\"><span class=\"ds-carta-n\">02</span><div class=\"ds-carta-txt\"><div class=\"ds-carta-item\">latte</div><div class=\"ds-carta-desc\">espresso + leche · grande</div></div><span class=\"ds-carta-price\">$ 5.500</span></div></div>",
+      "css": ".ds-carta{max-width:420px;background:#F1E5D9;color:#23251C;border:3px solid #783E32;border-radius:24px;box-shadow:8px 8px 0 #783E32;padding:24px}.ds-carta-head{display:flex;gap:12px;align-items:center;margin-bottom:8px}.ds-carta-disco{width:50px;height:50px;border-radius:50%;background:#14171B;color:#FBE6C8;display:flex;align-items:center;justify-content:center;font:italic 800 24px 'Barlow Condensed', 'Arial Narrow', sans-serif}.ds-carta-eyebrow{font:500 11px 'DM Mono', ui-monospace, monospace;letter-spacing:.1em;text-transform:uppercase;color:#5B4A40}.ds-carta-title{font:italic 800 34px/1 'Barlow Condensed', 'Arial Narrow', sans-serif;color:#9A4A38}.ds-carta-row{display:grid;grid-template-columns:28px 1fr auto;gap:10px;padding:10px 0;border-bottom:2px dashed #783E32}.ds-carta-row:last-child{border-bottom:0}.ds-carta-n{font:13px 'DM Mono', ui-monospace, monospace;color:#9A4A38;padding-top:3px}.ds-carta-item{font:800 17px/22px Nunito, system-ui, sans-serif}.ds-carta-desc{font:13px/18px Nunito, system-ui, sans-serif;color:#5B4A40}.ds-carta-price{font:16px 'DM Mono', ui-monospace, monospace;font-variant-numeric:tabular-nums;white-space:nowrap}"
+    },
+    {
+      "name": "Estado vacío",
+      "kind": "custom",
+      "refersTo": "empty-state",
+      "description": "Cuando no hay nada para mostrar, la rana lo dice con humor.",
+      "html": "<div class=\"ds-empty\"><div class=\"ds-empty-title\">por ahora no hay eventos anunciados</div><p class=\"ds-empty-text\">Seguinos en Instagram y te enterás primero.</p><a class=\"ds-empty-btn\" href=\"#\">seguinos en instagram</a></div>",
+      "css": ".ds-empty{max-width:420px;background:#F1E5D9;color:#23251C;border:3px solid #783E32;border-radius:28px;box-shadow:8px 8px 0 #783E32;padding:24px}.ds-empty-title{font:700 46px/.9 Gaegu, 'Comic Sans MS', cursive;color:#9A4A38}.ds-empty-text{font:16px Nunito, system-ui, sans-serif;margin:8px 0 14px}.ds-empty-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 24px;border:3px solid #783E32;border-radius:16px;background:#9A4A38;color:#FBE6C8;font:italic 800 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif;text-decoration:none;box-shadow:5px 5px 0 #783E32;transform:rotate(-1.5deg);transition:transform .15s ease-out,box-shadow .15s ease-out;cursor:pointer}.ds-empty-btn:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:8px 8px 0 #783E32}.ds-empty-btn:active{transform:translate(5px,5px);box-shadow:none}.ds-empty-btn:focus-visible{outline:3px solid #14171B;outline-offset:4px}@media (prefers-reduced-motion:reduce){.ds-empty-btn{transition:none}}"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Links en Barlow Condensed itálica de 22px, en minúscula; subrayado de 4px en la página actual.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a href=\"#\" aria-current=\"page\">inicio</a><a href=\"#\">la carta</a><a href=\"#\">eventos</a><a href=\"#\">visitanos</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#FBE6C8;padding:18px 24px;font:italic 800 22px/1.55 'Barlow Condensed', 'Arial Narrow', sans-serif}.ds-nav a{text-decoration:none;padding:10px 12px;color:#783E32;border-bottom:4px solid transparent}.ds-nav a[aria-current=page],.ds-nav a:hover{border-bottom-color:#9A4A38}.ds-nav a:focus-visible{outline:3px solid #14171B;outline-offset:3px}"
+    },
+    {
+      "name": "Figurita de café",
+      "kind": "card",
+      "refersTo": "figurita",
+      "description": "Una carta del sobre de cafés, con el color del tostador. Se inclina en 3D al pasar el mouse.",
+      "html": "<div class=\"ds-fig\" tabindex=\"0\"><div class=\"ds-fig-top\"><span>Komún Tostadores</span><span class=\"ds-fig-num\">#03</span></div><div class=\"ds-fig-art\"><div class=\"ds-fig-ph\"></div></div><div class=\"ds-fig-nm\">Etiopía</div><div class=\"ds-fig-mt\">Etiopía</div><div class=\"ds-fig-tags\"><span class=\"ds-fig-tg\">Natural</span></div></div>",
+      "css": ".ds-fig{width:200px;height:284px;box-sizing:border-box;display:flex;flex-direction:column;padding:12px;background:#CFC6EA;color:#14171B;border:3px solid #783E32;border-radius:14px;box-shadow:6px 8px 0 rgba(20,23,27,.28);transition:transform .35s cubic-bezier(.2,.8,.2,1);cursor:pointer}.ds-fig:hover{transform:perspective(1400px) rotateX(8deg) rotateY(-12deg)}.ds-fig:focus-visible{outline:3px solid #14171B;outline-offset:4px}.ds-fig-top{display:flex;justify-content:space-between;align-items:baseline;font:italic 800 17px/1 'Barlow Condensed', 'Arial Narrow', sans-serif}.ds-fig-num{font:11px 'DM Mono', ui-monospace, monospace;font-style:normal;opacity:.75}.ds-fig-art{flex:1;min-height:0;margin:8px 0;border-radius:10px;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;padding:6%}.ds-fig-ph{width:60%;height:80%;border:2px dashed #14171B;border-radius:8px;opacity:.4}.ds-fig-nm{font:700 30px/.9 Gaegu, 'Comic Sans MS', cursive}.ds-fig-mt{font:11px 'DM Mono', ui-monospace, monospace;margin-top:3px;opacity:.85}.ds-fig-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.ds-fig-tg{font:800 10px/1 Nunito, system-ui, sans-serif;padding:4px 7px;border-radius:999px;background:#14171B;color:#CFC6EA}@media (prefers-reduced-motion:reduce){.ds-fig{transition:none}.ds-fig:hover{transform:none}}"
+    },
+    {
+      "name": "Ticket de visita",
+      "kind": "card",
+      "refersTo": "ticket",
+      "description": "Dirección, horarios y acciones, con el mapa separado por una línea punteada como un talón.",
+      "html": "<div class=\"ds-tk\"><div class=\"ds-tk-l\"><span class=\"ds-tk-ey\">Pasá cuando quieras</span><h2 class=\"ds-tk-h\">9 de Julio 996</h2><span class=\"ds-tk-city\">Corrientes Capital</span><div class=\"ds-tk-pills\"><span class=\"ds-tk-pill\">mañana 7:00 → 13:00</span><span class=\"ds-tk-pill\">tarde 17:00 → 21:00</span></div><div class=\"ds-tk-acts\"><a class=\"ds-tk-btn\" href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20l1.3-4A8 8 0 1 1 8.5 19z\"/><path d=\"M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z\"/></svg>escribinos</a><a class=\"ds-tk-btn ds-ghost\" href=\"#\">cómo llegar</a></div></div><div class=\"ds-tk-r\">mapa de Google</div></div>",
+      "css": ".ds-tk{display:flex;flex-wrap:wrap;overflow:hidden;max-width:820px;background:#F1E5D9;color:#23251C;border:3px solid #783E32;border-radius:28px;box-shadow:10px 10px 0 #783E32}.ds-tk-l{flex:1 1 320px;padding:28px;display:flex;flex-direction:column;gap:12px}.ds-tk-ey{font:500 13px 'DM Mono', ui-monospace, monospace;letter-spacing:.1em;text-transform:uppercase;color:#9A4A38}.ds-tk-h{margin:0;font:700 64px/.82 Gaegu, 'Comic Sans MS', cursive;color:#9A4A38}.ds-tk-city{font:italic 800 24px 'Barlow Condensed', 'Arial Narrow', sans-serif;color:#783E32}.ds-tk-pills{display:flex;gap:10px;flex-wrap:wrap}.ds-tk-pill{background:#14171B;color:#FBE6C8;font:14px 'DM Mono', ui-monospace, monospace;padding:8px 14px;border-radius:10px}.ds-tk-acts{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}.ds-tk-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;box-sizing:border-box;padding:10px 24px;border:3px solid #783E32;border-radius:16px;background:#9A4A38;color:#FBE6C8;font:italic 800 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif;text-decoration:none;box-shadow:5px 5px 0 #783E32;transform:rotate(-1.5deg);transition:transform .15s ease-out,box-shadow .15s ease-out;cursor:pointer}.ds-tk-btn.ds-ghost{background:#FBE6C8;color:#783E32;transform:rotate(1.5deg)}.ds-tk-btn:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:8px 8px 0 #783E32}.ds-tk-btn:active{transform:translate(5px,5px);box-shadow:none}.ds-tk-btn:focus-visible{outline:3px solid #14171B;outline-offset:4px}.ds-tk-r{flex:1 1 240px;min-height:240px;border-left:3px dashed #783E32;background:repeating-linear-gradient(45deg,#FBE6C8 0 14px,#F1E5D9 14px 28px);display:flex;align-items:center;justify-content:center;font:13px 'DM Mono', ui-monospace, monospace;color:#783E32}@media (prefers-reduced-motion:reduce){.ds-tk-btn{transition:none}}"
+    },
+    {
+      "name": "Cinta de texto",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Tira terracota inclinada con palabras de la barra que corre sin fin; pausa al pasar el mouse.",
+      "html": "<div class=\"ds-mq\"><div class=\"ds-mq-track\"><span>espresso</span><span>✦</span><span>filtrados</span><span>✦</span><span>chipa</span><span>✦</span><span>roll de canela</span><span>✦</span><span>vinilos</span><span>✦</span><span>9 de julio 996</span><span>✦</span><span>espresso</span><span>✦</span><span>filtrados</span><span>✦</span><span>chipa</span><span>✦</span><span>roll de canela</span><span>✦</span><span>vinilos</span><span>✦</span><span>9 de julio 996</span><span>✦</span></div></div>",
+      "css": ".ds-mq{overflow:hidden;background:#9A4A38;color:#FBE6C8;border-top:3px solid #783E32;border-bottom:3px solid #783E32;padding:12px 0;transform:rotate(-1.2deg)}.ds-mq-track{display:flex;width:max-content;gap:34px;font:italic 800 30px 'Barlow Condensed', 'Arial Narrow', sans-serif;white-space:nowrap;animation:ds-marquee 30s linear infinite}.ds-mq:hover .ds-mq-track{animation-play-state:paused}@keyframes ds-marquee{to{transform:translateX(-50%)}}@media (prefers-reduced-motion:reduce){.ds-mq-track{animation:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La barra de barrio",
+    "overview": "Geacofi se diseña como la barra del local: la rana atiende, todo está hecho a mano y lo práctico (si está abierto, qué hay en la carta, cómo llegar, el WhatsApp) siempre queda al alcance del brazo. El sistema viene de la dirección de arte C, \"Café y eso\": la web como un flyer que se mueve, con stickers pegados, fechas de flyer, cinta de texto y un disco que gira. Sabe mucho de café y no se lo toma tan en serio.\n\nTiene dos registros. De día, todo vive sobre papel durazno: dibujado, con humor y con aire generoso. De noche, las secciones pasan a carbón y traen la luz baja del local (filtrados, eventos). Alternar los dos al bajar por la página es parte de la experiencia, no un modo oscuro opcional. El ritmo es de pachorra: mucho aire, animaciones lentas y nada que grite \"comprá ya\".\n\nLa identidad ya existe y se respeta. El lettering \"geacofi\" y la rana salen siempre de los originales vectorizados. Todo lo demás (contornos de marcador, sombras duras, inclinaciones de sticker) existe para que esos dos se sientan en casa.",
+    "keyCharacteristics": [
+      "Dos registros, día en durazno y noche en carbón, alternados por sección.",
+      "Contorno de marcador de 3 px y sombra dura sin desenfoque en todo control y tarjeta.",
+      "Botones inclinados como stickers que se enderezan al pasar el mouse.",
+      "Cuatro familias, cada una con un solo trabajo: manuscrita, condensada itálica, texto y mono.",
+      "La rana como anfitriona, nunca más de dos por pantalla.",
+      "Cultura de vinilo: la carta como lado A y lado B, fechas en estilo flyer, el disco que gira.",
+      "Iconografía dibujada a mano con la misma línea; ninguna librería de íconos."
+    ],
+    "rules": [
+      {
+        "name": "The Tostador Rule",
+        "body": "Los colores `tostador-*` (lavanda Komún, MOMO en carbón con brillo holográfico, naranja Motofeca, verde Lo de Pepe) existen solo en las figuritas del sobre de cafés. Fuera de ahí no aparecen.",
+        "section": "colors"
+      },
+      {
+        "name": "The Puntito Verde Rule",
+        "body": "`status-open` es solo el puntito de \"abierto\" en la pastilla de horario. Nunca es texto ni fondo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ámbar en la Foto Rule",
+        "body": "El ámbar vive en las fotos. En la interfaz es texto chico, etiqueta o contorno sobre carbón, nunca un relleno de día.",
+        "section": "colors"
+      },
+      {
+        "name": "The Minúscula Rule",
+        "body": "Títulos, botones y nombres de la carta van en minúscula (\"ver la carta\", \"spicy orange\"). Las mayúsculas existen solo en las etiquetas en mono.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lettering No Es Fuente Rule",
+        "body": "El logo \"geacofi\" es el lettering original y va siempre como imagen (carbón sobre durazno o crema, crema sobre terracota o carbón, bordó en piezas de eventos). Espacio libre de la altura de la \"g\" y 90px de ancho como mínimo. Nunca se compone con Gaegu ni con otra fuente.",
+        "section": "typography"
+      },
+      {
+        "name": "The Gaegu Grande Rule",
+        "body": "Gaegu solo va en tamaños grandes (30px para arriba) y en color `heading`. Lo que se lee va en Nunito.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sin Desenfoque Rule",
+        "body": "El blur de toda sombra es 0. Una sombra difusa o un brillo suave rompe el papel.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Se Despega Rule",
+        "body": "La sombra crece cuando el sticker se levanta (hover) y desaparece cuando se pega (presionado). La elevación cuenta el estado.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Sticker Torcido Rule",
+        "body": "Los botones se inclinan entre −2° y 2°: el principal a −1,5° y el secundario al otro lado, a +1,5°.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** usar siempre las variables de los tokens (`var(--terracota)`, `var(--radius-md)`), nunca los valores sueltos.",
+      "**Do** alternar secciones de día (durazno) y de noche (carbón, `data-theme=\"noche\"`) al bajar por la página.",
+      "**Do** darle a todo control o tarjeta contorno de 3px en `border` y sombra dura sin desenfoque.",
+      "**Do** mantener el texto a 4,5:1 como mínimo en los dos temas y el foco visible de 3px con 3-4px de separación.",
+      "**Do** dibujar los pocos íconos necesarios (WhatsApp, menú, flecha) con la misma línea gruesa y redondeada, en `currentColor`, de 22 a 28px.",
+      "**Do** usar fotos en clave baja, con una sola luz cálida y fondo oscuro, como en el Instagram del café.",
+      "**Do** escribir `[a confirmar]` donde falte un dato del café."
+    ],
+    "donts": [
+      "**Don't** usar librerías de íconos.",
+      "**Don't** componer el logo \"geacofi\" con una fuente.",
+      "**Don't** redibujar la cara, los ojos o la mano de la rana, ni ponerle verde realista en el cuerpo, estirarla hasta que aparezca un cuello, usar línea fina, sombras o degradés, ni darle ojos redondos con sonrisa grande como cara base (la vuelve una mascota infantil).",
+      "**Don't** poner más de dos ranas en la misma pantalla.",
+      "**Don't** usar los colores `tostador-*` fuera de las figuritas, ni los logos o el packaging de los tostadores (solo sus nombres).",
+      "**Don't** usar sombras con desenfoque ni brillos suaves en controles y tarjetas.",
+      "**Don't** usar Gaegu en texto de lectura ni por debajo de 30px.",
+      "**Don't** usar ámbar como relleno de día ni `status-open` como texto.",
+      "**Don't** animar nada que no se detenga con `prefers-reduced-motion: reduce`."
+    ]
+  }
+}

@@ -1,0 +1,571 @@
+# Análisis integral de marca, personaje y diseño web para una cafetería
+
+## 1. Rol y objetivo
+
+Actuá como un equipo creativo multidisciplinario compuesto por:
+
+- **Senior Brand Strategist:** especializado en identidad, personalidad y posicionamiento de marcas gastronómicas.
+- **Senior Art Director:** experto en dirección de arte, sistemas visuales y storytelling.
+- **Brand & Character Designer:** especializado en ilustración, mascotas de marca y diseño de personajes.
+- **Senior UX/UI Designer:** especializado en sitios web creativos, experiencias digitales y diseño gastronómico.
+- **Typography & Visual Identity Specialist:** experto en selección tipográfica, paletas cromáticas y composición.
+- **Creative Web Designer:** especializado en experiencias web memorables, animaciones e interacciones.
+
+Tu misión es analizar profundamente las imágenes de Instagram que voy a proporcionarte de una cafetería para **reconstruir su identidad visual, comprender su personalidad y desarrollar una propuesta de sitio web que represente fielmente su esencia**.
+
+No quiero una página genérica de cafetería. Quiero una experiencia digital que transmita la personalidad de esta marca, sus particularidades, su estilo y su relación con los clientes.
+
+La prioridad es **respetar y potenciar la identidad existente**, no reemplazarla por una estética arbitraria.
+
+---
+
+## 2. Investigación y análisis de la marca
+
+Analizá todas las imágenes proporcionadas, identificando patrones visuales y elementos recurrentes.
+
+### A. Personalidad de marca
+
+Identificá:
+
+- Qué personalidad transmite la cafetería.
+- Qué emociones busca despertar.
+- Qué valores comunica.
+- Qué tipo de público parece atraer.
+- Si su comunicación es divertida, cálida, artesanal, moderna, retro, minimalista, irreverente, elegante o una combinación.
+- Cómo utiliza el humor, las ilustraciones y los elementos gráficos.
+- Qué características la diferencian de otras cafeterías.
+- Qué experiencia parece prometer al cliente.
+
+Definí entre 5 y 7 atributos de personalidad y explicá cómo trasladarlos al sitio web.
+
+### B. Análisis de identidad visual
+
+Extraé y documentá:
+
+**Paleta cromática**
+- Colores principales y secundarios.
+- Colores de fondo, textos y acentos.
+- Códigos HEX aproximados.
+- Combinaciones recomendadas.
+- Proporción sugerida de utilización.
+
+**Tipografía**
+- Analizá las tipografías presentes en las publicaciones.
+- Identificá sus características visuales.
+- Proponé entre 3 y 5 fuentes reales que combinen con la identidad.
+- Incluí alternativas gratuitas disponibles en Google Fonts.
+- Recomendá combinaciones para títulos, subtítulos, botones y textos.
+- Mostrá ejemplos visuales de cómo funcionarían.
+
+**Lenguaje gráfico**
+- Formas y patrones recurrentes.
+- Texturas y elementos decorativos.
+- Estilo fotográfico.
+- Tratamiento de imágenes.
+- Ilustraciones, stickers y símbolos.
+- Composiciones y jerarquías visuales.
+- Estética general de las publicaciones.
+
+El resultado debe permitir construir un sistema visual coherente.
+
+---
+
+## 3. Análisis del personaje principal o mascota
+
+Este apartado es especialmente importante.
+
+Si las imágenes contienen un personaje representativo de la cafetería, analizalo exhaustivamente.
+
+### A. Identificación del personaje
+
+Describí:
+
+- Su apariencia y silueta.
+- Proporciones.
+- Rasgos distintivos.
+- Expresiones faciales.
+- Colores.
+- Tipo de trazo.
+- Nivel de detalle.
+- Estilo de ilustración.
+- Personalidad y actitud.
+- Relación con la identidad de la cafetería.
+
+Determiná cuáles son sus características esenciales y cuáles pueden adaptarse.
+
+**Es fundamental mantener la consistencia del personaje original.** No quiero que cada ilustración parezca una mascota diferente.
+
+### B. Sistema de ilustraciones del personaje
+
+Generá una hoja de personaje (*character sheet*) con distintas expresiones, movimientos y poses.
+
+Como mínimo, proponé:
+
+1. Personaje saludando.
+2. Personaje sosteniendo una taza de café.
+3. Personaje preparando café.
+4. Personaje tomando café.
+5. Personaje feliz o emocionado.
+6. Personaje descansando.
+7. Personaje señalando un botón o mensaje.
+8. Personaje caminando.
+9. Personaje celebrando.
+10. Personaje interactuando con elementos del sitio web.
+
+Además, proponé entre 5 y 8 poses originales que representen especialmente bien la personalidad de la cafetería.
+
+Para cada pose, explicá dónde podría utilizarse dentro de la web.
+
+Generá imágenes visuales de las propuestas, respetando el estilo original.
+
+### C. Aplicaciones digitales
+
+Explorá cómo utilizar al personaje en:
+
+- Hero principal.
+- Botones y llamadas a la acción.
+- Estados vacíos.
+- Mensajes de confirmación.
+- Secciones del menú.
+- Promociones.
+- Footer.
+- Animaciones y microinteracciones.
+- Pantallas de carga.
+
+Proponé también pequeñas animaciones que podrían darle vida al sitio sin perjudicar la experiencia de navegación.
+
+---
+
+## 4. Biblia Visual del Personaje — Character Brand Bible
+
+Esta etapa es fundamental para garantizar que el personaje principal mantenga una identidad reconocible y consistente en todas sus aplicaciones.
+
+El objetivo es desarrollar una **guía visual completa y reutilizable del personaje**, que permita generar nuevas ilustraciones, expresiones, poses y animaciones sin perder sus características originales.
+
+La biblia visual debe funcionar como documento de referencia para diseñadores, ilustradores, desarrolladores y herramientas de generación de imágenes mediante IA.
+
+### A. Anatomía y construcción
+
+Analizá y documentá:
+
+- Silueta principal.
+- Proporciones entre cabeza, cuerpo y extremidades.
+- Formas geométricas utilizadas en su construcción.
+- Posición y tamaño de ojos, boca y demás rasgos.
+- Grosor y terminaciones de los trazos.
+- Curvaturas características.
+- Simetrías y asimetrías intencionales.
+- Elementos que lo hacen reconocible.
+
+Generá una lámina de construcción visual que incluya vistas frontal, lateral, posterior y tres cuartos, siempre que las referencias permitan reconstruirlas con coherencia.
+
+Incluí una cuadrícula proporcional y guías visuales para facilitar su reproducción.
+
+### B. Sistema cromático del personaje
+
+Definí:
+
+- Colores originales identificados.
+- Códigos HEX aproximados.
+- Colores principales y secundarios.
+- Colores permitidos para accesorios.
+- Variantes sobre fondos claros y oscuros.
+- Versión monocromática.
+- Versión en blanco y negro.
+- Reglas de contraste y legibilidad.
+
+Evitá modificar arbitrariamente los colores que forman parte de su identidad.
+
+### C. Expresiones y personalidad
+
+Desarrollá una biblioteca de expresiones:
+
+- Feliz.
+- Entusiasmado.
+- Sorprendido.
+- Relajado.
+- Curioso.
+- Pensativo.
+- Orgulloso.
+- Divertido.
+- Concentrado.
+- Agradecido.
+
+Generá una lámina visual con estas expresiones y definí cómo cambian los ojos, la boca, las cejas y la postura corporal.
+
+La personalidad del personaje debe mantenerse reconocible en todas ellas.
+
+### D. Biblioteca de poses y acciones
+
+Construí una biblioteca de ilustraciones reutilizables organizada por categorías.
+
+**Interacción social**
+- Saludando.
+- Despidiéndose.
+- Invitando a entrar.
+- Señalando información.
+- Celebrando.
+
+**Universo cafetero**
+- Preparando espresso.
+- Sirviendo café.
+- Sosteniendo una taza.
+- Trabajando como barista.
+- Disfrutando una bebida.
+
+**Interacción digital**
+- Señalando botones.
+- Acompañando formularios.
+- Indicando promociones.
+- Presentando productos.
+- Confirmando una acción.
+- Apareciendo en estados vacíos.
+
+**Poses creativas**
+- Proponé al menos 8 poses adicionales inspiradas directamente en la personalidad de la marca.
+
+Para cada ilustración, indicá su propósito y contexto de utilización.
+
+### E. Reglas de consistencia visual
+
+Definí explícitamente:
+
+- Qué elementos nunca deben modificarse.
+- Qué características pueden variar.
+- Qué proporciones deben mantenerse.
+- Cómo utilizar accesorios.
+- Qué tipos de expresiones son compatibles.
+- Qué estilos de ilustración deben evitarse.
+- Qué deformaciones están permitidas.
+- Qué errores visuales pueden hacer que pierda su identidad.
+
+Incluí ejemplos visuales de usos correctos e incorrectos.
+
+### F. Sistema de animaciones
+
+Proponé animaciones compatibles con la identidad del personaje:
+
+- Saludo con movimiento de brazos.
+- Parpadeo.
+- Movimiento sutil al respirar.
+- Preparación de café.
+- Vapor saliendo de una taza.
+- Reacción al pasar el cursor.
+- Celebración al completar una acción.
+- Entrada y salida de pantalla.
+
+Para cada animación, describí:
+
+- Movimiento.
+- Duración aproximada.
+- Tipo de transición.
+- Contexto de uso.
+- Complejidad de implementación.
+- Tecnología recomendada: CSS, SVG, Rive o Lottie, según corresponda.
+
+Priorizá animaciones livianas y respetá las preferencias de movimiento reducido del usuario.
+
+### G. Preparación de recursos digitales
+
+Definí cómo organizar los recursos del personaje para reutilizarlos.
+
+Proponé una estructura de archivos con:
+
+- Ilustraciones maestras.
+- Variantes de expresiones.
+- Poses individuales.
+- Recursos para escritorio.
+- Recursos para dispositivos móviles.
+- Versiones monocromáticas.
+- Recursos para animaciones.
+- Assets para redes sociales.
+
+Recomendá formatos según el uso:
+
+- SVG para ilustraciones vectoriales.
+- PNG o WebP transparente para imágenes rasterizadas.
+- Rive o Lottie para animaciones compatibles.
+- Archivos fuente editables cuando estén disponibles.
+
+No presentes una imagen rasterizada como un vector editable. Si no es posible producir determinado formato, indicá qué proceso adicional se necesita.
+
+### H. Prompt maestro para reproducir el personaje
+
+Como parte de la biblia visual, generá un **prompt maestro de referencia** que permita crear nuevas ilustraciones mediante herramientas de IA.
+
+El prompt debe documentar:
+
+- Descripción precisa del personaje.
+- Proporciones.
+- Paleta.
+- Tipo de línea.
+- Estilo gráfico.
+- Expresiones permitidas.
+- Elementos invariables.
+- Restricciones visuales.
+- Instrucciones para mantener la coherencia.
+
+Incluí también una plantilla reutilizable donde únicamente sea necesario cambiar la pose, expresión o acción deseada.
+
+La referencia visual original debe seguir siendo la fuente principal de identidad.
+
+### I. Entregable de la biblia visual
+
+Presentá un documento visual organizado con:
+
+1. Portada del personaje.
+2. Anatomía y proporciones.
+3. Paleta cromática.
+4. Vistas principales.
+5. Expresiones.
+6. Biblioteca de poses.
+7. Aplicaciones web.
+8. Animaciones.
+9. Usos correctos e incorrectos.
+10. Reglas de consistencia.
+11. Especificaciones de exportación.
+12. Prompt maestro reutilizable.
+
+Este documento debe servir como una fuente de referencia permanente para cualquier futura aplicación del personaje.
+
+---
+
+## 5. Dirección de arte para el sitio web
+
+A partir de los hallazgos, desarrollá **3 conceptos visuales diferentes**, todos respetando la identidad de la cafetería.
+
+### Concepto A — Fiel a la identidad actual
+
+Una propuesta que traduzca directamente el lenguaje visual de Instagram a una experiencia web.
+
+### Concepto B — Identidad evolucionada
+
+Una versión más refinada y contemporánea, que mantenga el carácter de la marca pero mejore su consistencia y presentación.
+
+### Concepto C — Creativo y memorable
+
+Una propuesta más expresiva y experimental, donde el personaje, las ilustraciones, las animaciones y la composición tengan mayor protagonismo.
+
+Para cada concepto, incluí:
+
+- Nombre de la dirección creativa.
+- Idea central.
+- Paleta.
+- Tipografías.
+- Estilo de botones.
+- Diseño de tarjetas.
+- Tratamiento de fotografías.
+- Uso del personaje.
+- Animaciones recomendadas.
+- Ventajas y posibles desventajas.
+
+**Generá un moodboard visual y un mockup de la página de inicio para cada concepto.**
+
+No quiero únicamente descripciones textuales: necesito poder comparar visualmente las tres alternativas.
+
+---
+
+## 6. Arquitectura y experiencia del sitio web
+
+Proponé una estructura web que responda a las necesidades reales de una cafetería.
+
+Evaluá la conveniencia de incorporar:
+
+- Inicio.
+- Nuestra historia.
+- Carta o menú digital.
+- Especialidades.
+- Galería.
+- Ubicación y horarios.
+- Contacto.
+- Redes sociales.
+- Reservas o pedidos, si corresponde.
+- Eventos o promociones, si son relevantes.
+
+No agregues funcionalidades solo por completar el sitio.
+
+Para cada sección, explicá:
+
+1. Su objetivo.
+2. Qué información debería contener.
+3. Qué elementos visuales utilizar.
+4. Cómo integrar al personaje.
+5. Qué acción debería realizar el visitante.
+
+Considerá especialmente la experiencia en dispositivos móviles.
+
+---
+
+## 7. Diseño de las pantallas
+
+Una vez definidos los conceptos, desarrollá propuestas visuales para las siguientes secciones:
+
+### Home
+
+- Hero atractivo y original.
+- Presentación de la cafetería.
+- Integración del personaje principal.
+- Fotografías de productos.
+- Llamadas a la acción.
+- Secciones que transmitan la experiencia del local.
+
+### Menú
+
+- Presentación visual de cafés, bebidas y alimentos.
+- Categorías fáciles de navegar.
+- Fotografías y precios, cuando estén disponibles.
+- Diseño coherente con la identidad.
+
+### Nuestra historia
+
+- Narrativa de la cafetería.
+- Personalidad y valores.
+- Fotografías.
+- Ilustraciones complementarias.
+
+### Ubicación y contacto
+
+- Dirección y horarios.
+- Acceso a Google Maps.
+- Redes sociales.
+- Contacto mediante WhatsApp, si corresponde.
+
+Para cada pantalla, generá un mockup visual con una propuesta realista de composición, tipografía, colores, imágenes y componentes.
+
+---
+
+## 8. Recursos visuales complementarios
+
+Proponé y generá ejemplos de:
+
+- Ilustraciones secundarias.
+- Stickers.
+- Íconos personalizados.
+- Patrones decorativos.
+- Fondos y texturas.
+- Separadores entre secciones.
+- Elementos gráficos inspirados en el café.
+- Tarjetas de productos.
+- Botones y componentes.
+- Recursos para animaciones.
+
+Todos los elementos deben pertenecer al mismo universo visual.
+
+Evitá utilizar recursos genéricos que no representen la personalidad de la marca.
+
+---
+
+## 9. Referencias e inspiración
+
+Investigá sitios web de cafeterías, restaurantes y marcas gastronómicas con identidades visuales destacadas.
+
+Priorizá referencias que utilicen:
+
+- Mascotas o personajes ilustrados.
+- Tipografía expresiva.
+- Diseño editorial.
+- Animaciones creativas.
+- Identidad gráfica consistente.
+- Experiencias web originales.
+
+Seleccioná entre 5 y 8 referencias relevantes.
+
+Para cada una, indicá qué funciona bien y qué podríamos adaptar a nuestra propuesta sin copiarla.
+
+---
+
+## 10. Entregables esperados
+
+Organizá el trabajo en las siguientes etapas:
+
+**Etapa 1 — Diagnóstico de marca**
+- Análisis visual de las imágenes.
+- Personalidad y posicionamiento.
+- Paleta cromática.
+- Tipografías.
+- Características del personaje.
+- Elementos gráficos distintivos.
+
+**Etapa 2 — Exploración creativa**
+- Tres direcciones de arte.
+- Moodboards.
+- Combinaciones tipográficas.
+- Propuestas de estilo web.
+- Comparativa de alternativas.
+
+**Etapa 3 — Biblia visual del personaje**
+- Anatomía y proporciones.
+- Character sheet.
+- Expresiones y poses.
+- Biblioteca de ilustraciones.
+- Reglas de consistencia.
+- Aplicaciones web.
+- Sistema de animaciones.
+- Recursos exportables.
+- Prompt maestro para generación mediante IA.
+
+**Etapa 4 — Diseño web**
+- Arquitectura del sitio.
+- Mockups de escritorio y móvil.
+- Diseño de componentes.
+- Integración del personaje.
+- Propuestas de microinteracciones.
+
+**Etapa 5 — Sistema de diseño**
+- Design tokens.
+- Tipografías y jerarquías.
+- Colores.
+- Espaciados.
+- Botones.
+- Tarjetas.
+- Estilos de imágenes.
+- Recursos ilustrados.
+- Recomendaciones para implementar el sitio.
+
+---
+
+## 11. Reglas importantes
+
+1. **Primero analizá, después diseñá.** No generes propuestas visuales antes de comprender la marca.
+2. No inventes información comercial, precios, horarios ni características que no estén respaldadas por las imágenes o por información proporcionada.
+3. Diferenciá claramente los elementos observados de las interpretaciones y propuestas creativas.
+4. No rediseñes completamente el personaje si ya existe uno definido.
+5. Priorizá coherencia, personalidad y originalidad.
+6. Evitá las plantillas genéricas de cafeterías.
+7. Justificá las decisiones visuales y de UX/UI.
+8. Generá ejemplos visuales reales, no solamente explicaciones.
+9. Pensá el diseño como un sitio web que posteriormente deberá desarrollarse, considerando accesibilidad, rendimiento, responsive design y facilidad de mantenimiento.
+10. Si faltan datos esenciales para tomar una decisión, haceme preguntas concretas.
+11. Todas las nuevas ilustraciones del personaje deben respetar la biblia visual aprobada.
+12. No confundas una propuesta de evolución de marca con elementos que ya forman parte de su identidad.
+13. Cuando una vista o detalle del personaje no aparezca en las referencias, señalá que se trata de una interpretación propuesta.
+14. Mantené una única fuente de referencia visual para evitar inconsistencias entre ilustraciones.
+
+---
+
+## 12. Metodología de trabajo
+
+**No desarrolles todo de una sola vez.**
+
+Comenzá analizando exhaustivamente las imágenes de Instagram que voy a compartir.
+
+Presentame primero:
+
+- Tu interpretación de la personalidad de la cafetería.
+- La identidad visual detectada.
+- El análisis del personaje principal.
+- Las tipografías recomendadas.
+- La paleta cromática.
+- Las oportunidades para trasladar esa identidad a una web.
+
+Después, presentá las tres direcciones creativas con sus respectivos ejemplos visuales.
+
+Una vez seleccionada una dirección, avanzá con la biblia visual del personaje y solicitá mi aprobación antes de desarrollar las ilustraciones definitivas.
+
+Finalmente, utilizá la identidad y el personaje aprobados para diseñar las pantallas del sitio web y documentar el sistema de diseño.
+
+**Esperá mi aprobación en cada etapa creativa importante.**
+
+El objetivo final es crear una página web que, al verla, cualquier cliente de la cafetería pueda reconocer inmediatamente su personalidad y sentir que está entrando al universo de la marca.
+
+Además, quiero obtener un sistema visual y un personaje suficientemente documentados como para seguir creando nuevas ilustraciones, animaciones y piezas de comunicación sin perder la consistencia de la identidad original.

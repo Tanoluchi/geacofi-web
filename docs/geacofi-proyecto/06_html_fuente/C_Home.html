@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Concepto C · Home</title>
+
+</head>
+<body>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&amp;family=Nunito:wght@400;800;900&amp;family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&amp;family=DM+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#783E32}a:hover{color:#5A2C23}
+@keyframes gc-spin{to{transform:rotate(360deg)}}
+@keyframes gc-marquee{to{transform:translateX(-50%)}}
+@keyframes gc-bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.gc-spin{animation:gc-spin 6s linear infinite}
+.gc-marquee{animation:gc-marquee 28s linear infinite}
+.gc-bob{animation:gc-bob 1.8s ease-in-out infinite;transform-origin:50% 100%}
+@media (prefers-reduced-motion: reduce){.gc-spin,.gc-marquee,.gc-bob{animation:none}}
+</style>
+
+<div style="background: #FBE6C8; color: #23251C; font-family: Nunito, system-ui, sans-serif; overflow-x: hidden">
+
+  <header style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between">
+    <img src="img/logo_bordo.png" alt="geacofi" style="height: 56px; width: auto">
+    <nav style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 22px">
+      <a href="#carta" style="text-decoration: none; padding: 8px 12px">la carta</a>
+      <a href="#eventos" style="text-decoration: none; padding: 8px 12px">qué pasa</a>
+      <a href="#visitanos" style="text-decoration: none; padding: 8px 12px">dónde</a>
+      <a href="#" style="text-decoration: none; background: #9A4A38; color: #FBE6C8; padding: 8px 18px; border: 3px solid #783E32; border-radius: 14px; box-shadow: 4px 4px 0 #783E32">WhatsApp</a>
+    </nav>
+  </header>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 12px 24px 56px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+    <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 18px">
+      <span style="align-self: flex-start; background: #14171B; color: #FBE6C8; font-family: 'DM Mono', monospace; font-size: 13px; padding: 6px 12px; border-radius: 999px; transform: rotate(-2deg)">♪ sonando en la barra</span>
+      <h1 style="margin: 0; font-family: Gaegu, cursive; font-weight: 700; font-size: clamp(72px, 9vw, 132px); line-height: .78; color: #9A4A38">café, discos y eso…</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.5; max-width: 460px">Café de especialidad en 9 de Julio 996, Corrientes. Abrimos de 7 a 13 y de 17 a 21. A veces hay vinilos.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px">
+        <a href="#carta" style="text-decoration: none; background: #9A4A38; color: #FBE6C8; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 26px; padding: 12px 26px; border: 3px solid #783E32; border-radius: 16px; box-shadow: 6px 6px 0 #783E32; transform: rotate(-2deg)">ver la carta</a>
+        <a href="#eventos" style="text-decoration: none; background: #FBE6C8; color: #783E32; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 26px; padding: 12px 26px; border: 3px solid #783E32; border-radius: 16px; box-shadow: 6px 6px 0 #783E32; transform: rotate(1.5deg)">qué pasa esta semana</a>
+      </div>
+    </div>
+    <div style="flex: 1 1 420px; position: relative; height: 520px">
+      <div class="gc-spin" style="position: absolute; top: 10px; right: 0; width: 360px; height: 360px; border-radius: 50%; background: repeating-radial-gradient(circle, #14171B 0 6px, #22262C 6px 8px); display: flex; align-items: center; justify-content: center">
+        <div style="width: 130px; height: 130px; border-radius: 50%; background: #9A4A38; display: flex; align-items: center; justify-content: center">
+          <img src="img/logo_cream.png" alt="" style="width: 84px; height: auto">
+        </div>
+      </div>
+      <div style="position: absolute; left: 0; bottom: 0; width: 360px; height: 470px; background: #F1E5D9; border: 3px solid #783E32; border-radius: 48% 52% 22px 22px / 30% 30% 22px 22px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center">
+        <img class="gc-bob" src="img/frog_dark.png" alt="La rana de Geacofi pasando discos con auriculares" style="height: 94%; width: auto">
+      </div>
+    </div>
+  </section>
+
+  <div style="background: #9A4A38; color: #FBE6C8; border-top: 3px solid #783E32; border-bottom: 3px solid #783E32; overflow: hidden; padding: 14px 0; transform: rotate(-1.2deg); margin: 0 -20px">
+    <div class="gc-marquee" style="display: flex; width: max-content; gap: 36px; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 34px; white-space: nowrap">
+      <span>espresso</span><span>✦</span><span>filtrados</span><span>✦</span><span>chipa</span><span>✦</span><span>roll de canela</span><span>✦</span><span>vinilos</span><span>✦</span><span>9 de julio 996</span><span>✦</span>
+      <span>espresso</span><span>✦</span><span>filtrados</span><span>✦</span><span>chipa</span><span>✦</span><span>roll de canela</span><span>✦</span><span>vinilos</span><span>✦</span><span>9 de julio 996</span><span>✦</span>
+    </div>
+  </div>
+
+  <section id="carta" style="padding: 80px 24px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
+      <div style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px">
+        <h2 style="margin: 0; font-family: Gaegu, cursive; font-weight: 700; font-size: 84px; line-height: .8; color: #9A4A38">la carta, lado A y lado B</h2>
+        <a href="#" style="font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 24px">el disco completo →</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px">
+        <div style="background: #F1E5D9; border: 3px solid #783E32; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 4px; box-shadow: 8px 8px 0 #783E32">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px">
+            <span style="width: 54px; height: 54px; border-radius: 50%; background: #14171B; color: #FBE6C8; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 26px">A</span>
+            <h3 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 36px; color: #783E32">calientes</h3>
+          </div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #D9B9A0"><span style="font-family: 'DM Mono', monospace; color: #9A4A38">01</span><span style="font-weight: 800">espresso <span style="font-weight: 400; color: #5B5A4E">· shot chiquito</span></span><span style="font-family: 'DM Mono', monospace">$ 3.700</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #D9B9A0"><span style="font-family: 'DM Mono', monospace; color: #9A4A38">02</span><span style="font-weight: 800">uno y uno</span><span style="font-family: 'DM Mono', monospace">$ 4.100</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #D9B9A0"><span style="font-family: 'DM Mono', monospace; color: #9A4A38">03</span><span style="font-weight: 800">flat white</span><span style="font-family: 'DM Mono', monospace">$ 5.000</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0"><span style="font-family: 'DM Mono', monospace; color: #9A4A38">04</span><span style="font-weight: 800">spicy orange</span><span style="font-family: 'DM Mono', monospace">$ 5.500</span></div>
+        </div>
+        <div style="background: #14171B; color: #F1E5D9; border: 3px solid #783E32; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 4px; box-shadow: 8px 8px 0 #9A4A38">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px">
+            <span style="width: 54px; height: 54px; border-radius: 50%; background: #9A4A38; color: #FBE6C8; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 26px">B</span>
+            <h3 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 36px; color: #FBE6C8">filtrados y fríos</h3>
+          </div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #3A3E44"><span style="font-family: 'DM Mono', monospace; color: #BF834E">01</span><span style="font-weight: 800">v60</span><span style="font-family: 'DM Mono', monospace">$ 6.000</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #3A3E44"><span style="font-family: 'DM Mono', monospace; color: #BF834E">02</span><span style="font-weight: 800">chemex</span><span style="font-family: 'DM Mono', monospace">$ 6.500</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0; border-bottom: 2px dashed #3A3E44"><span style="font-family: 'DM Mono', monospace; color: #BF834E">03</span><span style="font-weight: 800">espresso tonic</span><span style="font-family: 'DM Mono', monospace">$ 6.500</span></div>
+          <div style="display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 9px 0"><span style="font-family: 'DM Mono', monospace; color: #BF834E">04</span><span style="font-weight: 800">affogato</span><span style="font-family: 'DM Mono', monospace">$ 7.000</span></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: center">
+        <img src="img/p_roll.jpg" alt="Roll de canela" style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 3px solid #783E32">
+        <img src="img/p_sandwich.jpg" alt="Tostado" style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 3px solid #783E32">
+        <img src="img/p_origami.jpg" alt="Origami" style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 3px solid #783E32">
+        <img src="img/p_babka.jpg" alt="Babka" style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 3px solid #783E32">
+        <span style="font-family: Gaegu, cursive; font-weight: 700; font-size: 30px; color: #9A4A38; transform: rotate(-4deg)">+ bonus tracks: panadería y pastelería</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="eventos" style="background: #14171B; color: #F1E5D9; padding: 80px 24px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+      <div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 16px">
+        <h2 style="margin: 0; font-family: Gaegu, cursive; font-weight: 700; font-size: 84px; line-height: .8; color: #FBE6C8">qué pasa en geacofi</h2>
+        <p style="margin: 0; font-size: 18px; line-height: 1.5; color: #D8CFC2">Sets de vinilos, catas y pop-ups. Los anunciamos acá y en Instagram.</p>
+        <a href="#" style="align-self: flex-start; text-decoration: none; background: #FBE6C8; color: #783E32; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 24px; padding: 10px 22px; border: 3px solid #FBE6C8; border-radius: 14px; box-shadow: 5px 5px 0 #9A4A38">seguinos en @geacofi</a>
+      </div>
+      <div style="flex: 1.4 1 480px; display: flex; flex-wrap: wrap; gap: 26px; justify-content: center">
+        <article style="width: 260px; background: #F1E5D9; color: #783E32; border-radius: 16px; padding: 12px 12px 16px; transform: rotate(-3deg); display: flex; flex-direction: column; gap: 8px">
+          <img src="img/cafeyeso.jpg" alt="Flyer café y eso" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px">
+          <span style="font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 24px">VIE 13/2 · 17 a 21</span>
+          <span style="font-size: 14px; color: #23251C">vinyl set + lostclub pop-up</span>
+        </article>
+        <article style="width: 260px; background: #F1E5D9; color: #783E32; border-radius: 16px; padding: 12px 12px 16px; transform: rotate(2.5deg) translateY(24px); display: flex; flex-direction: column; gap: 8px">
+          <img src="img/sensorial.jpg" alt="Flyer Studio Sensorial" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px">
+          <span style="font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 24px">DOM 23/11 · 16 hs</span>
+          <span style="font-size: 14px; color: #23251C">studio sensorial con Tomi Garcia</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="visitanos" style="padding: 80px 24px">
+    <div style="max-width: 1000px; margin: 0 auto; background: #F1E5D9; border: 3px solid #783E32; border-radius: 28px; box-shadow: 10px 10px 0 #783E32; display: flex; flex-wrap: wrap; overflow: hidden">
+      <div style="flex: 1 1 380px; padding: 36px; display: flex; flex-direction: column; gap: 16px">
+        <span style="font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: .1em; color: #9A4A38">PASÁ CUANDO QUIERAS</span>
+        <h2 style="margin: 0; font-family: Gaegu, cursive; font-weight: 700; font-size: 70px; line-height: .8; color: #9A4A38">9 de Julio 996</h2>
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 700; font-size: 28px; color: #783E32">Corrientes Capital</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px">
+          <span style="background: #14171B; color: #FBE6C8; font-family: 'DM Mono', monospace; padding: 8px 14px; border-radius: 10px">7:00 → 13:00</span>
+          <span style="background: #14171B; color: #FBE6C8; font-family: 'DM Mono', monospace; padding: 8px 14px; border-radius: 10px">17:00 → 21:00</span>
+        </div>
+        <span style="font-size: 14px; color: #5B5A4E">[días de apertura a confirmar]</span>
+        <a href="#" style="align-self: flex-start; text-decoration: none; background: #9A4A38; color: #FBE6C8; font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 800; font-size: 24px; padding: 10px 22px; border: 3px solid #783E32; border-radius: 14px; box-shadow: 5px 5px 0 #783E32">escribinos por WhatsApp</a>
+      </div>
+      <div style="flex: 1 1 320px; min-height: 320px; border-left: 3px dashed #783E32; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 20px; text-align: center; color: #783E32">
+        <span style="font-family: 'DM Mono', monospace">mapa de Google Maps</span>
+        <span style="font-size: 14px">se inserta en desarrollo</span>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: #9A4A38; color: #FBE6C8; padding: 36px 24px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between">
+      <img src="img/logo_cream.png" alt="geacofi" style="height: 50px; width: auto">
+      <span style="font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 700; font-size: 22px">café de especialidad · nominado The Best Coffee Shops Argentina 2026</span>
+    </div>
+  </footer>
+</div>
+
+
+</body>
+</html>
