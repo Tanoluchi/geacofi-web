@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import Cinta from '../components/home/Cinta.astro';
 import CartaAB from '../components/home/CartaAB.astro';
 import SobreSeccion from '../components/home/SobreSeccion.astro';
 import Filtrados from '../components/home/Filtrados.astro';
@@ -11,7 +10,6 @@ import { local } from '../lib/data.ts';
 ---
 <Base title="café, discos y eso…" description={`Café de especialidad en ${local.direccion}, ${local.ciudad}. Carta, eventos y cómo llegar.`}>
   <Hero />
-  <Cinta />
   <CartaAB />
   <SobreSeccion />
   <Filtrados />
