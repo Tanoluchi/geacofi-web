@@ -1,133 +1,65 @@
 ---
 import { local, turnosTexto } from '../lib/data.ts';
 import { logoUrl } from '../lib/assets.ts';
-import Icon from '../components/shared/Icon.astro';
-import Boton from '../components/shared/Boton.astro';
 import ranaFiltrado from '../assets/pie/rana-filtrado-verde.svg?url';
-
-const anio = new Date().getFullYear();
-const handle = '@' + new URL(local.instagram).pathname.replace(/\//g, '');
-const dias = local.horarios.map((h) => h.dias).join(' · ');
-const sitio = [['/', 'inicio'], ['/carta', 'la carta'], ['/eventos', 'eventos'], ['/visitanos', 'visitanos']];
 ---
 <footer class="pie">
-  <div class="marca">
-    <img src={logoUrl('carbon')} alt="geacofi" height="46" />
-    <p class="lema">{local.lema}</p>
+  <div class="rana-caja" aria-hidden="true">
+    <img class="rana" src={ranaFiltrado} alt="" width="540" height="570" />
+    <svg viewBox="0 0 540 570" fill="none" stroke="var(--verde)" stroke-width="5" stroke-linecap="round" focusable="false">
+      <path class="chorro" d="M407 414c2 10 1 22 3 32" />
+      <path class="chorro gota" d="M428 506v26" />
+      <path class="vapor v1" d="M452 440c-8-10 8-16 0-26s6-14 2-22" />
+      <path class="vapor v2" d="M482 440c-8-10 8-16 0-26s6-14 2-22" />
+      <path class="vapor v3" d="M510 442c-7-9 7-14 0-23" />
+    </svg>
   </div>
-
-  <div class="cols">
-    <nav aria-label="El sitio">
-      <h2>el sitio</h2>
-      <ul>{sitio.map(([href, txt]) => <li><a href={href}>{txt}</a></li>)}</ul>
-    </nav>
-    <div>
-      <h2>pasá</h2>
-      <ul class="datos">
-        <li><a href={local.maps} rel="noopener">{local.direccion}, {local.ciudad}</a></li>
-        <li>{turnosTexto}</li>
-        <li>{dias}</li>
-      </ul>
+  <div class="fila">
+    <div class="col">
+      <img src={logoUrl('crema')} alt="geacofi" height="50" />
+      <span class="dir">Café de especialidad · {local.direccion}, {local.ciudad}</span>
+      <span class="horas">{turnosTexto}</span>
     </div>
-    <div>
-      <h2>escribinos</h2>
-      <ul>
-        <li><Boton href={local.whatsapp} whatsapp class="wsp">WhatsApp</Boton></li>
-        <li><a class="ig" href={local.instagram} rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><path d="M17.3 6.8h.01" /></svg>Instagram</a></li>
-      </ul>
+    <div class="links">
+      <a href={local.whatsapp} rel="noopener">WhatsApp</a>
+      <a href={local.instagram} rel="noopener">Instagram @geacofi</a>
+      <a href={local.maps} rel="noopener">Cómo llegar</a>
     </div>
-  </div>
-
-  <div class="legal">
-    <span>© {anio} geacofi</span>
-    <a href={local.instagram} rel="noopener">{handle}</a>
     {local.nominacion && <span class="nota">{local.nominacion}</span>}
   </div>
-
-  <div class="escena" aria-hidden="true">
-    <svg class="props" viewBox="0 0 1000 570" fill="none" stroke="var(--verde)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" focusable="false">
-      <!-- pila de discos -->
-      <path d="M50 548c40 6 100 6 150 0M52 548c-4-12-2-18 2-22 40 5 98 5 146 0 4 5 4 12 0 22M54 526c-4-12-2-18 2-22 38 5 92 5 140 0 4 5 3 12-1 22M56 504c-3-10-1-16 3-20 36 4 86 4 130 0 4 4 3 11-1 20" />
-      <!-- planta -->
-      <path d="M92 484c-4-30-26-52-52-60 2 28 22 52 52 60zM100 484c0-34 14-62 40-76 4 30-10 60-40 76zM96 484c-2-24-6-46 6-70" />
-      <!-- bolsa de granos -->
-      <path d="M770 550c-6-60-8-110 4-160 30 12 78 12 108 0 14 50 12 100 6 160-36 8-82 8-118 0zM774 392c-2-12 0-22 6-30 28 12 70 12 96 0 6 8 8 18 6 30" />
-      <path d="M810 470c10-14 28-14 36 0-8 14-26 14-36 0zM812 470c10 6 24 6 34 0" />
-      <!-- disco que gira -->
-      <g class="disco"><circle cx="940" cy="495" r="46" /><circle cx="940" cy="495" r="30" stroke-width="3" /><circle cx="940" cy="495" r="12" /><path d="M940 465v10" stroke-width="4" /></g>
-    </svg>
-    <div class="rana-caja">
-      <img class="rana" src={ranaFiltrado} alt="" width="540" height="570" />
-      <svg viewBox="0 0 540 570" fill="none" stroke="var(--verde)" stroke-width="5" stroke-linecap="round" focusable="false">
-        <path class="chorro" d="M407 414c2 10 1 22 3 32" />
-        <path class="chorro gota" d="M428 506v26" />
-        <path class="vapor v1" d="M452 440c-8-10 8-16 0-26s6-14 2-22" />
-        <path class="vapor v2" d="M482 440c-8-10 8-16 0-26s6-14 2-22" />
-        <path class="vapor v3" d="M510 442c-7-9 7-14 0-23" />
-      </svg>
-    </div>
-  </div>
 </footer>
-
 <style>
-  .pie {
-    background: var(--crema); color: var(--ink-dia); margin-top: 48px;
-    padding: 56px var(--side) 0; overflow: hidden;
-    display: grid; gap: 40px 56px;
-    grid-template-columns: minmax(300px, 460px) 1fr;
-    grid-template-areas: "marca cols" "escena cols" "escena legal";
-    grid-template-rows: auto 1fr auto;
-  }
-  .marca { grid-area: marca; }
-  .marca img { height: 46px; width: auto; display: block; }
-  .lema { margin: 10px 0 0; font: 400 15px/1.4 var(--font-body); color: var(--ink-muted-dia); }
-  .cols { grid-area: cols; display: grid; grid-template-columns: repeat(3, auto); gap: 32px 48px; justify-content: start; align-content: start; }
-  h2 { margin: 0 0 8px; font: 500 12px/18px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--terracota); }
-  ul { list-style: none; margin: 0; padding: 0; font: 400 14px/1.4 var(--font-body); }
-  li { color: var(--ink-muted-dia); }
-  .cols a:not(.boton) { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ink-dia); text-decoration: none; }
-  .cols a:not(.boton):hover { text-decoration: underline; }
-  .datos li { padding: 4px 0; }
-  .datos li:first-child { padding: 0; }
-  .pie :global(.wsp) { font-size: 20px; min-height: 44px; padding: 6px 16px; }
-  a:focus-visible { outline: 3px solid var(--carbon); outline-offset: 4px; border-radius: 4px; }
-  .legal {
-    grid-area: legal; align-self: end; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: center;
-    padding: 14px 0 18px; border-top: 1px solid color-mix(in srgb, var(--ink-dia) 18%, transparent);
-    font: 400 12px/1.5 var(--font-mono); color: var(--ink-muted-dia);
-  }
-  .legal a { color: var(--ink-muted-dia); display: inline-flex; align-items: center; min-height: 44px; }
+  .pie { position: relative; background: var(--terracota); color: var(--durazno); padding: 44px var(--side); margin-top: 230px; }
+  .fila { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start; justify-content: space-between; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .col img { height: 50px; width: auto; align-self: flex-start; }
+  .dir { font-size: 15px; }
+  .horas { font: 13px/1.4 var(--font-mono); }
+  .links { display: flex; flex-direction: column; gap: 8px; font: italic 800 22px/1.2 var(--font-cond); }
+  .links a { color: var(--durazno); }
+  .nota { font: 12px/1.5 var(--font-mono); max-width: 260px; }
 
-  .escena { grid-area: escena; align-self: end; position: relative; aspect-ratio: 1000 / 570; width: 100%; max-width: 560px; margin-bottom: -2px; }
-  .props, .rana-caja { position: absolute; }
-  .props { inset: 0; width: 100%; height: 100%; }
-  .rana-caja { left: 20%; top: 0; width: 54%; aspect-ratio: 540 / 570; }
+  /* la rana sirviendo, parada sobre el borde del pie (donde antes se asomaba) */
+  .rana-caja { position: absolute; left: 50%; top: 0; width: 220px; aspect-ratio: 540 / 570; transform: translate(-50%, -96%); }
   .rana-caja img, .rana-caja svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .chorro { stroke-dasharray: 6 9; }
   .vapor { opacity: .55; }
-  .disco { transform-box: fill-box; transform-origin: center; }
-
-  /* loop: solo con el pie a la vista y sin reduced-motion */
   @media (prefers-reduced-motion: no-preference) {
-    :global(.pie.en-vista) .rana-caja { animation: respira 3.2s ease-in-out infinite; }
+    :global(.pie.en-vista) .rana-caja > * { animation: respira 3.2s ease-in-out infinite; }
     :global(.pie.en-vista) .chorro { animation: fluye .8s linear infinite; }
     :global(.pie.en-vista) .gota { animation-duration: 1.1s; }
     :global(.pie.en-vista) .vapor { animation: sube 2.6s ease-out infinite; }
     :global(.pie.en-vista) .v2 { animation-delay: .8s; }
     :global(.pie.en-vista) .v3 { animation-delay: 1.6s; }
-    :global(.pie.en-vista) .disco { animation: gira 6s linear infinite; }
   }
   @keyframes respira { 50% { transform: translateY(-5px); } }
   @keyframes fluye { to { stroke-dashoffset: -30; } }
   @keyframes sube { 0% { opacity: 0; transform: translateY(8px); } 25% { opacity: .6; } 100% { opacity: 0; transform: translateY(-12px); } }
-  @keyframes gira { to { transform: rotate(360deg); } }
 
-  @media (max-width: 900px) {
-    .pie { grid-template-columns: 1fr; grid-template-areas: "marca" "cols" "legal" "escena"; grid-template-rows: none; padding-top: 40px; gap: 28px; }
-    .cols { grid-template-columns: 1fr 1fr; }
-    .escena { max-width: 420px; justify-self: start; }
+  @media (max-width: 640px) {
+    .pie { padding: 28px 18px 36px; margin-top: 180px; }
+    .rana-caja { width: 170px; }
   }
-  @media (max-width: 520px) { .cols { grid-template-columns: 1fr; } .escena { max-width: 340px; } }
 </style>
 <script>
   const pie = document.querySelector<HTMLElement>('footer.pie');
