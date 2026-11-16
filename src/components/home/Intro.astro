@@ -1,5 +1,6 @@
 ---
-import { ranaUrl, logoUrl } from '../../lib/assets.ts';
+import { logoUrl } from '../../lib/assets.ts';
+import ranaUrl from '../../assets/intro/rana-filtrado-verde.svg?url';
 
 // Intro: la rana sirve el café, el vapor escribe "geacofi" y el telón se abre sobre el hero.
 // render(t) es función pura del tiempo (como Artina): ?t=1.8 congela el cuadro.
@@ -28,30 +29,36 @@ const letras = [
         </mask>
       </defs>
       <image id="i-logo" href={logoUrl('bordo')} x="270" y="10" width="480" height="164" mask="url(#intro-m)" />
-      <g id="i-rana"><image href={ranaUrl('barra')} x="0" y="190" width="540" height="463" /></g>
-      <g class="trazo">
-        <path id="i-barra" pathLength="1" d="M528 518C575 521 640 515 705 519" />
-        <g id="i-taza">
-          <path d="M-46 -62C-49 -30 -45 -5 -27 -2 -8 1 10 1 26 -2 44 -5 47 -32 44 -62" />
-          <path d="M-51 -62C-20 -67 20 -58 49 -64" />
-          <path d="M45 -52C80 -58 82 -18 40 -20" />
-          <path d="M-64 5C-30 13 30 10 64 3" />
+      <g id="i-rana">
+        <defs>
+          <clipPath id="i-cb"><path d="M368 456L494 456 470 478 436 495 405 483Z" /></clipPath>
+          <clipPath id="i-cm"><rect x="392" y="510" width="76" height="42" rx="10" /></clipPath>
+        </defs>
+        <g clip-path="url(#i-cb)"><path id="i-nb" fill="#6B3E26" fill-opacity=".85" /></g>
+        <g clip-path="url(#i-cm)"><path id="i-nm" fill="#6B3E26" fill-opacity=".85" /></g>
+        <path id="i-gota" stroke="#6B3E26" stroke-opacity=".85" stroke-width="5" stroke-linecap="round" fill="none" />
+        <image href={ranaUrl} x="0" y="0" width="540" height="570" />
+        <path id="i-brillo" stroke="#E2B382" stroke-width="3" stroke-opacity=".8" stroke-linecap="round" fill="none" />
+        <path id="i-chorro" fill="#6B3E26" fill-opacity=".85" stroke="#445012" stroke-width="4.5" />
+        <g id="i-gotas" fill="#6B3E26" stroke="#445012" stroke-width="2.5">
+          {[0, 1, 2, 3, 4, 5].map(() => <circle r="3.5" />)}
         </g>
-        <path id="i-chorro" pathLength="1" d="M506 402C528 400 546 403 551 416M551 416C554 440 549 456 552 484" />
-        <g transform="translate(-22 0)"><path class="i-vapor" pathLength="1" d="M600 436C582 408 620 384 602 354 586 326 618 304 604 276 596 256 608 246 606 236" />
-        <path class="i-vapor" pathLength="1" d="M574 440C560 416 588 400 576 376 566 356 586 340 578 322 574 310 580 304 580 298" />
-        <path class="i-vapor" pathLength="1" d="M628 440C612 418 640 398 626 374 616 354 636 338 628 320 622 306 630 300 628 292" /></g>
+      </g>
+      <g class="trazo">
+        {[
+          'M500 550C470 520 548 500 566 462 584 424 574 392 592 356 610 320 586 292 604 252 614 226 606 210 610 192',
+          'M520 550C500 520 566 508 580 476 596 440 612 420 632 388 650 356 628 330 646 292 656 266 650 236 660 214',
+          'M486 550C466 524 524 504 548 470 570 436 546 418 570 384 590 352 566 326 584 288 596 262 584 240 590 212',
+        ].map((d) => <path class="i-vapor" pathLength="1" d={d} />)}
       </g>
     </svg>
   </div>
   <button type="button" class="saltar-intro" data-skip>saltar intro</button>
 </div>
 <script is:inline>
-  // Antes del primer pintado: solo se muestra con JS, una vez por sesión y sin reduced-motion.
+  // Antes del primer pintado: solo se muestra con JS y sin reduced-motion; en cada carga del Home.
   (function () {
-    var q = location.search;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!/[?&]t=/.test(q) && sessionStorage.getItem('gi-intro')) return;
     document.documentElement.classList.add('intro-on');
   })();
 </script>
@@ -61,12 +68,13 @@ const letras = [
   if (!on) root.remove();
   else {
     const $ = (s: string) => root.querySelector<SVGElement>(s)!;
-    const rana = $('#i-rana'), barra = $('#i-barra'), taza = $('#i-taza'), chorro = $('#i-chorro');
+    const rana = $('#i-rana'), chorro = $('#i-chorro'), brillo = $('#i-brillo'), gota = $('#i-gota');
+    const nb = $('#i-nb'), nm = $('#i-nm'), gotas = [...root.querySelectorAll<SVGElement>('#i-gotas circle')];
     const logo = $('#i-logo'), vapor = [...root.querySelectorAll<SVGElement>('.i-vapor')];
     const trazos = [...root.querySelectorAll<SVGElement>('mask path')];
     const skip = root.querySelector<HTMLElement>('[data-skip]')!;
     const frozen = new URLSearchParams(location.search).get('t');
-    const DUR = 3.8, SALIDA = 3.15; // la salida (iris) arranca en 3.15 s
+    const DUR = 4.3, SALIDA = 3.6; // la salida (iris) arranca en 3.6 s
     const seg = (t: number, a: number, b: number) => Math.min(1, Math.max(0, (t - a) / (b - a)));
     const eo = (x: number) => 1 - (1 - x) ** 3;
     const back = (x: number) => 1 + 2.7 * (x - 1) ** 3 + 1.7 * (x - 1) ** 2; // easeOutBack
@@ -91,30 +99,78 @@ const letras = [
     // un trazo por letra, en orden de escritura, con tiempo repartido por largo aproximado
     const pesos = [1.1, 1.2, 1.8, 1.5, .5, 1.1, 1.4, 1.2, .5, .8];
     const suma = pesos.reduce((a, b) => a + b);
-    const E0 = 1.55, E1 = 2.75; // el vapor escribe el lettering
+    const E0 = 2.3, E1 = 3.45; // el vapor escribe el lettering
     let acc = 0;
     const tramos = pesos.map((p) => { const a = E0 + (E1 - E0) * acc / suma; acc += p; return [a, E0 + (E1 - E0) * acc / suma]; });
     trazos.forEach((p) => { p.setAttribute('stroke-dasharray', '1 2'); });
 
+    // chorro: cinta rellena (cúbica del pico a la superficie) con bordes que ondulan; todo en coordenadas de la imagen
+    const SP = [356, 443]; // pico de la tetera en el SVG
+    const bez = (P: number[][], u: number) => {
+      const v = 1 - u, k = [v * v * v, 3 * v * v * u, 3 * v * u * u, u * u * u];
+      return [0, 1].map((j) => P.reduce((a, p, i) => a + p[j] * k[i], 0));
+    };
+    const cinta = (P: number[][], a: number, b: number, w: number, t: number) => {
+      const L: number[][] = [], R: number[][] = [], C: number[][] = [];
+      for (let i = 0; i <= 14; i++) {
+        const u = a + (b - a) * i / 14, [x, y] = bez(P, u), [x2, y2] = bez(P, Math.min(1, u + .02));
+        let dx = x2 - x, dy = y2 - y; const n = Math.hypot(dx, dy) || 1; dx /= n; dy /= n;
+        const h = w / 2 * (1 + .22 * Math.sin(u * 11 - t * 16)) * (1 - .25 * u);
+        L.push([x - dy * h, y + dx * h]); R.push([x + dy * h, y - dx * h]); C.push([x - dy * h * .45, y + dx * h * .45]);
+      }
+      const f = (q: number[][]) => q.map((p) => p.map((v) => v.toFixed(1)).join(' ')).join('L');
+      chorro.setAttribute('d', `M${f(L)}L${f(R.reverse())}Z`);
+      brillo.setAttribute('d', `M${f(C.slice(1, -1))}`);
+    };
+    const nivel = (el: SVGElement, y0: number, y1: number, v: number, t: number) => {
+      const y = y0 - (y0 - y1) * v;
+      el.setAttribute('d', v <= 0 ? '' : `M350 ${y0 + 6}L350 ${y}${[0, 1, 2, 3, 4, 5].map((i) => `L${350 + 30 * (i + 1)} ${y + 2.5 * Math.sin(i * 2 + t * 9)}`).join('')}L530 ${y0 + 6}Z`);
+    };
+    const hide = (el: Element, v: boolean) => el.setAttribute('visibility', v ? 'hidden' : 'visible');
+
     const render = (t: number) => {
-      const r = eo(seg(t, 0, .7));
-      rana.setAttribute('transform', `translate(0 ${(1 - r) * 110 - (r === 1 ? 2.5 * (1 + Math.sin((t - .7) * 1.96)) : 0)})`);
+      // entra deslizando, se asienta, se inclina hacia la taza para volcar la tetera y vuelve
+      const r = eo(seg(t, 0, .6));
+      const tilt = eo(seg(t, .6, 1)) - eo(seg(t, 2, 2.4));
+      const bob = tilt > .9 ? Math.sin((t - 1) * 11) : 0;
+      const a = 11 * tilt + bob * .5, sq = tilt * .025;
+      rana.setAttribute('transform', `translate(160 ${196 + (1 - r) * 110}) scale(.8) translate(270 565) rotate(${a}) scale(${1 + sq} ${1 - sq}) translate(-270 -565)`);
       rana.style.opacity = String(Math.min(1, r * 4));
-      // barra que se prolonga y taza que llega con easeOutBack
-      barra.setAttribute('stroke-dasharray', '1 2');
-      barra.setAttribute('stroke-dashoffset', String(1 - eo(seg(t, .45, .85))));
-      const c = back(seg(t, .6, 1.05)), u = Math.max(0, t - 1.3);
-      const rebote = Math.exp(-7 * u) * Math.sin(20 * u) * .07;
-      taza.setAttribute('transform', `translate(580 516) scale(${(.8 + .2 * c) * (1 - rebote)} ${(.8 + .2 * c) * (1 + rebote)})`);
-      taza.style.opacity = String(seg(t, .6, .8));
-      // chorro: la cabeza cae y después la cola lo alcanza
-      ventana(chorro, eo(seg(t, .95, 1.3)), seg(t, 1.3, 1.5));
-      // vapor continuo desde que la taza está llena
+      // nivel del café: cono y taza
+      const pour = seg(t, 1, 1.15) * (1 - seg(t, 2, 2.3));
+      const lb = seg(t, 1.1, 1.9), lm = seg(t, 1.35, 2);
+      nivel(nb, 495, 458, eo(lb), t); nivel(nm, 556, 516, eo(lm), t);
+      // el chorro nace en el pico, cae a la superficie y se afina al enderezarse
+      const Lx = 428 + Math.sin(t * 7) * 2, Ly = 495 - 37 * eo(lb) - 2;
+      const P = [SP, [SP[0] + 38, SP[1] - 16], [Lx - 8, Ly - 38], [Lx, Ly]];
+      const head = eo(seg(t, 1, 1.2)), tail = eo(seg(t, 2.05, 2.3));
+      const w = 15 * (1 - .6 * seg(t, 1.95, 2.3));
+      hide(chorro, head - tail < .03); hide(brillo, head - tail < .03);
+      if (head - tail >= .03) cinta(P, tail, head, w, t);
+      // gotas: salpicadura donde cae y 3 últimas gotas del pico
+      gotas.forEach((g, i) => {
+        if (i < 3) { // salpicadura
+          const ph = (t * 3.2 + i / 3) % 1, on = pour > .5 && head > .9;
+          hide(g, !on);
+          g.setAttribute('cx', String(Lx + (i - 1) * 22 * ph)); g.setAttribute('cy', String(Ly - 26 * ph * (1 - ph) * 4 + 2));
+        } else { // cola: caen por el arco y se pierden en el cono
+          const u = seg(t, 2.25 + (i - 3) * .12, 2.65 + (i - 3) * .12), on = u > 0 && u < 1;
+          hide(g, !on);
+          const [x, y] = bez(P, Math.min(1, .35 + u * .65)); g.setAttribute('cx', String(x)); g.setAttribute('cy', String(y + 18 * u * u));
+        }
+      });
+      // gotero del cono a la taza
+      const dr = pour * seg(t, 1.25, 1.4);
+      gota.setAttribute('d', dr > .5 && lm < 1 ? `M433 498L${433 + Math.sin(t * 20)} ${516 + 40 * (1 - lm)}` : '');
+      // vapor: 3 curvas que se dibujan, suben y se mecen; desde que la taza está llena fluyen hasta el lettering
+      const alto = .5 + .5 * eo(seg(t, E0, E0 + .6));
       vapor.forEach((v, i) => {
-        if (t < 1.35) return ventana(v, 0, 0);
-        const ph = ((t - 1.35 - i * .3) / 1.3) % 1;
+        if (t < 2) return ventana(v, 0, 0);
+        const ph = ((t - 2 - i * .28) / 1.1) % 1;
         if (ph < 0) return ventana(v, 0, 0);
-        ventana(v, Math.min(1, ph * 1.7), Math.max(0, (ph - .45) * 1.8));
+        ventana(v, alto * Math.min(1, ph * 1.7), alto * Math.max(0, (ph - .5) * 2));
+        v.setAttribute('transform', `translate(${Math.sin(t * 4 + i * 2.1) * 6} 0)`);
+        if (v.style.opacity === '1') v.style.opacity = String(Math.min(1, (1 - ph) * 4) * (1 - seg(t, 3.1, 3.5)));
       });
       // lettering: máscara que sigue la escritura; al terminar se quita y queda nítido
       trazos.forEach((p, i) => p.setAttribute('stroke-dashoffset', String(1.001 - eo(seg(t, tramos[i][0], tramos[i][1])))));
@@ -149,7 +205,6 @@ const letras = [
       render(t);
       if (t >= DUR) terminar();
     } else {
-      sessionStorage.setItem('gi-intro', '1');
       prev = document.activeElement; y = scrollY;
       document.body.append(root);
       root.hidden = false;
@@ -183,7 +238,7 @@ const letras = [
   .intro .escena { width: min(94vw, 920px, calc((100svh - 96px) * 1.15)); }
   .intro svg { display: block; width: 100%; height: auto; overflow: visible; visibility: hidden; }
   html.intro-run .intro svg { visibility: visible; }
-  .intro .trazo { fill: none; stroke: var(--carbon); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+  .intro .trazo { fill: none; stroke: var(--verde); stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
   .intro .saltar-intro {
     position: absolute; right: var(--space-5); bottom: var(--space-5); min-height: 44px; padding: 8px 20px;
     font: italic 800 24px/1 var(--font-cond); text-transform: lowercase;
