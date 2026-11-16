@@ -12,6 +12,7 @@ import '../styles/base.css';
 import { local } from '../lib/data.ts';
 import Nav from './Nav.astro';
 import Pie from './Pie.astro';
+import Tira from './Tira.astro';
 import Icon from '../components/shared/Icon.astro';
 
 interface Props { title: string; description: string; noindex?: boolean }
@@ -62,6 +63,7 @@ const jsonLd = {
     <Nav />
     <main id="contenido"><slot /></main>
     <Pie />
+    <Tira />
     <a class="wa-flotante" href={local.whatsapp} rel="noopener" aria-label="Escribinos por WhatsApp"><Icon name="whatsapp" size={28} /></a>
   </body>
 </html>
@@ -79,4 +81,28 @@ const jsonLd = {
   }
   .wa-flotante:hover { color: var(--durazno); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--bordo); }
   .wa-flotante:active { transform: translate(4px, 4px); box-shadow: none; }
+  @media (max-width: 760px) { .wa-flotante { display: none; } } /* en celular lo reemplaza la tira de abajo */
+  @media (max-width: 1023px) {
+    .wa-flotante { right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); width: 52px; height: 52px; }
+    /* mientras un botón o el pie pasa por su franja, se aparta para no taparlo */
+    .wa-flotante.aparte { opacity: 0; pointer-events: none; transform: scale(.8); }
+  }
 </style>
+<script is:inline>
+(() => {
+  const wa = document.querySelector('.wa-flotante');
+  if (!wa) return;
+  let io;
+  const watch = () => {
+    io?.disconnect();
+    const r = wa.getBoundingClientRect(), vis = new Set();
+    // la raíz del observador es solo el rincón del botón (+8px)
+    io = new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? vis.add(e.target) : vis.delete(e.target)));
+      wa.classList.toggle('aparte', vis.size > 0);
+    }, { rootMargin: `-${Math.max(0, Math.round(r.top - 8))}px 0px 0px -${Math.max(0, Math.round(r.left - 8))}px` });
+    document.querySelectorAll('a.boton, footer.pie').forEach((el) => io.observe(el));
+  };
+  watch(); addEventListener('resize', watch);
+})();
+</script>

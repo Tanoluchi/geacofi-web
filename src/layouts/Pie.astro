@@ -37,6 +37,7 @@ import ranaFiltrado from '../assets/pie/rana-filtrado-verde.svg?url';
   .horas { font: 13px/1.4 var(--font-mono); }
   .links { display: flex; flex-direction: column; gap: 8px; font: italic 800 22px/1.2 var(--font-cond); }
   .links a { color: var(--durazno); }
+  @media (max-width: 1023px) { .links { gap: 0; } .links a { display: flex; align-items: center; min-height: 44px; } } /* área táctil de 44px; en escritorio quedan compactos */
   .nota { font: 12px/1.5 var(--font-mono); max-width: 260px; }
 
   /* la rana sirviendo, parada sobre el borde del pie (donde antes se asomaba) */
@@ -56,8 +57,14 @@ import ranaFiltrado from '../assets/pie/rana-filtrado-verde.svg?url';
   @keyframes fluye { to { stroke-dashoffset: -30; } }
   @keyframes sube { 0% { opacity: 0; transform: translateY(8px); } 25% { opacity: .6; } 100% { opacity: 0; transform: translateY(-12px); } }
 
+  /* tablet: tres bloques parejos en una fila, sin amontonarse a la izquierda */
+  @media (min-width: 760px) and (max-width: 1055px) {
+    .fila { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-5) var(--space-6); align-items: start; }
+    .nota { grid-column: 1 / -1; max-width: none; }
+  }
+  @media (max-width: 760px) { .pie { padding-bottom: calc(44px + 96px + env(safe-area-inset-bottom)); } } /* lugar para la tira fija */
   @media (max-width: 640px) {
-    .pie { padding: 28px 18px 36px; margin-top: 180px; }
+    .pie { padding: 28px 18px calc(36px + 96px + env(safe-area-inset-bottom)); margin-top: 180px; }
     .rana-caja { width: 170px; }
   }
 </style>

@@ -164,7 +164,59 @@ const granos = [[grano1, 1, 'izq'], [grano2, 2, 'der'], [grano3, 3, 'izq'], [gra
     .vaso.scrub .g3 { --dir: -1; --st: .74; --len: .14; --spin: 200; --w: 62px; left: 8%; top: 64%; }
     .vaso.scrub .g4 { --dir: 1; --st: .68; --len: .26; --spin: -360; --w: 60px; right: 6%; top: 61%; }
 
-    @media (min-width: 900px) {
+    /* ---- <1100px: pin corto (180vh). Celular: un paso por vez bajo el vaso. Tablet: los cuatro alrededor del vaso, en orden de lectura. */
+    @media (max-width: 1099px) {
+      .vaso.scrub { height: 180vh; }
+      .vaso.scrub .stage { grid-template-rows: auto minmax(0, 1fr) auto auto; row-gap: 6px; }
+      .vaso.scrub .cab { grid-row: 1; padding-top: 12px; }
+      .vaso.scrub .cab .t-h2 { font-size: clamp(40px, 12vw, 52px); }
+      .vaso.scrub .escena { --cw: min(24svh, 190px); grid-row: 2; padding: 6px 0; align-self: center; }
+      .vaso.scrub .cup { transform: rotateX(calc(10deg - var(--p) * 8deg)) rotateY(calc(-25deg + var(--p) * 50deg)) scale(calc(.78 + var(--p) * .22)); }
+      .vaso.scrub .feat { grid-column: 1; grid-row: 3; align-self: center; max-width: 360px; --a: clamp(0, min((var(--p) - var(--s)) / .07, (var(--e) - var(--p)) / .07), 1); transform: translateY(calc((1 - var(--a)) * 16px)); }
+      .vaso.scrub .num { font-size: 48px; }
+      .vaso.scrub .feat h3 { font-size: 30px; }
+      .vaso.scrub .feat p { font-size: 17px; line-height: 24px; }
+      .vaso.scrub .f1 { --s: -.1; --e: .25; } .vaso.scrub .f2 { --s: .25; --e: .5; }
+      .vaso.scrub .f3 { --s: .5; --e: .75; } .vaso.scrub .f4 { --s: .75; --e: 3; }
+      .vaso.scrub .cta { grid-row: 4; padding: 8px 0 22px; opacity: 1; transform: none; }
+      .vaso.scrub .g1 { --w: 40px; left: 7%; top: 22%; } .vaso.scrub .g2 { --w: 36px; right: 7%; top: 28%; }
+      .vaso.scrub .g3 { --w: 44px; left: 14%; top: 42%; } .vaso.scrub .g4 { --w: 42px; right: 13%; top: 46%; }
+    }
+    /* celular: lugar abajo para la tira fija */
+    @media (max-width: 760px) {
+      .vaso.scrub .stage { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+      .vaso.scrub .escena { --cw: min(21svh, 170px); }
+    }
+    @media (min-width: 700px) and (max-width: 1099px) {
+      .vaso.scrub .stage { grid-template-columns: 1fr minmax(0, 240px) 1fr; grid-template-rows: auto 1fr 1fr auto; column-gap: 20px; row-gap: 24px; }
+      .vaso.scrub .cab { grid-column: 1 / -1; padding-top: 24px; }
+      .vaso.scrub .cab .t-h2 { font-size: 64px; }
+      .vaso.scrub .escena { --cw: min(230px, 28svh); grid-column: 1 / -1; grid-row: 2 / 4; padding: 0; }
+      .vaso.scrub .cup { transform: rotateX(calc(10deg - var(--p) * 8deg)) rotateY(calc(-25deg + var(--p) * 50deg)) scale(calc(.8 + var(--p) * .25)); }
+      .vaso.scrub .feat { max-width: 300px; grid-template-columns: 1fr; column-gap: 0; gap: 4px; --e: 3; }
+      .vaso.scrub .num { grid-row: auto; font-size: 56px; }
+      .vaso.scrub .feat h3 { font-size: 30px; }
+      .vaso.scrub .f1 { --s: .06; grid-column: 1; grid-row: 2; justify-self: end; text-align: right; align-self: end; }
+      .vaso.scrub .f2 { --s: .2; grid-column: 3; grid-row: 2; justify-self: start; align-self: end; }
+      .vaso.scrub .f3 { --s: .34; grid-column: 1; grid-row: 3; justify-self: end; text-align: right; align-self: start; }
+      .vaso.scrub .f4 { --s: .48; grid-column: 3; grid-row: 3; justify-self: start; align-self: start; }
+      .vaso.scrub .f1 p, .vaso.scrub .f3 p { margin-left: auto; }
+      .vaso.scrub .cta { grid-column: 1 / -1; padding: 0 0 28px; }
+      .vaso.scrub .g1 { left: 36%; top: 26%; } .vaso.scrub .g2 { right: 36%; top: 22%; }
+      .vaso.scrub .g3 { left: 38%; top: 70%; } .vaso.scrub .g4 { right: 38%; top: 74%; }
+    }
+
+    /* tablet vertical (alto de sobra): vaso más grande y paso más amplio para que no quede aire muerto */
+    @media (min-width: 700px) and (max-width: 1099px) and (orientation: portrait) {
+      .vaso.scrub .stage { grid-template-columns: 1fr minmax(0, 300px) 1fr; row-gap: 56px; column-gap: 16px; }
+      .vaso.scrub .escena { --cw: min(300px, 34svh); }
+      .vaso.scrub .feat { max-width: 230px; }
+      .vaso.scrub .feat h3 { font-size: 28px; }
+      .vaso.scrub .feat p { font-size: 16px; line-height: 23px; }
+      .vaso.scrub .g1 { left: 32%; } .vaso.scrub .g2 { right: 32%; }
+    }
+
+    @media (min-width: 1100px) {
       .vaso.scrub .stage { grid-template-columns: 1fr minmax(0, 460px) 1fr; grid-template-rows: auto 1fr 1fr auto; row-gap: 40px; padding: 0 var(--side); }
       .vaso.scrub .cab { grid-column: 1 / -1; grid-row: 1; padding-top: 28px; }
       .vaso.scrub .cab .t-h2 { font-size: 72px; }

@@ -71,6 +71,12 @@ const fecha = carta.actualizada.split('-').reverse().join('/');
   }
   .cta-t { font: 700 38px/1 var(--font-display); color: var(--terracota); flex: 1 1 280px; }
   .cta-rana { flex: none; width: 170px; }
+  /* tablet: título y rana lado a lado desde 760px (antes la rana quedaba sola en su fila) */
+  @media (min-width: 760px) {
+    .hero { flex-wrap: nowrap; }
+    .hero-txt { flex: 1 1 0; min-width: 0; }
+    .hero-rana { flex: 0 0 clamp(220px, 32%, 320px); }
+  }
   @media (max-width: 640px) {
     .hero { display: grid; grid-template-columns: 1fr 130px; gap: 10px 8px; align-items: center; padding-block: 8px 20px; }
     .hero-txt { display: contents; }

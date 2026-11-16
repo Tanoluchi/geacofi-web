@@ -99,8 +99,8 @@ const flecha = 'M9 4l-8 8 8 8';
   .flecha:hover { transform: translate(-2px, -2px); box-shadow: var(--sticker); }
   .flecha:active { transform: translate(4px, 4px); box-shadow: none; }
   .flecha:focus-visible, .dot:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-  .dots { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; justify-content: center; }
-  .dot { position: relative; width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .dots { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+  .dot { position: relative; width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
   .dot::before { content: ''; position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; translate: -50% -50%; border-radius: var(--radius-pill); border: 2px solid var(--bordo); background: var(--crema); transition: width .3s cubic-bezier(.22, .8, .24, 1), background-color .3s; }
   .dot[aria-current='true']::before { width: 26px; background: var(--terracota); }
 

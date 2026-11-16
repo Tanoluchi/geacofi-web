@@ -107,14 +107,15 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
   .sobre .back::before { content: ""; position: absolute; inset: 7%; border: var(--border-dash) dashed var(--bordo); border-radius: calc(var(--cw) * .05); }
   .sobre .back .q { font: 700 calc(var(--cw) * .5)/1 var(--font-display); color: var(--terracota); }
   .sobre .front { display: flex; flex-direction: column; padding: calc(var(--cw) * .06); background: var(--bg); color: var(--ink-f); }
-  .sobre .front .top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font: italic 800 calc(var(--cw) * .085)/1 var(--font-cond); }
-  .sobre .front .num { font: 500 calc(var(--cw) * .055)/1 var(--font-mono); font-style: normal; opacity: .8; }
+  .sobre .front .top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font: italic 800 max(13px, calc(var(--cw) * .085))/1 var(--font-cond); }
+  .sobre .front .num { font: 500 max(11px, calc(var(--cw) * .055))/1 var(--font-mono); font-style: normal; opacity: .8; }
   .sobre .front .art { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; margin: calc(var(--cw) * .04) 0; padding: 6%; border-radius: calc(var(--cw) * .05); background: var(--panel); }
   .sobre .front .art img { max-height: 100%; max-width: 100%; width: auto; height: auto; }
   .sobre .front .name { font: 700 calc(var(--cw) * .15)/.9 var(--font-display); text-wrap: balance; }
-  .sobre .front .meta { margin-top: calc(var(--cw) * .02); font: 500 calc(var(--cw) * .056)/1.3 var(--font-mono); opacity: .9; }
+  .sobre .front .meta { margin-top: calc(var(--cw) * .02); font: 500 max(11px, calc(var(--cw) * .056))/1.3 var(--font-mono); opacity: .9; }
   .sobre .front .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: calc(var(--cw) * .035); }
-  .sobre .front .tag { padding: 4px 7px; border-radius: var(--radius-pill); background: var(--ink-f); color: var(--bg); font: 800 calc(var(--cw) * .05)/1 var(--font-body); }
+  .sobre .front .tag { padding: 4px 7px; border-radius: var(--radius-pill); background: var(--ink-f); color: var(--bg); font: 800 max(11px, calc(var(--cw) * .05))/1 var(--font-body); }
+  .sobre .card.sm .tags { display: none; } /* a ~150px las notas no entran legibles: quedan en el detalle */
   .sobre .sheen { position: absolute; inset: 0; border-radius: calc(var(--cw) * .07); pointer-events: none; opacity: 0; mix-blend-mode: soft-light; transition: opacity .3s; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.75), transparent 55%); }
   .sobre .holo .sheen { opacity: .55; mix-blend-mode: color-dodge; background-size: 100% 100%, 220% 220%; background-position: center, var(--mx, 50%) var(--my, 50%);
     background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.55), transparent 45%), linear-gradient(115deg, transparent 20%, rgba(255,92,180,.45) 35%, rgba(90,200,255,.45) 50%, rgba(140,255,170,.45) 65%, transparent 80%); }
@@ -195,7 +196,7 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
     const nombre = f.tipo === 'semana' ? 'café de la semana' : c!.nombre;
     const num = c ? '#' + String(D.numeros[c.id]).padStart(2, '0') : '';
     const label = tag === 'button' ? ` type="button" aria-label="${esc(nombre)}, de ${esc(t.nombre)}. ver detalle"` : '';
-    return `<${tag} class="card${t.holo ? ' holo' : ''}"${label} style="--cw:${cw}px;--bg:var(--${t.color});--ink-f:var(--${t.tinta});--panel:${carbon ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.1)'}">
+    return `<${tag} class="card${t.holo ? ' holo' : ''}${cw < 170 ? ' sm' : ''}"${label} style="--cw:${cw}px;--bg:var(--${t.color});--ink-f:var(--${t.tinta});--panel:${carbon ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.1)'}">
       <span class="inner">
         <span class="face back"><span class="q">?</span></span>
         <span class="face front">
@@ -225,17 +226,18 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
   }
 
   // ---------------------------------------------------------------- disposición del abanico
+  // celular: 2 columnas (2+2+1, la última centrada) con figuritas de ~150px; tablet angosta: 3+2; ancho: abanico de 5
   function layout() {
-    const W = stage.clientWidth, H = stage.clientHeight, n = 5, small = W < 700, gap = small ? 12 : 22;
+    const W = stage.clientWidth, H = stage.clientHeight, n = 5, gap = W < 700 ? 12 : 22;
     const pos: [number, number, number][] = [];
     let cw: number;
-    if (small) {
-      cw = Math.min(150, (W - gap * 2 - 8) / 3);
-      const ch = cw * 1.42, y1 = H / 2 - ch - gap / 2, y2 = H / 2 + gap / 2;
-      const x1 = (W - (cw * 3 + gap * 2)) / 2, x2 = (W - (cw * 2 + gap)) / 2;
-      for (let i = 0; i < 3; i++) pos.push([x1 + i * (cw + gap), y1, 0]);
-      for (let i = 0; i < 2; i++) pos.push([x2 + i * (cw + gap), y2, 0]);
-    } else {
+    const grid = (cols: number[]) => {
+      const ch = cw * 1.42;
+      cols.forEach((c, r) => { const x0 = (W - (cw * c + gap * (c - 1))) / 2; for (let i = 0; i < c; i++) pos.push([x0 + i * (cw + gap), r * (ch + gap), 0]); });
+    };
+    if (W < 700) { cw = Math.min(160, (W - gap - 8) / 2); grid([2, 2, 1]); }
+    else if ((W - gap * (n - 1) - 20) / n < 150) { cw = Math.min(205, (W - gap * 2 - 8) / 3); grid([3, 2]); }
+    else {
       cw = Math.min(205, (W - gap * (n - 1) - 20) / n);
       const x0 = (W - (cw * n + gap * (n - 1))) / 2, ch = cw * 1.42;
       for (let i = 0; i < n; i++) { const k = i - (n - 1) / 2; pos.push([x0 + i * (cw + gap), H / 2 - ch / 2 - 20 + Math.abs(k) * 10, k * 2.2]); }
@@ -255,9 +257,9 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
   let parts: P[] = [], fxOn = false, fxStart = 0, org = [0, 0], raf = 0, last = 0, fh = 0, seen = true, cols: string[] = [], sparks: Spark[] = [];
   let sprites: { beans: HTMLCanvasElement[]; glow: HTMLCanvasElement; ray: HTMLCanvasElement; star: HTMLCanvasElement } | null = null;
   new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf && (parts.some((q) => q.st < 2) || fxOn)) { last = 0; raf = requestAnimationFrame(tick); } }).observe(stage);
-  function sizeFx() {
+  function sizeFx(h = stage.clientHeight + 28) { // +28: los granos en reposo asoman bajo las figuritas
     const d = devicePixelRatio || 1;
-    fh = stage.clientHeight; // el bitmap y su tamaño CSS quedan fijos aunque el escenario se achique al armar el abanico (si no, se estira)
+    fh = h; // el bitmap y su tamaño CSS quedan fijos aunque el escenario se achique al armar el abanico (si no, se estira)
     fx.style.height = fh + PAD + 'px';
     fx.width = stage.clientWidth * d; fx.height = (fh + PAD) * d;
     ctx.setTransform(d, 0, 0, d, 0, PAD * d);
@@ -437,6 +439,9 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
     hand = elegirSobre(D.tostadores, D.cafes); // sorteo nuevo en cada sobre
     const L = layout(), ch = L.cw * 1.42;
     // las figuritas nacen ya en su lugar final (marco del escenario achicado); el escenario solo se achica al terminar, sin mover nada
+    // si el abanico es más alto que el escenario (celular: 3 filas), el escenario crece ya, con el sobre fijo donde está
+    const need = fanH(L), cur = stage.clientHeight;
+    if (need > cur) { pack.style.top = cur / 2 + 'px'; stage.style.height = need + 'px'; sizeFx(need + 28); }
     const dy = fitShift(L); cardsEl.style.transition = 'none'; cardsEl.style.transform = `translateY(${dy}px)`; cardsEl.offsetHeight; cardsEl.style.transition = '';
     const sr = stage.getBoundingClientRect(), pr = pack.getBoundingClientRect();
     const cx = pr.left - sr.left + pr.width / 2, ty = pr.top - sr.top + 40;
@@ -473,6 +478,7 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
 
   // con el abanico armado el escenario se achica a lo que ocupan las figuritas (sin hueco antes del botón)
   const fitShift = (L: { pos: number[][] }) => 28 - Math.min(...L.pos.map((p) => p[1]));
+  const fanH = (L: { cw: number; pos: number[][] }) => { const ys = L.pos.map((p) => p[1]); return Math.ceil(Math.max(...ys) + L.cw * 1.42 - Math.min(...ys) + 56); };
   function fit(L: { cw: number; pos: number[][] }) {
     const ys = L.pos.map((p) => p[1]), pad = 28;
     const top = Math.min(...ys), bottom = Math.max(...ys) + L.cw * 1.42;
@@ -497,7 +503,7 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
     const cards = [...cardsEl.children] as HTMLElement[];
     const finish = () => {
       cardsEl.innerHTML = '';
-      parts = []; stage.style.transition = 'none'; unfit(); sizeFx(); stage.offsetHeight; stage.style.transition = '';
+      parts = []; stage.style.transition = 'none'; unfit(); pack.style.top = ''; sizeFx(); stage.offsetHeight; stage.style.transition = '';
       packIdx = (packIdx + 1) % PACKS.length;
       pack.style.setProperty('--pack', `var(${PACKS[packIdx]})`);
       pack.getAnimations().concat(top.getAnimations()).forEach((a) => a.cancel());
@@ -537,13 +543,13 @@ const datos = { tostadores: cafes.tostadores, cafes: enBarra, ranas, numeros, te
       if (busy) return;
       const fitted = !!cardsEl.children.length;
       if (fitted) { stage.style.transition = 'none'; unfit(); }
-      sizeFx();
       const L = layout();
       if (fitted) { fit(L); stage.offsetHeight; stage.style.transition = ''; }
+      sizeFx();
       parts = parts.filter((q) => q.st === 2); free = restSpots(); // granos en reposo: se reubican en el piso nuevo
       parts.forEach((q, i) => { const s = free[i]; if (s) { q.tx = s.x; q.ty = s.y; } else q.keep = false, q.dead = 0; });
       if (parts.length && !raf) { sprites ||= makeSprites(); last = 0; raf = requestAnimationFrame(tick); }
-      ([...cardsEl.children] as HTMLElement[]).forEach((el, i) => { el.style.setProperty('--cw', L.cw + 'px'); place(el, L.pos[i]); });
+      ([...cardsEl.children] as HTMLElement[]).forEach((el, i) => { el.style.setProperty('--cw', L.cw + 'px'); el.classList.toggle('sm', L.cw < 170); place(el, L.pos[i]); });
     }, 150);
   });
 </script>

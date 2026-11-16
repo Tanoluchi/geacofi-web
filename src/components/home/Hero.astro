@@ -31,7 +31,8 @@ import { local } from '../../lib/data.ts';
   p { font-size: 20px; line-height: 30px; max-width: 460px; }
   .botones { display: flex; flex-wrap: wrap; gap: 18px; }
   .escena { flex: 1 1 520px; position: relative; height: 560px; }
-  .disco-caja { position: absolute; top: 0; right: 10px; }
+  /* contain: paint recorta el disco a su propia caja: al girar, su caja rotada ya no ensancha el scroll horizontal */
+  .disco-caja { position: absolute; top: 0; right: 10px; width: 340px; height: 340px; border-radius: 50%; contain: paint; }
   .disco {
     width: 340px; height: 340px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     background: repeating-radial-gradient(circle, var(--carbon) 0 6px, var(--carbon-raised) 6px 8px);
@@ -51,6 +52,18 @@ import { local } from '../../lib/data.ts';
   }
   @keyframes gira { to { transform: rotate(360deg); } }
   @keyframes respira { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  /* tablet: dos columnas desde 760px, con la escena más baja para que título, pastilla y botones queden sobre el pliegue */
+  @media (min-width: 760px) and (max-width: 1055px) {
+    .hero { flex-wrap: nowrap; gap: var(--space-5); padding-top: var(--space-5); }
+    .texto, .escena { flex: 1 1 0; min-width: 0; }
+    .escena { height: 440px; }
+    .disco-caja, .disco { width: 230px; height: 230px; }
+    .etiqueta { width: 82px; height: 82px; }
+    .etiqueta img { width: 54px; height: auto; }
+    .barra { left: 14%; right: 20px; }
+    .suena { font-size: 20px; top: 20px; }
+    p { font-size: 18px; line-height: 27px; }
+  }
   @media (max-width: 640px) {
     .hero { padding-bottom: var(--space-6); gap: var(--space-5); }
     p { font-size: 17px; line-height: 26px; }

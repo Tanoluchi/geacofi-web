@@ -1,0 +1,46 @@
+---
+import { local } from '../lib/data.ts';
+import Icon from '../components/shared/Icon.astro';
+import PastillaHorario from '../components/shared/PastillaHorario.astro';
+---
+<aside class="tira" aria-label="Acciones rápidas">
+  <PastillaHorario />
+  <div class="acciones">
+    <a class="acc wa" href={local.whatsapp} rel="noopener"><Icon name="whatsapp" size={22} />escribinos</a>
+    <a class="acc" href={local.maps} rel="noopener">cómo llegar</a>
+  </div>
+</aside>
+<style is:global>
+  .tira { display: none; }
+  @media (max-width: 760px) {
+    html { scroll-padding-bottom: 110px; }
+    .tira {
+      display: flex; flex-direction: column; gap: 8px; position: fixed; inset: auto 0 0; z-index: 10;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--carbon); color: var(--durazno);
+      border-top: var(--border-ink) solid var(--ambar); box-shadow: 0 -5px 0 var(--terracota);
+    }
+    /* la intro y el detalle de un café (dialog modal) tienen la pantalla entera */
+    html.intro-on .tira, body:has(dialog[open]) .tira { display: none; }
+    html .tira [data-pastilla] { background: none; padding: 0 2px; }
+    .tira .acciones { display: flex; gap: 10px; }
+    .tira .acc {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 12px;
+      background: var(--durazno); color: var(--bordo); border: var(--border-ink) solid var(--ambar); border-radius: var(--radius-md);
+      font: italic 800 22px/1 var(--font-cond); text-decoration: none;
+    }
+    .tira .acc.wa { background: var(--terracota); color: var(--durazno); }
+    .tira .acc:active { transform: translateY(2px); }
+    /* entra de abajo con el primer scroll; con reduced motion, siempre a la vista y sin animar */
+    .tira.entra { transform: translateY(calc(100% + 8px)); }
+    .tira.entra-lista { transition: transform .35s cubic-bezier(.16, 1, .3, 1); }
+  }
+</style>
+<script>
+  const tira = document.querySelector<HTMLElement>('.tira');
+  if (tira && matchMedia('(prefers-reduced-motion: no-preference)').matches && !scrollY) {
+    tira.classList.add('entra', 'entra-lista');
+    const mostrar = () => tira.classList.remove('entra');
+    addEventListener('scroll', mostrar, { once: true, passive: true });
+    tira.addEventListener('focusin', mostrar);
+  }
+</script>

@@ -24,6 +24,11 @@ const { tabs } = Astro.props;
   a:hover { background: var(--durazno); color: var(--bordo); }
   a[aria-current] { background: var(--terracota); color: var(--durazno); }
   a:focus-visible { outline-offset: 2px; }
+  /* celular: snap + borde derecho que se desvanece = hay más pestañas para deslizar */
+  @media (max-width: 760px) {
+    .tabs { scroll-snap-type: x proximity; padding-inline-end: 48px; mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+    a { scroll-snap-align: center; }
+  }
 </style>
 <script>
   const links = [...document.querySelectorAll<HTMLAnchorElement>('.tabs a')];

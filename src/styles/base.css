@@ -26,15 +26,15 @@ input, textarea { caret-color: var(--terracota); }
 html { scrollbar-color: var(--bordo) var(--durazno); }
 
 /* tipografía del sistema (usar las clases o los tamaños de DESIGN.md) */
-.t-hero { font: 700 128px/.82 var(--font-display); color: var(--heading); }
-.t-h2 { font: 700 88px/.82 var(--font-display); color: var(--heading); }
+.t-hero { font: 700 clamp(56px, 11.5vw, 128px)/.82 var(--font-display); color: var(--heading); }
+.t-h2 { font: 700 clamp(56px, 9vw, 88px)/.82 var(--font-display); color: var(--heading); }
 .t-h3 { font: 700 52px/.9 var(--font-display); color: var(--heading); }
 .t-eyebrow { font: 500 13px/18px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--eyebrow); }
 .t-price { font: 400 16px/22px var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 @media (max-width: 640px) {
-  .t-hero { font-size: 72px; }
-  .t-h2 { font-size: 56px; }
-  .t-h3 { font-size: 40px; }
+  .t-hero { font-size: clamp(56px, 19vw, 76px); }
+  .t-h2 { font-size: clamp(48px, 15vw, 56px); }
+  .t-h3 { font-size: clamp(36px, 11vw, 40px); }
 }
 
 /* banda de sección: <section class="banda" data-theme="noche"> */
